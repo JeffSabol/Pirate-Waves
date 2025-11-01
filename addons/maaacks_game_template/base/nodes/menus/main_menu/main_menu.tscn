@@ -1,8 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://c6k5nnpbypshi"]
+[gd_scene load_steps=9 format=3 uid="uid://c6k5nnpbypshi"]
 
 [ext_resource type="Script" uid="uid://bhgs1upaahk3y" path="res://addons/maaacks_game_template/base/nodes/menus/main_menu/main_menu.gd" id="1"]
+[ext_resource type="AudioStream" uid="uid://bcsap1t3mvobc" path="res://assets/music/raxlen_slice_drunken_sailor.wav" id="4_cw27w"]
 [ext_resource type="Script" uid="uid://1nf36h0gms3q" path="res://addons/maaacks_game_template/base/nodes/utilities/capture_focus.gd" id="4_l1ebe"]
 [ext_resource type="PackedScene" uid="uid://bkcsjsk2ciff" path="res://addons/maaacks_game_template/base/nodes/music_players/background_music_player.tscn" id="4_w8sbm"]
+[ext_resource type="FontFile" uid="uid://bmfleyxdqpc0r" path="res://assets/fonts/pixel_pirate.ttf" id="5_im16j"]
 [ext_resource type="Script" uid="uid://b5oej1q4h7jvh" path="res://addons/maaacks_game_template/base/nodes/autoloads/ui_sound_controller/ui_sound_controller.gd" id="6_bs342"]
 [ext_resource type="Script" uid="uid://dmkubt2nsnsbn" path="res://addons/maaacks_game_template/base/nodes/labels/config_version_label.gd" id="6_pdiij"]
 [ext_resource type="Script" uid="uid://bkwlopi4qn32o" path="res://addons/maaacks_game_template/base/nodes/labels/config_name_label.gd" id="7_j7612"]
@@ -20,6 +22,8 @@ script = ExtResource("1")
 script = ExtResource("6_bs342")
 
 [node name="BackgroundMusicPlayer" parent="." instance=ExtResource("4_w8sbm")]
+stream = ExtResource("4_cw27w")
+volume_db = -14.0
 
 [node name="BackgroundTextureRect" type="TextureRect" parent="."]
 layout_mode = 1
@@ -83,12 +87,14 @@ mouse_filter = 2
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_bottom = 67.0
+offset_left = -1909.0
+offset_top = -64.0
+offset_right = -1909.0
+offset_bottom = 3.0
 grow_horizontal = 2
-theme_override_font_sizes/font_size = 48
-text = "Game Template
-
-hey"
+scale = Vector2(4, 4)
+theme_override_fonts/font = ExtResource("5_im16j")
+text = "Pirate Waves"
 horizontal_alignment = 1
 vertical_alignment = 1
 script = ExtResource("7_j7612")
@@ -105,10 +111,14 @@ mouse_filter = 2
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_bottom = 34.0
+offset_left = -623.0
+offset_top = 108.0
+offset_right = -623.0
+offset_bottom = 142.0
 grow_horizontal = 2
-theme_override_font_sizes/font_size = 24
-text = "Subtitle"
+scale = Vector2(2, 2)
+theme_override_fonts/font = ExtResource("5_im16j")
+text = "Game Off 2025"
 horizontal_alignment = 1
 vertical_alignment = 1
 
