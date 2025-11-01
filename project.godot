@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="Game Template"
+config/name="Pirate Waves"
 run/main_scene="res://scenes/opening/opening.tscn"
 config/features=PackedStringArray("4.5")
 boot_splash/image="uid://cvqi3wwkc31bp"
@@ -36,6 +36,7 @@ enabled=PackedStringArray("res://addons/maaacks_game_template/plugin.cfg")
 
 [gui]
 
+theme/custom="res://resources/themes/lore.tres"
 common/drop_mouse_on_gui_input_disabled=true
 
 [input]
