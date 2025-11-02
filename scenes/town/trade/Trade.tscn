@@ -1,0 +1,118 @@
+[gd_scene load_steps=12 format=3 uid="uid://exlfjrsql2fw"]
+
+[ext_resource type="Texture2D" uid="uid://dhmyuc14ebn1e" path="res://assets/backgrounds/MarketBackground.png" id="1_sh6sl"]
+[ext_resource type="Texture2D" uid="uid://ciqv4m2ttxndr" path="res://assets/ui/town/tavern/TradeMenuEmpty.png" id="2_httn2"]
+[ext_resource type="Texture2D" uid="uid://bp18w77y1hy64" path="res://assets/ui/town/tavern/FoodTradeButton.png" id="3_1e65h"]
+[ext_resource type="Texture2D" uid="uid://dfyy5lv86f8x5" path="res://assets/ui/town/tavern/GoodsTradeButton.png" id="4_4c0wx"]
+[ext_resource type="Texture2D" uid="uid://crftoep5uo071" path="res://assets/ui/town/tavern/CannonssTradeButton.png" id="5_jkeck"]
+[ext_resource type="Texture2D" uid="uid://cjq0fegwqoqol" path="res://assets/ui/town/tavern/CannonBallsTradeButton.png" id="6_0thvx"]
+[ext_resource type="Texture2D" uid="uid://bdnwjqcrfet5y" path="res://assets/ui/town/Leave.png" id="7_h647s"]
+[ext_resource type="FontFile" uid="uid://bmfleyxdqpc0r" path="res://assets/fonts/pixel_pirate.ttf" id="8_httn2"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_1e65h"]
+font = ExtResource("8_httn2")
+font_size = 64
+font_color = Color(1, 0.8862745, 0.02745098, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_4c0wx"]
+font = ExtResource("8_httn2")
+font_size = 48
+font_color = Color(1, 0.8862745, 0.02745098, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_jkeck"]
+font = ExtResource("8_httn2")
+font_size = 48
+font_color = Color(1, 0.8862745, 0.02745098, 1)
+
+[node name="Trade" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="BackgroundArt" type="TextureRect" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -39.0
+offset_bottom = 73.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_sh6sl")
+metadata/_edit_use_anchors_ = true
+
+[node name="MenuBackground" type="TextureRect" parent="CanvasLayer"]
+offset_left = 9.0
+offset_top = -21.0
+offset_right = 2563.0
+offset_bottom = 1489.0
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_httn2")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/MenuBackground"]
+layout_mode = 0
+offset_left = 218.0
+offset_top = 480.0
+offset_right = 925.0
+offset_bottom = 1293.0
+scale = Vector2(3, 3)
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/MenuBackground/VBoxContainer"]
+layout_mode = 2
+texture = ExtResource("3_1e65h")
+
+[node name="TextureRect2" type="TextureRect" parent="CanvasLayer/MenuBackground/VBoxContainer"]
+layout_mode = 2
+texture = ExtResource("4_4c0wx")
+
+[node name="TextureRect3" type="TextureRect" parent="CanvasLayer/MenuBackground/VBoxContainer"]
+layout_mode = 2
+texture = ExtResource("5_jkeck")
+
+[node name="TextureRect4" type="TextureRect" parent="CanvasLayer/MenuBackground/VBoxContainer"]
+layout_mode = 2
+texture = ExtResource("6_0thvx")
+
+[node name="Leave" type="TextureButton" parent="CanvasLayer/MenuBackground"]
+layout_mode = 0
+offset_left = 218.0
+offset_top = 1030.0
+offset_right = 719.0
+offset_bottom = 1191.0
+texture_normal = ExtResource("7_h647s")
+
+[node name="PlayerNameLabel" type="Label" parent="CanvasLayer/MenuBackground"]
+layout_mode = 0
+offset_left = 192.0
+offset_top = 116.0
+offset_right = 808.0
+offset_bottom = 204.0
+text = "PlayerName"
+label_settings = SubResource("LabelSettings_1e65h")
+
+[node name="PlayerGoldLabel" type="Label" parent="CanvasLayer/MenuBackground/PlayerNameLabel"]
+layout_mode = 0
+offset_left = 46.0
+offset_top = 100.0
+offset_right = 214.0
+offset_bottom = 166.0
+text = "300g"
+label_settings = SubResource("LabelSettings_4c0wx")
+
+[node name="MerchantNameLabel" type="Label" parent="CanvasLayer/MenuBackground"]
+layout_mode = 0
+offset_left = 1554.0
+offset_top = 116.0
+offset_right = 2322.0
+offset_bottom = 204.0
+text = "MerchantName"
+label_settings = SubResource("LabelSettings_1e65h")
+
+[node name="Label" type="Label" parent="CanvasLayer/MenuBackground/MerchantNameLabel"]
+layout_mode = 0
+offset_left = 62.0
+offset_top = 94.0
+offset_right = 230.0
+offset_bottom = 160.0
+text = "500g"
+label_settings = SubResource("LabelSettings_jkeck")
