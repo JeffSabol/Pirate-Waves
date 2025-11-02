@@ -23,5 +23,5 @@ func set_sprite_by_type():
 func _on_enter_zone_body_entered(body):
 	if body.name == "PlayerBoat":
 		$Building.play()
-		await get_tree().create_timer(1.0).timeout
+		await get_tree().create_timer(0.5).timeout
 		$"../../GameUI".show_town_ui()

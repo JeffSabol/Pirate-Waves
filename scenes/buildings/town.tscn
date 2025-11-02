@@ -349,7 +349,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_0s1at")
 }],
-"loop": true,
+"loop": false,
 "name": &"middle",
 "speed": 5.0
 }, {
@@ -399,7 +399,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_173jk")
 }],
-"loop": true,
+"loop": false,
 "name": &"poor",
 "speed": 5.0
 }, {
@@ -449,13 +449,13 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_1lb43")
 }],
-"loop": true,
+"loop": false,
 "name": &"wealthy",
 "speed": 5.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0j776"]
-size = Vector2(218, 166)
+size = Vector2(189, 169)
 
 [node name="Town" type="Node2D"]
 script = ExtResource("1_sl2f4")
@@ -467,7 +467,7 @@ animation = &"good"
 [node name="EnterZone" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="EnterZone"]
-position = Vector2(16, 10)
+position = Vector2(1.5, 8.5)
 shape = SubResource("RectangleShape2D_0j776")
 
 [connection signal="body_entered" from="EnterZone" to="." method="_on_enter_zone_body_entered"]
