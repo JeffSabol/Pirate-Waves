@@ -1,6 +1,7 @@
-[gd_scene load_steps=67 format=3 uid="uid://cdc0kjiub4x3w"]
+[gd_scene load_steps=68 format=3 uid="uid://cdc0kjiub4x3w"]
 
 [ext_resource type="Texture2D" uid="uid://baaotoarhb7di" path="res://assets/buildings/Good.png" id="1_1kidy"]
+[ext_resource type="Script" uid="uid://bpch1mdbibgd6" path="res://scenes/buildings/town.gd" id="1_sl2f4"]
 [ext_resource type="Texture2D" uid="uid://b7n3ye8uq0wlu" path="res://assets/buildings/Middle.png" id="2_sl2f4"]
 [ext_resource type="Texture2D" uid="uid://cx5e3alqyfrk8" path="res://assets/buildings/Poor.png" id="3_68ajx"]
 [ext_resource type="Texture2D" uid="uid://c04j4e6topvgh" path="res://assets/buildings/Wealthy.png" id="4_8unm6"]
@@ -298,7 +299,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_rrlbk")
 }],
-"loop": true,
+"loop": false,
 "name": &"good",
 "speed": 5.0
 }, {
@@ -454,9 +455,10 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0j776"]
-size = Vector2(105, 105)
+size = Vector2(218, 166)
 
 [node name="Town" type="Node2D"]
+script = ExtResource("1_sl2f4")
 
 [node name="Building" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_megev")
@@ -465,5 +467,7 @@ animation = &"good"
 [node name="EnterZone" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="EnterZone"]
-position = Vector2(4.5, 5.5)
+position = Vector2(16, 10)
 shape = SubResource("RectangleShape2D_0j776")
+
+[connection signal="body_entered" from="EnterZone" to="." method="_on_enter_zone_body_entered"]

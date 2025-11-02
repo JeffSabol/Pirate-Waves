@@ -37,7 +37,7 @@ func _ready() -> void:
 	_show_continue_if_set()
 
 func _on_continue_game_button_pressed() -> void:
-	GameState.continue_game()
+	.continue_game()
 	load_game_scene()
 
 func _on_level_select_button_pressed() -> void:

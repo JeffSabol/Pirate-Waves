@@ -1,0 +1,81 @@
+[gd_scene load_steps=10 format=3 uid="uid://det64ltelxgj8"]
+
+[ext_resource type="Texture2D" uid="uid://c4dvj2ech50xs" path="res://assets/backgrounds/ShipyardBackground.png" id="1_7oip4"]
+[ext_resource type="Script" uid="uid://drfnyqhrabudn" path="res://scenes/town/townUI.gd" id="1_ki453"]
+[ext_resource type="Texture2D" uid="uid://cw43718gtttoq" path="res://assets/ui/town/MenuEmpty.png" id="3_lersf"]
+[ext_resource type="Texture2D" uid="uid://degfw088l4gtu" path="res://assets/ui/town/Town.png" id="4_v3pdc"]
+[ext_resource type="Texture2D" uid="uid://btvea3m20hwrx" path="res://assets/ui/town/Trade.png" id="5_tyo6j"]
+[ext_resource type="Texture2D" uid="uid://d34tnjjs4iu3q" path="res://assets/ui/town/Shipyard.png" id="6_1xjsg"]
+[ext_resource type="Texture2D" uid="uid://cmj3w3hjiccxk" path="res://assets/ui/town/Tavern.png" id="7_ffnhu"]
+[ext_resource type="Texture2D" uid="uid://dnuc8w7jqinuw" path="res://assets/ui/town/Quests.png" id="8_r6lmy"]
+[ext_resource type="Texture2D" uid="uid://bdnwjqcrfet5y" path="res://assets/ui/town/Leave.png" id="9_nbo5m"]
+
+[node name="Town" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ki453")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="BackgroundArt" type="TextureRect" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -39.0
+offset_bottom = 73.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_7oip4")
+
+[node name="MenuBackground" type="TextureRect" parent="CanvasLayer"]
+offset_left = 736.0
+offset_top = -25.0
+offset_right = 1760.0
+offset_bottom = 1511.0
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_lersf")
+
+[node name="TownTitleLogo" type="TextureRect" parent="CanvasLayer/MenuBackground"]
+layout_mode = 0
+offset_left = 330.0
+offset_top = 200.0
+offset_right = 681.0
+offset_bottom = 311.0
+texture = ExtResource("4_v3pdc")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/MenuBackground"]
+layout_mode = 0
+offset_left = 94.0
+offset_top = 424.0
+offset_right = 773.0
+offset_bottom = 1237.0
+
+[node name="TradeButton" type="TextureButton" parent="CanvasLayer/MenuBackground/VBoxContainer"]
+layout_mode = 2
+texture_normal = ExtResource("5_tyo6j")
+
+[node name="ShipyardButton" type="TextureButton" parent="CanvasLayer/MenuBackground/VBoxContainer"]
+layout_mode = 2
+texture_normal = ExtResource("6_1xjsg")
+
+[node name="TavernButton" type="TextureButton" parent="CanvasLayer/MenuBackground/VBoxContainer"]
+layout_mode = 2
+texture_normal = ExtResource("7_ffnhu")
+
+[node name="QuestsButton" type="TextureButton" parent="CanvasLayer/MenuBackground/VBoxContainer"]
+layout_mode = 2
+texture_normal = ExtResource("8_r6lmy")
+
+[node name="LeaveButton" type="TextureButton" parent="CanvasLayer/MenuBackground/VBoxContainer"]
+layout_mode = 2
+texture_normal = ExtResource("9_nbo5m")
+
+[connection signal="pressed" from="CanvasLayer/MenuBackground/VBoxContainer/TradeButton" to="." method="_on_trade_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/MenuBackground/VBoxContainer/ShipyardButton" to="." method="_on_shipyard_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/MenuBackground/VBoxContainer/TavernButton" to="." method="_on_tavern_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/MenuBackground/VBoxContainer/QuestsButton" to="." method="_on_quests_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/MenuBackground/VBoxContainer/LeaveButton" to="." method="_on_leave_button_pressed"]
