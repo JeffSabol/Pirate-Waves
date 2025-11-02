@@ -25,3 +25,13 @@ Exports/
 
 # Plugin specific
 addons/script-ide/*
+
+# Not my songs
+assets/music/gangstas_paradise.mp3
+assets/music/gangstas_paradise.mp3.import
+assets/music/hips_dont_lie.mp3
+assets/music/hips_dont_lie.mp3.import
+assets/music/musette.mp3
+assets/music/musette.mp3.import
+assets/music/ymca.mp3
+assets/music/ymca.mp3.import
