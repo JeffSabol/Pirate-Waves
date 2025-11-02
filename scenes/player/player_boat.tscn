@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://d3nh1rywkpqb0"]
+[gd_scene load_steps=5 format=3 uid="uid://d3nh1rywkpqb0"]
 
 [ext_resource type="Texture2D" uid="uid://h56m310r62on" path="res://assets/boat/boat.png" id="1_n1myn"]
+[ext_resource type="Script" uid="uid://3lm8sk43yjjr" path="res://scenes/player/player_boat.gd" id="1_tfbt8"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_tfbt8"]
 animations = [{
@@ -16,6 +17,7 @@ animations = [{
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_n1myn"]
 
 [node name="PlayerBoat" type="CharacterBody2D"]
+script = ExtResource("1_tfbt8")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 rotation = 3.1415927
