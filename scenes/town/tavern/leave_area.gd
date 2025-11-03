@@ -23,3 +23,9 @@ func _on_mouse_exited():
 	var fade_tween = create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 	fade_tween.tween_property(self, "color", Color(0, 0, 0, 0), 1.0) # fade out slower
 	$FireplaceSound.stop()
+
+
+func _on_gui_input(event):
+	print("leave!")
+	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+		$"../../..".queue_free()
