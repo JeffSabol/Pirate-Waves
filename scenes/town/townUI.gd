@@ -20,6 +20,7 @@ func _on_trade_button_pressed():
 	
 func _on_shipyard_button_pressed():
 	print("Pressed shipyard button")
+	$"../../GameUI".show_shipyard_ui()
 
 func _on_tavern_button_pressed():
 	print("Pressed tavern button")

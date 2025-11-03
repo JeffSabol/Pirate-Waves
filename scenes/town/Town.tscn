@@ -1,7 +1,7 @@
 [gd_scene load_steps=10 format=3 uid="uid://det64ltelxgj8"]
 
-[ext_resource type="Texture2D" uid="uid://c4dvj2ech50xs" path="res://assets/backgrounds/ShipyardBackground.png" id="1_7oip4"]
 [ext_resource type="Script" uid="uid://drfnyqhrabudn" path="res://scenes/town/townUI.gd" id="1_ki453"]
+[ext_resource type="Texture2D" uid="uid://bn3uj8udde8j6" path="res://assets/backgrounds/TownBackground.png" id="2_lersf"]
 [ext_resource type="Texture2D" uid="uid://cw43718gtttoq" path="res://assets/ui/town/MenuEmpty.png" id="3_lersf"]
 [ext_resource type="Texture2D" uid="uid://degfw088l4gtu" path="res://assets/ui/town/Town.png" id="4_v3pdc"]
 [ext_resource type="Texture2D" uid="uid://btvea3m20hwrx" path="res://assets/ui/town/Trade.png" id="5_tyo6j"]
@@ -29,7 +29,7 @@ offset_top = -39.0
 offset_bottom = 73.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("1_7oip4")
+texture = ExtResource("2_lersf")
 metadata/_edit_use_anchors_ = true
 
 [node name="MenuBackground" type="TextureRect" parent="CanvasLayer"]

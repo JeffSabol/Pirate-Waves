@@ -1,13 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://c6qexg224wfyy"]
+[gd_scene load_steps=4 format=3 uid="uid://c6qexg224wfyy"]
 
 [ext_resource type="Texture2D" uid="uid://c4dvj2ech50xs" path="res://assets/backgrounds/ShipyardBackground.png" id="1_xb5ba"]
-[ext_resource type="Texture2D" uid="uid://cw43718gtttoq" path="res://assets/ui/town/MenuEmpty.png" id="2_bxmte"]
-[ext_resource type="Texture2D" uid="uid://degfw088l4gtu" path="res://assets/ui/town/Town.png" id="3_3tc6v"]
-[ext_resource type="Texture2D" uid="uid://btvea3m20hwrx" path="res://assets/ui/town/Trade.png" id="4_wf01b"]
-[ext_resource type="Texture2D" uid="uid://d34tnjjs4iu3q" path="res://assets/ui/town/Shipyard.png" id="5_d4k3m"]
-[ext_resource type="Texture2D" uid="uid://cmj3w3hjiccxk" path="res://assets/ui/town/Tavern.png" id="6_2tcl3"]
-[ext_resource type="Texture2D" uid="uid://dnuc8w7jqinuw" path="res://assets/ui/town/Quests.png" id="7_8sxeu"]
-[ext_resource type="Texture2D" uid="uid://bdnwjqcrfet5y" path="res://assets/ui/town/Leave.png" id="8_p6ufq"]
+[ext_resource type="Texture2D" uid="uid://bi4skf1dgo3a3" path="res://assets/ui/town/shipyard/Menu.png" id="2_4ju20"]
+[ext_resource type="Script" uid="uid://yas2vi8amvgj" path="res://scenes/town/shipyard/leave.gd" id="3_ee18e"]
 
 [node name="Shipyard" type="Control"]
 layout_mode = 3
@@ -27,44 +22,65 @@ texture = ExtResource("1_xb5ba")
 metadata/_edit_use_anchors_ = true
 
 [node name="MenuBackground" type="TextureRect" parent="CanvasLayer"]
-offset_left = 736.0
-offset_top = -25.0
-offset_right = 1760.0
-offset_bottom = 1511.0
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("2_bxmte")
-
-[node name="TownTitleLogo" type="TextureRect" parent="CanvasLayer/MenuBackground"]
-layout_mode = 0
-offset_left = 330.0
-offset_top = 200.0
-offset_right = 681.0
-offset_bottom = 311.0
-texture = ExtResource("3_3tc6v")
+offset_left = -6.0
+offset_top = 68.0
+offset_right = 1018.0
+offset_bottom = 1604.0
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("2_4ju20")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/MenuBackground"]
 layout_mode = 0
-offset_left = 94.0
-offset_top = 424.0
-offset_right = 773.0
-offset_bottom = 1237.0
+offset_left = 218.0
+offset_top = 480.0
+offset_right = 925.0
+offset_bottom = 1293.0
+scale = Vector2(3, 3)
 
-[node name="TradeButton" type="TextureButton" parent="CanvasLayer/MenuBackground/VBoxContainer"]
-layout_mode = 2
-texture_normal = ExtResource("4_wf01b")
+[node name="SpeedUpgrade" type="ColorRect" parent="CanvasLayer/MenuBackground"]
+layout_mode = 0
+offset_left = 592.5
+offset_top = 284.99997
+offset_right = 665.0
+offset_bottom = 334.99997
+tooltip_text = "Increases your ship’s max speed"
+color = Color(1, 1, 0, 0)
 
-[node name="ShipyardButton" type="TextureButton" parent="CanvasLayer/MenuBackground/VBoxContainer"]
-layout_mode = 2
-texture_normal = ExtResource("5_d4k3m")
+[node name="TurningUpgrade" type="ColorRect" parent="CanvasLayer/MenuBackground"]
+layout_mode = 0
+offset_left = 592.5
+offset_top = 504.99994
+offset_right = 667.5
+offset_bottom = 559.99994
+tooltip_text = "Improves turning rate"
+color = Color(1, 1, 0, 0)
 
-[node name="TavernButton" type="TextureButton" parent="CanvasLayer/MenuBackground/VBoxContainer"]
-layout_mode = 2
-texture_normal = ExtResource("6_2tcl3")
+[node name="HullUpgrade" type="ColorRect" parent="CanvasLayer/MenuBackground"]
+layout_mode = 0
+offset_left = 590.0
+offset_top = 732.5
+offset_right = 665.0
+offset_bottom = 782.5
+tooltip_text = "Boosts max health"
+color = Color(1, 1, 0, 0)
 
-[node name="QuestsButton" type="TextureButton" parent="CanvasLayer/MenuBackground/VBoxContainer"]
-layout_mode = 2
-texture_normal = ExtResource("7_8sxeu")
+[node name="GunsUpgrade" type="ColorRect" parent="CanvasLayer/MenuBackground"]
+layout_mode = 0
+offset_left = 592.5
+offset_top = 952.5
+offset_right = 665.0
+offset_bottom = 1007.5
+tooltip_text = "Increases cannon damage and firing rate"
+color = Color(1, 1, 0, 0)
 
-[node name="LeaveButton" type="TextureButton" parent="CanvasLayer/MenuBackground/VBoxContainer"]
-layout_mode = 2
-texture_normal = ExtResource("8_p6ufq")
+[node name="Leave" type="ColorRect" parent="CanvasLayer/MenuBackground"]
+layout_mode = 0
+offset_left = 237.50006
+offset_top = 1277.5
+offset_right = 782.5
+offset_bottom = 1447.5
+tooltip_text = "Exit the shipyard"
+color = Color(1, 1, 0, 0)
+script = ExtResource("3_ee18e")
+
+[connection signal="gui_input" from="CanvasLayer/MenuBackground/Leave" to="CanvasLayer/MenuBackground/Leave" method="_on_gui_input"]
