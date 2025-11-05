@@ -1,10 +1,11 @@
-[gd_scene load_steps=10 format=4 uid="uid://cu0u00s7rwajd"]
+[gd_scene load_steps=11 format=4 uid="uid://cu0u00s7rwajd"]
 
 [ext_resource type="Texture2D" uid="uid://dof2tt5ld5wst" path="res://assets/tiles/WaterAndIslands/Water and Island tiles.png" id="1_k8tay"]
 [ext_resource type="PackedScene" uid="uid://clxs5gwisal5m" path="res://scenes/game_scene/game_ui.tscn" id="2_oxjrw"]
 [ext_resource type="PackedScene" uid="uid://d3nh1rywkpqb0" path="res://scenes/player/player_boat.tscn" id="3_ptotq"]
 [ext_resource type="AudioStream" uid="uid://c3iohqiy1v26q" path="res://assets/music/sea_wave_pause_music.mp3" id="5_xhe80"]
 [ext_resource type="PackedScene" uid="uid://cdc0kjiub4x3w" path="res://scenes/buildings/town.tscn" id="6_2maww"]
+[ext_resource type="PackedScene" uid="uid://cu6c72fyiba2s" path="res://scenes/game_scene/world/world_ui.tscn" id="6_7ih7l"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_oxjrw"]
 texture = ExtResource("1_k8tay")
@@ -324,10 +325,10 @@ sources/0 = SubResource("TileSetAtlasSource_ptotq")
 [node name="World" type="Node2D"]
 
 [node name="ColorRect" type="ColorRect" parent="."]
-offset_left = -5228.0
-offset_top = -2648.0
-offset_right = 10591.0
-offset_bottom = 7115.0
+offset_left = -5524.0
+offset_top = -4079.0
+offset_right = 10295.0
+offset_bottom = 5684.0
 color = Color(0.10980392, 0.52156866, 0.8509804, 1)
 
 [node name="LandLayer" type="TileMapLayer" parent="."]
@@ -385,3 +386,5 @@ town_type = "Good"
 [node name="Skull Island Pirates" parent="Towns" instance=ExtResource("6_2maww")]
 position = Vector2(4720, -1215)
 town_type = "Pirate"
+
+[node name="WorldUI" parent="." instance=ExtResource("6_7ih7l")]

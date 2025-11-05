@@ -24,5 +24,7 @@ func _on_enter_zone_body_entered(body):
 	if body.name == "PlayerBoat":
 		$Building.play()
 		await get_tree().create_timer(0.5).timeout
+		$"../../GameUI".hide_world_ui()
 		$"../../GameUI".show_town_ui()
 		$"../../PlayerBoat/AudioStreamPlayer2D".stop()
+		
