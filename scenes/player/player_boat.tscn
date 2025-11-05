@@ -1,7 +1,12 @@
-[gd_scene load_steps=5 format=3 uid="uid://d3nh1rywkpqb0"]
+[gd_scene load_steps=7 format=3 uid="uid://d3nh1rywkpqb0"]
 
 [ext_resource type="Texture2D" uid="uid://h56m310r62on" path="res://assets/boat/boat.png" id="1_n1myn"]
 [ext_resource type="Script" uid="uid://3lm8sk43yjjr" path="res://scenes/player/player_boat.gd" id="1_tfbt8"]
+[ext_resource type="Texture2D" uid="uid://cpl3o1k0trd55" path="res://assets/boat/Boat1.png" id="3_xfafm"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tyh3w"]
+atlas = ExtResource("3_xfafm")
+region = Rect2(0, 0, 30, 64)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_tfbt8"]
 animations = [{
@@ -11,6 +16,14 @@ animations = [{
 }],
 "loop": true,
 "name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tyh3w")
+}],
+"loop": true,
+"name": &"new_animation",
 "speed": 5.0
 }]
 
@@ -22,6 +35,7 @@ script = ExtResource("1_tfbt8")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 rotation = 3.1415927
 sprite_frames = SubResource("SpriteFrames_tfbt8")
+animation = &"new_animation"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-1, 2)

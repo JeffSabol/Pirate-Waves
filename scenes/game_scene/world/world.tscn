@@ -325,10 +325,10 @@ sources/0 = SubResource("TileSetAtlasSource_ptotq")
 [node name="World" type="Node2D"]
 
 [node name="ColorRect" type="ColorRect" parent="."]
-offset_left = -5524.0
-offset_top = -4079.0
-offset_right = 10295.0
-offset_bottom = 5684.0
+offset_left = -6385.0
+offset_top = -3271.0
+offset_right = 11715.0
+offset_bottom = 7829.0
 color = Color(0.10980392, 0.52156866, 0.8509804, 1)
 
 [node name="LandLayer" type="TileMapLayer" parent="."]

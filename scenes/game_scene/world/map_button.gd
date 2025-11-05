@@ -6,6 +6,8 @@ func _on_gui_input(event):
 		if ! $"../Map".is_visible_in_tree():
 			$"../Map".show()
 			$"../MapBorder".show()
+			$"../ShipIcon".show()
 		else:
 			$"../Map".hide()
 			$"../MapBorder".hide()
+			$"../ShipIcon".hide()

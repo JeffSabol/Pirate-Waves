@@ -1,14 +1,27 @@
-[gd_scene load_steps=5 format=3 uid="uid://cu6c72fyiba2s"]
+[gd_scene load_steps=7 format=3 uid="uid://cu6c72fyiba2s"]
 
 [ext_resource type="Texture2D" uid="uid://is5yutlhkb27" path="res://assets/ui/map/MapBackground.png" id="1_cm2e8"]
 [ext_resource type="Texture2D" uid="uid://det87dh4q513y" path="res://assets/ui/map/MapButton.png" id="1_ditpx"]
 [ext_resource type="Texture2D" uid="uid://bbrjt84hpvqry" path="res://assets/ui/map/Map.png" id="1_ij4mi"]
+[ext_resource type="Script" uid="uid://bjg7ug8bx7lau" path="res://scenes/game_scene/world/map_ui.gd" id="1_wknfc"]
 [ext_resource type="Script" uid="uid://b2u4mh42rrys" path="res://scenes/game_scene/world/map_button.gd" id="2_ydqjq"]
+[ext_resource type="Texture2D" uid="uid://h56m310r62on" path="res://assets/boat/boat.png" id="6_eddq1"]
 
 [node name="WorldUI" type="CanvasLayer"]
 
-[node name="MapBorder" type="TextureRect" parent="."]
+[node name="MapUI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_top = 1.0
+offset_right = 40.0
+offset_bottom = 41.0
+script = ExtResource("1_wknfc")
+world_size = Vector2(100000, 11100)
+world_top_left = Vector2(-20000, -5000)
+
+[node name="MapBorder" type="TextureRect" parent="MapUI"]
 visible = false
+layout_mode = 0
 offset_left = 281.0
 offset_top = 84.0
 offset_right = 1817.0
@@ -16,8 +29,9 @@ offset_bottom = 1134.909
 scale = Vector2(0.45, 0.45)
 texture = ExtResource("1_cm2e8")
 
-[node name="Map" type="TextureRect" parent="."]
+[node name="Map" type="TextureRect" parent="MapUI"]
 visible = false
+layout_mode = 0
 offset_left = 323.57684
 offset_top = 126.99999
 offset_right = 2052.1482
@@ -25,7 +39,8 @@ offset_bottom = 1192.7142
 scale = Vector2(0.35, 0.35)
 texture = ExtResource("1_ij4mi")
 
-[node name="MapButton" type="TextureRect" parent="."]
+[node name="MapButton" type="TextureRect" parent="MapUI"]
+layout_mode = 0
 offset_top = 650.0
 offset_right = 225.0
 offset_bottom = 790.0
@@ -33,8 +48,19 @@ scale = Vector2(0.5, 0.5)
 texture = ExtResource("1_ditpx")
 script = ExtResource("2_ydqjq")
 
-[node name="BoatStats" type="TextureRect" parent="."]
+[node name="BoatStats" type="TextureRect" parent="MapUI"]
+layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[connection signal="gui_input" from="MapButton" to="MapButton" method="_on_gui_input"]
+[node name="ShipIcon" type="TextureRect" parent="MapUI"]
+visible = false
+layout_mode = 0
+offset_top = 32.0
+offset_right = 64.0
+offset_bottom = 96.0
+rotation = -1.5707964
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("6_eddq1")
+
+[connection signal="gui_input" from="MapUI/MapButton" to="MapUI/MapButton" method="_on_gui_input"]

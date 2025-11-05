@@ -9,6 +9,7 @@ func _ready():
 func _exit_tree():
 	# re-enable when UI is removed
 	get_tree().call_group("player", "enable_controls")
+	$"../../GameUI".show_world_ui()
 	
 func _unhandled_input(event):
 	if event.is_action_pressed("ui_cancel"):
