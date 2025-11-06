@@ -1,0 +1,52 @@
+[gd_resource type="SpriteFrames" load_steps=5 format=3 uid="uid://ciwy8sitwoy6a"]
+
+[ext_resource type="Texture2D" uid="uid://knja10sawg4e" path="res://assets/boat/Guns/cannon_shoot_1.png" id="1_r0inp"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c3i3b"]
+atlas = ExtResource("1_r0inp")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_75wxv"]
+atlas = ExtResource("1_r0inp")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6ht7b"]
+atlas = ExtResource("1_r0inp")
+region = Rect2(32, 0, 16, 16)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c3i3b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_75wxv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6ht7b")
+}],
+"loop": true,
+"name": &"level1",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"level2",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"level3",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"level4",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"level5",
+"speed": 5.0
+}]

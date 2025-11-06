@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://d3nh1rywkpqb0"]
+[gd_scene load_steps=8 format=3 uid="uid://d3nh1rywkpqb0"]
 
 [ext_resource type="Texture2D" uid="uid://h56m310r62on" path="res://assets/boat/boat.png" id="1_n1myn"]
 [ext_resource type="Script" uid="uid://3lm8sk43yjjr" path="res://scenes/player/player_boat.gd" id="1_tfbt8"]
 [ext_resource type="Texture2D" uid="uid://cpl3o1k0trd55" path="res://assets/boat/Boat1.png" id="3_xfafm"]
+[ext_resource type="SpriteFrames" uid="uid://ciwy8sitwoy6a" path="res://scenes/player/guns_sprite_sheet.tres" id="4_tyh3w"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_tyh3w"]
 atlas = ExtResource("3_xfafm")
@@ -28,6 +29,8 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_n1myn"]
+radius = 11.0
+height = 46.0
 
 [node name="PlayerBoat" type="CharacterBody2D"]
 script = ExtResource("1_tfbt8")
@@ -41,5 +44,45 @@ sprite_frames = SubResource("SpriteFrames_tfbt8")
 animation = &"new_animation"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-1, 2)
+position = Vector2(0, -1)
 shape = SubResource("CapsuleShape2D_n1myn")
+
+[node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="."]
+
+[node name="Guns" type="Node2D" parent="."]
+
+[node name="Gun1" type="AnimatedSprite2D" parent="Guns"]
+position = Vector2(-16, 0)
+sprite_frames = ExtResource("4_tyh3w")
+animation = &"level1"
+
+[node name="Gun2" type="AnimatedSprite2D" parent="Guns"]
+position = Vector2(16, 0)
+rotation = 3.1415927
+scale = Vector2(1, -1)
+sprite_frames = ExtResource("4_tyh3w")
+animation = &"level1"
+
+[node name="Gun4" type="AnimatedSprite2D" parent="Guns"]
+position = Vector2(16, 7)
+rotation = 3.1415927
+scale = Vector2(1, -1)
+sprite_frames = ExtResource("4_tyh3w")
+animation = &"level1"
+
+[node name="Gun3" type="AnimatedSprite2D" parent="Guns"]
+position = Vector2(-16, 7)
+sprite_frames = ExtResource("4_tyh3w")
+animation = &"level1"
+
+[node name="Gun5" type="AnimatedSprite2D" parent="Guns"]
+position = Vector2(-16, -7)
+sprite_frames = ExtResource("4_tyh3w")
+animation = &"level1"
+
+[node name="Gun6" type="AnimatedSprite2D" parent="Guns"]
+position = Vector2(16, -7)
+rotation = 3.1415927
+scale = Vector2(1, -1)
+sprite_frames = ExtResource("4_tyh3w")
+animation = &"level1"

@@ -1,8 +1,8 @@
 extends CharacterBody2D
 
-@export var acceleration := 60.0
-@export var deceleration := 40.0
-@export var max_speed := 220.0
+@export var acceleration := 30.0
+@export var deceleration := 10.0
+@export var max_speed := 100.0
 @export var reverse_speed := 60.0
 @export var turn_speed := 2.0
 
@@ -49,3 +49,12 @@ func _physics_process(delta):
 	current_speed = clamp(current_speed, -reverse_speed, max_speed)
 	velocity = (FORWARD_BASE * current_speed).rotated(rotation)
 	move_and_slide()
+	update_guns_visibility()
+
+func update_guns_visibility():
+	var guns_node := $Guns
+	var total := guns_node.get_child_count()
+
+	for i in range(total):
+		var child := guns_node.get_child(i)
+		child.visible = (i < guns)
