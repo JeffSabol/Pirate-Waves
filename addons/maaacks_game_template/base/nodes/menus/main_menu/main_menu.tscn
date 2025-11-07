@@ -1,7 +1,6 @@
-[gd_scene load_steps=9 format=3 uid="uid://c6k5nnpbypshi"]
+[gd_scene load_steps=8 format=3 uid="uid://c6k5nnpbypshi"]
 
 [ext_resource type="Script" uid="uid://bhgs1upaahk3y" path="res://addons/maaacks_game_template/base/nodes/menus/main_menu/main_menu.gd" id="1"]
-[ext_resource type="AudioStream" uid="uid://bcsap1t3mvobc" path="res://assets/music/raxlen_slice_drunken_sailor.wav" id="4_cw27w"]
 [ext_resource type="Script" uid="uid://1nf36h0gms3q" path="res://addons/maaacks_game_template/base/nodes/utilities/capture_focus.gd" id="4_l1ebe"]
 [ext_resource type="PackedScene" uid="uid://bkcsjsk2ciff" path="res://addons/maaacks_game_template/base/nodes/music_players/background_music_player.tscn" id="4_w8sbm"]
 [ext_resource type="FontFile" uid="uid://bmfleyxdqpc0r" path="res://assets/fonts/pixel_pirate.ttf" id="5_im16j"]
@@ -23,7 +22,6 @@ game_scene_path = "uid://cu0u00s7rwajd"
 script = ExtResource("6_bs342")
 
 [node name="BackgroundMusicPlayer" parent="." instance=ExtResource("4_w8sbm")]
-stream = ExtResource("4_cw27w")
 volume_db = -14.0
 
 [node name="BackgroundTextureRect" type="TextureRect" parent="."]

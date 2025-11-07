@@ -2,13 +2,19 @@ extends CharacterBody2D
 
 @export var acceleration := 30.0
 @export var deceleration := 10.0
-@export var max_speed := 100.0
+@export var max_speed := 60.0
 @export var reverse_speed := 60.0
 @export var turn_speed := 2.0
 
 @export var hp := 100
 @export var gold := 0
 @export var guns := 2
+# KNOTS
+# 1 knot = 10 speed
+# Level 1 (small sloop / default): 6 knots
+# Level 2 (sloop): 9 knots
+# Level 3 (brig): 12 knots
+# Level 4 (frigate): 14 knots
 @export var knots := 0
 @export var morale := 0
 @export var left_fire_cooldown := 3
@@ -60,7 +66,12 @@ func _physics_process(delta):
 	velocity = (FORWARD_BASE * current_speed).rotated(rotation)
 	move_and_slide()
 	update_guns_visibility()
+	update_knots_display()
 
+func update_knots_display():
+	knots = int(current_speed) / 10
+	
+	
 func update_guns_visibility():
 	var guns_node := $Guns
 	var total := guns_node.get_child_count()
