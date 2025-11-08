@@ -349,14 +349,6 @@ offset_bottom = -670.0
 
 [node name="PlayerBoat" parent="." instance=ExtResource("3_ptotq")]
 position = Vector2(290, -670)
-acceleration = 30.0
-deceleration = 10.0
-max_speed = 100.0
-turn_speed = 2.0
-hp = 100
-guns = 2
-knots = 0
-controls_enabled = true
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="PlayerBoat"]
 position = Vector2(-1, 5)
