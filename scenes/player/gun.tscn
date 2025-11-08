@@ -1,13 +1,15 @@
-[gd_scene load_steps=5 format=3 uid="uid://b6nvp82ty2110"]
+[gd_scene load_steps=6 format=3 uid="uid://b6nvp82ty2110"]
 
 [ext_resource type="SpriteFrames" uid="uid://ciwy8sitwoy6a" path="res://scenes/player/guns_sprite_sheet.tres" id="1_ae5e1"]
 [ext_resource type="Script" uid="uid://lufr4jivvja5" path="res://scenes/player/gun.gd" id="1_xf7jr"]
 [ext_resource type="PackedScene" uid="uid://ls4m2pn76itj" path="res://scenes/player/cannon_ball.tscn" id="2_ly66m"]
+[ext_resource type="PackedScene" uid="uid://c4jdv1gbeic3o" path="res://scenes/player/Smoke.tscn" id="3_e0dt0"]
 [ext_resource type="AudioStream" uid="uid://ccfc7gli15es5" path="res://assets/sfx/Cannon/cannon_1.mp3" id="3_ly66m"]
 
 [node name="Gun" type="Node2D"]
 script = ExtResource("1_xf7jr")
 cannonball_scene = ExtResource("2_ly66m")
+smoke_scene = ExtResource("3_e0dt0")
 
 [node name="GunSprite" type="AnimatedSprite2D" parent="."]
 position = Vector2(-16, 0)

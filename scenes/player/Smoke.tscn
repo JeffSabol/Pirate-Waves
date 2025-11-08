@@ -1,0 +1,44 @@
+[gd_scene load_steps=7 format=3 uid="uid://c4jdv1gbeic3o"]
+
+[ext_resource type="Texture2D" uid="uid://dc5018l31swol" path="res://assets/boat/Guns/explosion1.png" id="1_ewlkg"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ttr5w"]
+atlas = ExtResource("1_ewlkg")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s8ahi"]
+atlas = ExtResource("1_ewlkg")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t2ah0"]
+atlas = ExtResource("1_ewlkg")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vkxvp"]
+atlas = ExtResource("1_ewlkg")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_p2rhg"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ttr5w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s8ahi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t2ah0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vkxvp")
+}],
+"loop": false,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Smoke" type="AnimatedSprite2D"]
+sprite_frames = SubResource("SpriteFrames_p2rhg")
+autoplay = "default"
+frame_progress = 0.92335427
