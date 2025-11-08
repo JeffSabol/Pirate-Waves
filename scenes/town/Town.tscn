@@ -1,14 +1,14 @@
 [gd_scene load_steps=10 format=3 uid="uid://det64ltelxgj8"]
 
 [ext_resource type="Script" uid="uid://drfnyqhrabudn" path="res://scenes/town/townUI.gd" id="1_ki453"]
-[ext_resource type="Texture2D" uid="uid://bn3uj8udde8j6" path="res://assets/backgrounds/TownBackground.png" id="2_lersf"]
-[ext_resource type="Texture2D" uid="uid://cw43718gtttoq" path="res://assets/ui/town/MenuEmpty.png" id="3_lersf"]
-[ext_resource type="Texture2D" uid="uid://degfw088l4gtu" path="res://assets/ui/town/Town.png" id="4_v3pdc"]
-[ext_resource type="Texture2D" uid="uid://btvea3m20hwrx" path="res://assets/ui/town/Trade.png" id="5_tyo6j"]
-[ext_resource type="Texture2D" uid="uid://d34tnjjs4iu3q" path="res://assets/ui/town/Shipyard.png" id="6_1xjsg"]
-[ext_resource type="Texture2D" uid="uid://cmj3w3hjiccxk" path="res://assets/ui/town/Tavern.png" id="7_ffnhu"]
-[ext_resource type="Texture2D" uid="uid://dnuc8w7jqinuw" path="res://assets/ui/town/Quests.png" id="8_r6lmy"]
-[ext_resource type="Texture2D" uid="uid://bdnwjqcrfet5y" path="res://assets/ui/town/Leave.png" id="9_nbo5m"]
+[ext_resource type="Texture2D" uid="uid://wdneset53t7e" path="res://assets/ui/town/TownFull.png" id="2_ki453"]
+[ext_resource type="Texture2D" uid="uid://6oa1s5tru2xe" path="res://assets/ui/town/TavernGlow.png" id="3_qvgpt"]
+[ext_resource type="Script" uid="uid://b64y2x7228jat" path="res://scenes/town/tavern_click_zone.gd" id="3_uiijs"]
+[ext_resource type="Texture2D" uid="uid://coc7iptaf0sum" path="res://assets/ui/town/MarketGlow.png" id="4_25glc"]
+[ext_resource type="Script" uid="uid://d24m3t07ee201" path="res://scenes/town/trade_click_zone.gd" id="5_n5615"]
+[ext_resource type="Texture2D" uid="uid://c6hl6kulg70yv" path="res://assets/ui/town/ShipyardHover.png" id="7_8mv33"]
+[ext_resource type="Script" uid="uid://b70s7ifoilayp" path="res://scenes/town/shipyard_click_zone.gd" id="7_lersf"]
+[ext_resource type="Script" uid="uid://o4mp706v1hhr" path="res://scenes/town/leave_click_zone.gd" id="7_tr5gk"]
 
 [node name="Town" type="Control"]
 layout_mode = 3
@@ -25,58 +25,96 @@ script = ExtResource("1_ki453")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -39.0
-offset_bottom = 73.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("2_lersf")
+texture = ExtResource("2_ki453")
 metadata/_edit_use_anchors_ = true
 
-[node name="MenuBackground" type="TextureRect" parent="CanvasLayer"]
-offset_left = 736.0
-offset_top = -25.0
-offset_right = 1760.0
-offset_bottom = 1511.0
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("3_lersf")
+[node name="TavernClickZone" type="ColorRect" parent="CanvasLayer"]
+offset_right = 218.0
+offset_bottom = 409.0
+tooltip_text = "Enter the tavern"
+color = Color(1, 1, 1, 0)
+script = ExtResource("3_uiijs")
 
-[node name="TownTitleLogo" type="TextureRect" parent="CanvasLayer/MenuBackground"]
+[node name="TavernGlow" type="TextureRect" parent="CanvasLayer/TavernClickZone"]
+visible = false
 layout_mode = 0
-offset_left = 330.0
-offset_top = 200.0
-offset_right = 681.0
-offset_bottom = 311.0
-texture = ExtResource("4_v3pdc")
+offset_right = 1280.0
+offset_bottom = 720.0
+mouse_filter = 2
+texture = ExtResource("3_qvgpt")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/MenuBackground"]
+[node name="TradeClickZone" type="ColorRect" parent="CanvasLayer"]
+offset_left = 333.0
+offset_top = 165.0
+offset_right = 487.0
+offset_bottom = 317.0
+tooltip_text = "Enter the market"
+color = Color(1, 1, 1, 0)
+script = ExtResource("5_n5615")
+
+[node name="TradeGlow" type="TextureRect" parent="CanvasLayer/TradeClickZone"]
+visible = false
 layout_mode = 0
-offset_left = 94.0
-offset_top = 424.0
-offset_right = 773.0
-offset_bottom = 1237.0
+offset_left = -333.0
+offset_top = -165.0
+offset_right = 947.0
+offset_bottom = 555.0
+mouse_filter = 2
+texture = ExtResource("4_25glc")
 
-[node name="TradeButton" type="TextureButton" parent="CanvasLayer/MenuBackground/VBoxContainer"]
-layout_mode = 2
-texture_normal = ExtResource("5_tyo6j")
+[node name="QuestClickZone" type="ColorRect" parent="CanvasLayer"]
+offset_left = 668.0
+offset_top = 207.0
+offset_right = 881.0
+offset_bottom = 427.0
+tooltip_text = "Look at quests"
+color = Color(1, 1, 1, 0)
 
-[node name="ShipyardButton" type="TextureButton" parent="CanvasLayer/MenuBackground/VBoxContainer"]
-layout_mode = 2
-texture_normal = ExtResource("6_1xjsg")
+[node name="ShipyardClickZone" type="ColorRect" parent="CanvasLayer"]
+offset_left = 894.0
+offset_top = -39.0
+offset_right = 1280.0
+offset_bottom = 232.0
+tooltip_text = "Enter the shipyard"
+color = Color(1, 1, 1, 0)
+script = ExtResource("7_lersf")
 
-[node name="TavernButton" type="TextureButton" parent="CanvasLayer/MenuBackground/VBoxContainer"]
-layout_mode = 2
-texture_normal = ExtResource("7_ffnhu")
+[node name="ShipyardGlow" type="TextureRect" parent="CanvasLayer/ShipyardClickZone"]
+visible = false
+layout_mode = 0
+offset_left = -894.0
+offset_top = 39.0
+offset_right = 386.0
+offset_bottom = 759.0
+mouse_filter = 2
+texture = ExtResource("7_8mv33")
 
-[node name="QuestsButton" type="TextureButton" parent="CanvasLayer/MenuBackground/VBoxContainer"]
-layout_mode = 2
-texture_normal = ExtResource("8_r6lmy")
+[node name="LeaveClickZone" type="ColorRect" parent="CanvasLayer"]
+offset_top = 462.0
+offset_right = 1281.0
+offset_bottom = 718.0
+color = Color(1, 1, 1, 0)
+script = ExtResource("7_tr5gk")
 
-[node name="LeaveButton" type="TextureButton" parent="CanvasLayer/MenuBackground/VBoxContainer"]
-layout_mode = 2
-texture_normal = ExtResource("9_nbo5m")
+[node name="LeaveGlow" type="TextureRect" parent="CanvasLayer/LeaveClickZone"]
+visible = false
+layout_mode = 0
+offset_top = -462.0
+offset_right = 40.0
+offset_bottom = -422.0
+mouse_filter = 2
 
-[connection signal="pressed" from="CanvasLayer/MenuBackground/VBoxContainer/TradeButton" to="." method="_on_trade_button_pressed"]
-[connection signal="pressed" from="CanvasLayer/MenuBackground/VBoxContainer/ShipyardButton" to="." method="_on_shipyard_button_pressed"]
-[connection signal="pressed" from="CanvasLayer/MenuBackground/VBoxContainer/TavernButton" to="." method="_on_tavern_button_pressed"]
-[connection signal="pressed" from="CanvasLayer/MenuBackground/VBoxContainer/QuestsButton" to="." method="_on_quests_button_pressed"]
-[connection signal="pressed" from="CanvasLayer/MenuBackground/VBoxContainer/LeaveButton" to="." method="_on_leave_button_pressed"]
+[connection signal="gui_input" from="CanvasLayer/TavernClickZone" to="CanvasLayer/TavernClickZone" method="_on_gui_input"]
+[connection signal="mouse_entered" from="CanvasLayer/TavernClickZone" to="CanvasLayer/TavernClickZone" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="CanvasLayer/TavernClickZone" to="CanvasLayer/TavernClickZone" method="_on_mouse_exited"]
+[connection signal="gui_input" from="CanvasLayer/TradeClickZone" to="CanvasLayer/TradeClickZone" method="_on_gui_input"]
+[connection signal="mouse_entered" from="CanvasLayer/TradeClickZone" to="CanvasLayer/TradeClickZone" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="CanvasLayer/TradeClickZone" to="CanvasLayer/TradeClickZone" method="_on_mouse_exited"]
+[connection signal="gui_input" from="CanvasLayer/ShipyardClickZone" to="CanvasLayer/ShipyardClickZone" method="_on_gui_input"]
+[connection signal="mouse_entered" from="CanvasLayer/ShipyardClickZone" to="CanvasLayer/ShipyardClickZone" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="CanvasLayer/ShipyardClickZone" to="CanvasLayer/ShipyardClickZone" method="_on_mouse_exited"]
+[connection signal="gui_input" from="CanvasLayer/LeaveClickZone" to="CanvasLayer/LeaveClickZone" method="_on_gui_input"]
+[connection signal="mouse_entered" from="CanvasLayer/LeaveClickZone" to="CanvasLayer/LeaveClickZone" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="CanvasLayer/LeaveClickZone" to="CanvasLayer/LeaveClickZone" method="_on_mouse_exited"]

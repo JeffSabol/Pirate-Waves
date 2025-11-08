@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cdia3lka8tb52"
-path="res://.godot/imported/HouseGlow.png-9455242ed57591a4ddc3db66256a535c.ctex"
+uid="uid://6oa1s5tru2xe"
+path="res://.godot/imported/TavernGlow.png-f389f4fb7a7b08d4b0c9ec71b05a145f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/ui/town/HouseGlow.png"
-dest_files=["res://.godot/imported/HouseGlow.png-9455242ed57591a4ddc3db66256a535c.ctex"]
+source_file="res://assets/ui/town/TavernGlow.png"
+dest_files=["res://.godot/imported/TavernGlow.png-f389f4fb7a7b08d4b0c9ec71b05a145f.ctex"]
 
 [params]
 
