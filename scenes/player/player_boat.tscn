@@ -1,9 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://d3nh1rywkpqb0"]
+[gd_scene load_steps=10 format=3 uid="uid://d3nh1rywkpqb0"]
 
 [ext_resource type="Texture2D" uid="uid://h56m310r62on" path="res://assets/boat/boat.png" id="1_n1myn"]
 [ext_resource type="Script" uid="uid://3lm8sk43yjjr" path="res://scenes/player/player_boat.gd" id="1_tfbt8"]
 [ext_resource type="Texture2D" uid="uid://cpl3o1k0trd55" path="res://assets/boat/Boat1.png" id="3_xfafm"]
 [ext_resource type="PackedScene" uid="uid://b6nvp82ty2110" path="res://scenes/player/gun.tscn" id="4_wniug"]
+[ext_resource type="Script" uid="uid://dx48q0tsf6rf8" path="res://scenes/game_scene/npcs/health.gd" id="5_wniug"]
+[ext_resource type="AudioStream" uid="uid://ju3ogqg6d686" path="res://assets/sfx/HitSoundPlayer.mp3" id="6_hnfsw"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_tyh3w"]
 atlas = ExtResource("3_xfafm")
@@ -68,3 +70,10 @@ position = Vector2(0, 7)
 [node name="Gun6" parent="Guns" instance=ExtResource("4_wniug")]
 position = Vector2(0, 7)
 scale = Vector2(-1, 1)
+
+[node name="ShipHealth" type="Node2D" parent="."]
+script = ExtResource("5_wniug")
+
+[node name="HitSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_hnfsw")
+volume_db = -10.0

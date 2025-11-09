@@ -15,5 +15,12 @@ func apply_damage(amount: int, from: Node) -> void:
 	damaged.emit(amount, from)
 	$"../HitSound".play()
 	if hp == 0:
+		print("from " + str(from))
 		died.emit()
-		get_parent().queue_free()
+		print(get_parent().name)
+		if (get_parent().name=="PlayerBoat"):
+			# Cannon ball send from player will delete the enemy
+			print("player player died! play the YouDied.tscn")
+		elif (get_parent().name.contains("Area2D")):
+			print("Remove enemy ship!")
+			get_parent().queue_free()
