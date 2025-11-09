@@ -26,7 +26,7 @@ var _length: float = 0.0      # total baked length (pixels)
 func set_path(curve: Curve2D, loop: bool, speed: float, start_t: float) -> void:
 	_curve = curve
 	_loop = loop
-	_speed = speed
+	_speed = speed 
 	_dist = 0.0
 	_length = 0.0
 
@@ -79,3 +79,9 @@ func _physics_process(delta: float) -> void:
 func _emit_and_free() -> void:
 	despawned.emit()
 	queue_free()
+
+func set_speed(speed: float) -> void:
+	_speed = speed
+
+func set_face_direction(enabled: bool) -> void:
+	face_direction = enabled

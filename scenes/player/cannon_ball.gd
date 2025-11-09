@@ -1,15 +1,35 @@
-# cannon_ball.gd
+extends Area2D
 class_name CannonBall
-extends Node2D
 
 @export var speed: float = 375.0
+@export var damage: int = 20
+@export var shooter_group: String = ""  # e.g. "player", "pirate", "merchant" to avoid friendly fire if you want
+
 @onready var notifier: VisibleOnScreenNotifier2D = $VisibleOnScreenNotifier2D
 
 func _ready() -> void:
 	if notifier:
 		notifier.screen_exited.connect(queue_free)
-	# Fail-safe in case it never leaves screen:
+	area_entered.connect(_on_area_entered)
+	body_entered.connect(_on_body_entered)
 	get_tree().create_timer(10.0).timeout.connect(queue_free)
 
 func _physics_process(delta: float) -> void:
 	position += Vector2.RIGHT.rotated(global_rotation) * speed * delta
+
+func _try_damage(target: Node) -> void:
+	# Walk up the tree to find a ShipHealth
+	var n: Node = target
+	while n:
+		var h := n.get_node_or_null("ShipHealth")
+		if h:
+			h.apply_damage(damage, self)
+			queue_free()
+			return
+		n = n.get_parent()
+
+func _on_area_entered(a: Area2D) -> void:
+	_try_damage(a)
+
+func _on_body_entered(b: Node2D) -> void:
+	_try_damage(b)

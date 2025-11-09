@@ -1,13 +1,16 @@
-[gd_scene load_steps=8 format=3 uid="uid://jb7ks6loxwux"]
+[gd_scene load_steps=11 format=3 uid="uid://jb7ks6loxwux"]
 
 [ext_resource type="Script" uid="uid://tjy3np0h2fe1" path="res://scenes/game_scene/npcs/ship_ai.gd" id="1_o5imu"]
+[ext_resource type="Script" uid="uid://7te8mum3pqsc" path="res://scenes/game_scene/npcs/merchant_brain.gd" id="2_j8gk0"]
 [ext_resource type="Texture2D" uid="uid://h56m310r62on" path="res://assets/boat/boat.png" id="2_w2y5q"]
-[ext_resource type="Texture2D" uid="uid://cpl3o1k0trd55" path="res://assets/boat/Boat1.png" id="3_j8gk0"]
 [ext_resource type="PackedScene" uid="uid://b6nvp82ty2110" path="res://scenes/player/gun.tscn" id="4_4i2vo"]
+[ext_resource type="Texture2D" uid="uid://cptsx3eenlsed" path="res://assets/boat/merchant1.png" id="4_j8gk0"]
+[ext_resource type="Script" uid="uid://dx48q0tsf6rf8" path="res://scenes/game_scene/npcs/health.gd" id="4_w2y5q"]
+[ext_resource type="AudioStream" uid="uid://ljnrvt0jhnln" path="res://assets/sfx/debris_break.wav" id="7_4i2vo"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_tyh3w"]
-atlas = ExtResource("3_j8gk0")
-region = Rect2(0, 0, 30, 64)
+[sub_resource type="AtlasTexture" id="AtlasTexture_4i2vo"]
+atlas = ExtResource("4_j8gk0")
+region = Rect2(0, 0, 40, 72)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_mxv8p"]
 animations = [{
@@ -21,7 +24,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_tyh3w")
+"texture": SubResource("AtlasTexture_4i2vo")
 }],
 "loop": true,
 "name": &"new_animation",
@@ -29,19 +32,24 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_jopw0"]
-radius = 11.0
-height = 46.0
+radius = 15.0
+height = 68.0
 
-[node name="MerchantShip" type="Node2D"]
+[node name="MerchantShip" type="Area2D"]
 script = ExtResource("1_o5imu")
 
+[node name="MerchantBrain" type="Node" parent="."]
+script = ExtResource("2_j8gk0")
+
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-rotation = 3.1415927
+rotation = -3.1415925
 sprite_frames = SubResource("SpriteFrames_mxv8p")
 animation = &"new_animation"
 
+[node name="ShipHealth" type="Node2D" parent="."]
+script = ExtResource("4_w2y5q")
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -1)
 shape = SubResource("CapsuleShape2D_jopw0")
 
 [node name="Guns" type="Node2D" parent="."]
@@ -64,3 +72,6 @@ position = Vector2(0, 7)
 [node name="Gun6" parent="Guns" instance=ExtResource("4_4i2vo")]
 position = Vector2(0, 7)
 scale = Vector2(-1, 1)
+
+[node name="HitSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("7_4i2vo")
