@@ -1,0 +1,66 @@
+[gd_scene load_steps=8 format=3 uid="uid://jb7ks6loxwux"]
+
+[ext_resource type="Script" uid="uid://tjy3np0h2fe1" path="res://scenes/game_scene/npcs/ship_ai.gd" id="1_o5imu"]
+[ext_resource type="Texture2D" uid="uid://h56m310r62on" path="res://assets/boat/boat.png" id="2_w2y5q"]
+[ext_resource type="Texture2D" uid="uid://cpl3o1k0trd55" path="res://assets/boat/Boat1.png" id="3_j8gk0"]
+[ext_resource type="PackedScene" uid="uid://b6nvp82ty2110" path="res://scenes/player/gun.tscn" id="4_4i2vo"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tyh3w"]
+atlas = ExtResource("3_j8gk0")
+region = Rect2(0, 0, 30, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_mxv8p"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_w2y5q")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tyh3w")
+}],
+"loop": true,
+"name": &"new_animation",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_jopw0"]
+radius = 11.0
+height = 46.0
+
+[node name="MerchantShip" type="Node2D"]
+script = ExtResource("1_o5imu")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+rotation = 3.1415927
+sprite_frames = SubResource("SpriteFrames_mxv8p")
+animation = &"new_animation"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -1)
+shape = SubResource("CapsuleShape2D_jopw0")
+
+[node name="Guns" type="Node2D" parent="."]
+
+[node name="Gun1" parent="Guns" instance=ExtResource("4_4i2vo")]
+
+[node name="Gun2" parent="Guns" instance=ExtResource("4_4i2vo")]
+scale = Vector2(-1, 1)
+
+[node name="Gun3" parent="Guns" instance=ExtResource("4_4i2vo")]
+position = Vector2(0, -7)
+
+[node name="Gun4" parent="Guns" instance=ExtResource("4_4i2vo")]
+position = Vector2(0, -7)
+scale = Vector2(-1, 1)
+
+[node name="Gun5" parent="Guns" instance=ExtResource("4_4i2vo")]
+position = Vector2(0, 7)
+
+[node name="Gun6" parent="Guns" instance=ExtResource("4_4i2vo")]
+position = Vector2(0, 7)
+scale = Vector2(-1, 1)

@@ -48,8 +48,6 @@ animation = &"new_animation"
 position = Vector2(0, -1)
 shape = SubResource("CapsuleShape2D_n1myn")
 
-[node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="."]
-
 [node name="Guns" type="Node2D" parent="."]
 
 [node name="Gun1" parent="Guns" instance=ExtResource("4_wniug")]

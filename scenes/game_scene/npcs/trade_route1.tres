@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="TradeRoute" load_steps=2 format=3 uid="uid://bfih5pj2vkipk"]
+
+[ext_resource type="Script" uid="uid://c3t3ucil41475" path="res://scenes/game_scene/npcs/trade_route1.gd" id="1_h2yoc"]
+
+[resource]
+script = ExtResource("1_h2yoc")
+metadata/_custom_type_script = "uid://c3t3ucil41475"
