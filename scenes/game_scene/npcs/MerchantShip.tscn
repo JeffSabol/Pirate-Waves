@@ -75,3 +75,11 @@ scale = Vector2(-1, 1)
 
 [node name="HitSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("7_4i2vo")
+
+[node name="LeftSight" type="RayCast2D" parent="."]
+rotation = 1.5707964
+target_position = Vector2(0, 250)
+
+[node name="RightSight" type="RayCast2D" parent="."]
+rotation = -1.5707964
+target_position = Vector2(0, 260)

@@ -76,6 +76,14 @@ func _physics_process(delta: float) -> void:
 	if player and global_position.distance_to(player.global_position) > max_distance_from_player:
 		_emit_and_free()
 
+	if ($LeftSight.is_colliding()):
+		if $LeftSight.get_collider().name == "PlayerBoat":
+			fire_left()
+
+	if ($RightSight.is_colliding()):
+		if $RightSight.get_collider().name == "PlayerBoat":
+			fire_right()
+
 func _emit_and_free() -> void:
 	despawned.emit()
 	queue_free()
@@ -85,3 +93,9 @@ func set_speed(speed: float) -> void:
 
 func set_face_direction(enabled: bool) -> void:
 	face_direction = enabled
+
+func fire_left():
+	print("fire left")
+
+func fire_right():
+	print("fire right")
