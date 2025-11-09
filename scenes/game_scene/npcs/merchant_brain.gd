@@ -11,6 +11,8 @@ class_name MerchantBrain
 @export var stop_to_shoot: bool = true          # if true, pause along route while firing
 @export var projectile_speed: float = 420.0
 @export var rotation_offset_deg: float = 90.0   # same convention as ShipAI
+@export var left_fire_cooldown := 3
+@export var right_fire_cooldown := 3
 
 var _target: Node2D
 var _cool: float = 0.0

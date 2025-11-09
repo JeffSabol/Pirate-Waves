@@ -23,6 +23,13 @@ var _length: float = 0.0      # total baked length (pixels)
 # Curve fidelity (helps heading match tight turns)
 @export var override_bake_interval: float = 0.0  # 0 = keep default; else set in pixels (e.g., 2.0)
 
+# Cannons
+@export var left_fire_cooldown := 3
+@export var right_fire_cooldown := 3
+var can_fire_left := true
+var can_fire_right := true
+@export var guns := 2
+
 func set_path(curve: Curve2D, loop: bool, speed: float, start_t: float) -> void:
 	_curve = curve
 	_loop = loop
@@ -78,11 +85,11 @@ func _physics_process(delta: float) -> void:
 
 	if ($LeftSight.is_colliding()):
 		if $LeftSight.get_collider().name == "PlayerBoat":
-			fire_left()
+			fire_left_guns()
 
 	if ($RightSight.is_colliding()):
 		if $RightSight.get_collider().name == "PlayerBoat":
-			fire_right()
+			fire_right_guns()
 
 func _emit_and_free() -> void:
 	despawned.emit()
@@ -94,8 +101,41 @@ func set_speed(speed: float) -> void:
 func set_face_direction(enabled: bool) -> void:
 	face_direction = enabled
 
-func fire_left():
-	print("fire left")
+# TODO i'm sure this can be pulled up into a more general class with playerboat
+func update_guns_visibility() -> void:
+	var guns_node: Node = $Guns
+	var total: int = guns_node.get_child_count()
 
-func fire_right():
-	print("fire right")
+	for i in range(total):
+		var child := guns_node.get_child(i) as CanvasItem
+		if child:
+			child.visible = (i < guns)
+
+func fire_left_guns() -> void:
+	if not can_fire_left:
+		return
+	can_fire_left = false
+
+	var guns_node: Node = $Guns
+	for i in range(1, guns + 1):
+		if i % 2 == 1:
+			var gun: Node = guns_node.get_node("Gun%d" % i)
+			if gun:
+				gun.call("fire")
+
+	# start cooldown timer
+	var t: SceneTreeTimer = get_tree().create_timer(left_fire_cooldown)
+	t.timeout.connect(func() -> void:
+		can_fire_left = true)
+		
+func fire_right_guns():
+	if not can_fire_right:
+		return
+	can_fire_right = false
+
+	var guns_node: Node = $Guns
+	for i in range(1, guns + 1):
+		if i % 2 == 0:
+			var gun: Node = guns_node.get_node("Gun%d" % i)
+			if gun:
+				gun.call("fire")
