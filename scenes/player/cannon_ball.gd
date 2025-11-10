@@ -22,6 +22,7 @@ func _try_damage(target: Node) -> void:
 	while n:
 		var h := n.get_node_or_null("ShipHealth")
 		if h and h.has_method("apply_damage"):
+			h.get_parent().on_hit(h.get_parent().get_parent().get_node("PlayerBoat"))
 			h.apply_damage(damage, self)
 			queue_free()
 			return
