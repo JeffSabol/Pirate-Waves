@@ -30,8 +30,8 @@ func _try_damage(target: Node) -> void:
 		if h and h.has_method("apply_damage") and h.get_parent().has_method("on_hit"):
 			_hit_once()
 			h.get_parent().on_hit(h.get_parent().get_parent().get_node("PlayerBoat"))
-			h.apply_damage(damage, self)
 			await _explode_then_free()
+			h.apply_damage(damage, self)
 			return
 
 		if n.name == "PlayerBoat":

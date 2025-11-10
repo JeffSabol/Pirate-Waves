@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://bvxk3y20nij0a"]
+
+[ext_resource type="Texture2D" uid="uid://bk7vbtbes03vb" path="res://assets/backgrounds/YouDied.png" id="1_rlbk7"]
+[ext_resource type="AudioStream" uid="uid://csqo0btnuclgr" path="res://assets/sfx/haunted_ghost_ship.mp3" id="2_o032v"]
+[ext_resource type="AudioStream" uid="uid://g8w5ttkhls4a" path="res://assets/sfx/rain.mp3" id="3_3yway"]
+[ext_resource type="AudioStream" uid="uid://bkpcrjpymqpsn" path="res://assets/sfx/sea_wave.mp3" id="4_ii6q4"]
+
+[node name="YouDied" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("1_rlbk7")
+
+[node name="Ship" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_o032v")
+
+[node name="Rain" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_3yway")
+volume_db = -14.715
+autoplay = true
+
+[node name="Waves" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_ii6q4")
+volume_db = -5.0
+autoplay = true
