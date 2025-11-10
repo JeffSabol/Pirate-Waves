@@ -37,6 +37,7 @@ height = 68.0
 
 [node name="MerchantShip" type="Area2D"]
 script = ExtResource("1_o5imu")
+aggro_range_tolerance = 350.0
 aggro_duration = 60.0
 
 [node name="MerchantBrain" type="Node" parent="."]

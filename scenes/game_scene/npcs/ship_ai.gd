@@ -91,20 +91,25 @@ func _physics_process(delta: float) -> void:
 			var lower := float(max(0.0, aggro_preferred_range - aggro_range_tolerance))
 			var upper := aggro_preferred_range + aggro_range_tolerance
 
+			# --- compute movement vector ---
+			var move := Vector2.ZERO
 			if dist > upper:
 				# Move in
-				global_position += (to_target / max(1.0, dist)) * chase_speed * delta
+				move = (to_target / max(1.0, dist)) * chase_speed
 			elif dist < lower:
 				# Back off a bit
-				global_position -= (to_target / max(1.0, dist)) * chase_speed * 0.6 * delta
+				move = -(to_target / max(1.0, dist)) * chase_speed * 0.6
 			else:
 				# In band: slight orbit to avoid ramming
 				var tangent := Vector2(-to_target.y, to_target.x).normalized()
-				global_position += tangent * chase_speed * 0.35 * delta
+				move = tangent * chase_speed * 0.35
 
-			# Face the target smoothly
-			if face_direction and dist > 0.001:
-				var desired: float = to_target.angle() + deg_to_rad(rotation_offset_deg)
+			# Apply movement
+			global_position += move * delta
+
+			# Face the movement direction (like Path2D)
+			if face_direction and move.length() > 0.001:
+				var desired: float = move.angle() + deg_to_rad(rotation_offset_deg)
 				var step: float = clamp(turn_speed * delta, 0.0, 1.0)
 				rotation = lerp_angle(rotation, desired, step)
 

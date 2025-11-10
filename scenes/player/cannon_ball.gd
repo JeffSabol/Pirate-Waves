@@ -20,24 +20,21 @@ func _physics_process(delta: float) -> void:
 func _try_damage(target: Node) -> void:
 	var n: Node = target
 	while n:
+		# ---- Ship enemy damage ----
 		var h := n.get_node_or_null("ShipHealth")
-		if h and h.has_method("apply_damage"):
+		if h and h.has_method("apply_damage") and h.get_parent().has_method("on_hit"):
 			h.get_parent().on_hit(h.get_parent().get_parent().get_node("PlayerBoat"))
 			h.apply_damage(damage, self)
 			queue_free()
 			return
 
+		# ---- PlayerBoat damage ----
 		if n.name == "PlayerBoat":
-			if n.has_method("set") and (n.has_property("HP") or true):
-				if "HP" in n:
-					n.HP = max(0.0, float(n.HP) - float(damage))
-					queue_free()
-					return
-				elif n.has_property("HP"):
-					var cur := float(n.get("HP"))
-					n.set("HP", max(0.0, cur - float(damage)))
-					print("GO TO YOU DIED SCENE")
-					return
+			var cur := n.get("hp") as float
+			n.set("hp", max(0.0, cur - float(damage)))
+			if (n.get("hp") == 0.0):
+				print("GO TO YOU DIED SCENE")
+			return
 
 		n = n.get_parent()
 
