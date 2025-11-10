@@ -142,3 +142,6 @@ func fire_right_guns() -> void:
 	var t: SceneTreeTimer = get_tree().create_timer(right_fire_cooldown)
 	t.timeout.connect(func() -> void:
 		can_fire_right = true)
+
+func play_hit_sound():
+	$HitSound.play()
