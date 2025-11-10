@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://cu6c72fyiba2s"]
+[gd_scene load_steps=17 format=3 uid="uid://cu6c72fyiba2s"]
 
 [ext_resource type="Texture2D" uid="uid://is5yutlhkb27" path="res://assets/ui/map/MapBackground.png" id="1_cm2e8"]
 [ext_resource type="Texture2D" uid="uid://bbrjt84hpvqry" path="res://assets/ui/map/Map.png" id="1_ij4mi"]
@@ -19,9 +19,18 @@ font = ExtResource("10_l840g")
 font_size = 50
 font_color = Color(0.16862746, 0.11372549, 0.06666667, 1)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cvm3m"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.32156864, 0.14901961, 0.078431375, 1)
+
 [sub_resource type="LabelSettings" id="LabelSettings_vomcc"]
+line_spacing = 0.0
 font = ExtResource("10_l840g")
-font_size = 20
+font_size = 15
 font_color = Color(0.32395226, 0.14817587, 0.07933294, 1)
 
 [node name="WorldUI" type="CanvasLayer"]
@@ -246,13 +255,17 @@ script = ExtResource("13_cvm3m")
 
 [node name="Label" type="Label" parent="InventoryUI/InventoryButton"]
 layout_mode = 0
-offset_left = -1.0
+offset_left = 9.0
 offset_top = 6.0
-offset_right = 43.0
-offset_bottom = 41.0
-text = "i"
+offset_right = 36.0
+offset_bottom = 37.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_cvm3m")
+text = "I"
 label_settings = SubResource("LabelSettings_vomcc")
 horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_trim_flags = 0
+justification_flags = 0
 
 [connection signal="pressed" from="MapUI/MapButton" to="MapUI/MapButton" method="_on_pressed"]
 [connection signal="pressed" from="InventoryUI/InventoryButton" to="InventoryUI/InventoryButton" method="_on_pressed"]

@@ -1,15 +1,22 @@
-[gd_scene load_steps=14 format=3 uid="uid://exlfjrsql2fw"]
+[gd_scene load_steps=15 format=3 uid="uid://exlfjrsql2fw"]
 
 [ext_resource type="Script" uid="uid://bjs48hyrufm2s" path="res://scenes/town/trade/trade.gd" id="1_1e65h"]
 [ext_resource type="Texture2D" uid="uid://dhmyuc14ebn1e" path="res://assets/backgrounds/MarketBackground.png" id="1_sh6sl"]
 [ext_resource type="Texture2D" uid="uid://ciqv4m2ttxndr" path="res://assets/ui/town/trade/TradeMenuEmpty.png" id="2_httn2"]
-[ext_resource type="Texture2D" uid="uid://bp18w77y1hy64" path="res://assets/ui/town/trade/FoodTradeButton.png" id="3_1e65h"]
-[ext_resource type="Texture2D" uid="uid://dfyy5lv86f8x5" path="res://assets/ui/town/trade/GoodsTradeButton.png" id="4_4c0wx"]
-[ext_resource type="Texture2D" uid="uid://crftoep5uo071" path="res://assets/ui/town/trade/CannonssTradeButton.png" id="5_jkeck"]
-[ext_resource type="Texture2D" uid="uid://cjq0fegwqoqol" path="res://assets/ui/town/trade/CannonBallsTradeButton.png" id="6_0thvx"]
+[ext_resource type="FontFile" uid="uid://duln27t01nc1q" path="res://assets/fonts/Minecraftia-Regular.ttf" id="4_jkeck"]
+[ext_resource type="Texture2D" uid="uid://clfek7apvtvmu" path="res://assets/ui/town/trade/leftarrow.PNG" id="5_1e65h"]
+[ext_resource type="Texture2D" uid="uid://hv6tuk6kan5x" path="res://assets/ui/town/trade/rightarrow.PNG" id="7_4c0wx"]
 [ext_resource type="Texture2D" uid="uid://bdnwjqcrfet5y" path="res://assets/ui/town/Leave.png" id="7_h647s"]
 [ext_resource type="LabelSettings" uid="uid://b7kljk1ntsalm" path="res://assets/ui/town/trade/trade_amount_label_settings.tres" id="8_4c0wx"]
 [ext_resource type="FontFile" uid="uid://bmfleyxdqpc0r" path="res://assets/fonts/pixel_pirate.ttf" id="8_httn2"]
+[ext_resource type="Texture2D" uid="uid://btvea3m20hwrx" path="res://assets/ui/town/Trade.png" id="9_4c0wx"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_0thvx"]
+font = ExtResource("4_jkeck")
+font_size = 30
+font_color = Color(0.21960784, 0.14117648, 0.05882353, 1)
+outline_size = 2
+outline_color = Color(0.04755766, 0.047557645, 0.047557645, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_1e65h"]
 font = ExtResource("8_httn2")
@@ -55,89 +62,139 @@ texture = ExtResource("2_httn2")
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/MenuBackground"]
 custom_minimum_size = Vector2(300, 500)
 layout_mode = 0
-offset_left = 220.0
-offset_top = 494.0
+offset_left = 220.00003
+offset_top = 459.99994
 offset_right = 927.0
-offset_bottom = 994.0
+offset_bottom = 959.99994
 scale = Vector2(3, 3)
 
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/MenuBackground/VBoxContainer"]
+[node name="FishContainer" type="HBoxContainer" parent="CanvasLayer/MenuBackground/VBoxContainer"]
 layout_mode = 2
-texture = ExtResource("3_1e65h")
+alignment = 1
 
-[node name="TextureRect2" type="TextureRect" parent="CanvasLayer/MenuBackground/VBoxContainer"]
+[node name="PlayerFish" type="Label" parent="CanvasLayer/MenuBackground/VBoxContainer/FishContainer"]
 layout_mode = 2
-texture = ExtResource("4_4c0wx")
-
-[node name="TextureRect3" type="TextureRect" parent="CanvasLayer/MenuBackground/VBoxContainer"]
-layout_mode = 2
-texture = ExtResource("5_jkeck")
-
-[node name="TextureRect4" type="TextureRect" parent="CanvasLayer/MenuBackground/VBoxContainer"]
-layout_mode = 2
-texture = ExtResource("6_0thvx")
-
-[node name="PlayerLabels" type="VBoxContainer" parent="CanvasLayer/MenuBackground"]
-layout_mode = 0
-offset_left = 232.0
-offset_top = 488.0
-offset_right = 626.0
-offset_bottom = 1600.0
-
-[node name="PlayerFood" type="Label" parent="CanvasLayer/MenuBackground/PlayerLabels"]
-layout_mode = 2
-text = "0 lb"
+text = "0 lb   "
 label_settings = ExtResource("8_4c0wx")
 
-[node name="PlayerGoods" type="Label" parent="CanvasLayer/MenuBackground/PlayerLabels"]
+[node name="AddToPlayer" type="TextureButton" parent="CanvasLayer/MenuBackground/VBoxContainer/FishContainer"]
 layout_mode = 2
-text = "0 lb"
+texture_normal = ExtResource("5_1e65h")
+
+[node name="Fish" type="Label" parent="CanvasLayer/MenuBackground/VBoxContainer/FishContainer"]
+layout_mode = 2
+text = "    Fish     "
+label_settings = SubResource("LabelSettings_0thvx")
+horizontal_alignment = 1
+
+[node name="AddToMerchant" type="TextureButton" parent="CanvasLayer/MenuBackground/VBoxContainer/FishContainer"]
+layout_mode = 2
+texture_normal = ExtResource("7_4c0wx")
+
+[node name="MerchantFish" type="Label" parent="CanvasLayer/MenuBackground/VBoxContainer/FishContainer"]
+layout_mode = 2
+text = "   20 lb"
 label_settings = ExtResource("8_4c0wx")
 
-[node name="PlayerCannons" type="Label" parent="CanvasLayer/MenuBackground/PlayerLabels"]
+[node name="RumContainer" type="HBoxContainer" parent="CanvasLayer/MenuBackground/VBoxContainer"]
 layout_mode = 2
-text = "0 lb"
+alignment = 1
+
+[node name="PlayerRum" type="Label" parent="CanvasLayer/MenuBackground/VBoxContainer/RumContainer"]
+layout_mode = 2
+text = "0 lb   "
 label_settings = ExtResource("8_4c0wx")
 
-[node name="PlayerCannonBalls" type="Label" parent="CanvasLayer/MenuBackground/PlayerLabels"]
+[node name="AddToPlayer" type="TextureButton" parent="CanvasLayer/MenuBackground/VBoxContainer/RumContainer"]
 layout_mode = 2
-text = "0 lb"
+texture_normal = ExtResource("5_1e65h")
+
+[node name="Rum" type="Label" parent="CanvasLayer/MenuBackground/VBoxContainer/RumContainer"]
+layout_mode = 2
+text = "     Rum     "
+label_settings = SubResource("LabelSettings_0thvx")
+horizontal_alignment = 1
+
+[node name="AddToMerchant" type="TextureButton" parent="CanvasLayer/MenuBackground/VBoxContainer/RumContainer"]
+layout_mode = 2
+texture_normal = ExtResource("7_4c0wx")
+
+[node name="MerchantRum" type="Label" parent="CanvasLayer/MenuBackground/VBoxContainer/RumContainer"]
+layout_mode = 2
+text = "   20 lb"
 label_settings = ExtResource("8_4c0wx")
 
-[node name="MerchantAmounts" type="VBoxContainer" parent="CanvasLayer/MenuBackground"]
-layout_mode = 0
-offset_left = 1956.0
-offset_top = 488.0
-offset_right = 2362.0
-offset_bottom = 1600.0
-
-[node name="MerchantFood" type="Label" parent="CanvasLayer/MenuBackground/MerchantAmounts"]
+[node name="OreContainer" type="HBoxContainer" parent="CanvasLayer/MenuBackground/VBoxContainer"]
 layout_mode = 2
-text = "20 lb"
+alignment = 1
+
+[node name="PlayerOre" type="Label" parent="CanvasLayer/MenuBackground/VBoxContainer/OreContainer"]
+layout_mode = 2
+text = "0 lb   "
 label_settings = ExtResource("8_4c0wx")
 
-[node name="MerchantGoods" type="Label" parent="CanvasLayer/MenuBackground/MerchantAmounts"]
+[node name="AddToPlayer" type="TextureButton" parent="CanvasLayer/MenuBackground/VBoxContainer/OreContainer"]
 layout_mode = 2
-text = "20 lb"
+texture_normal = ExtResource("5_1e65h")
+
+[node name="Ore" type="Label" parent="CanvasLayer/MenuBackground/VBoxContainer/OreContainer"]
+layout_mode = 2
+text = "     Ore     "
+label_settings = SubResource("LabelSettings_0thvx")
+horizontal_alignment = 1
+
+[node name="AddToMerchant" type="TextureButton" parent="CanvasLayer/MenuBackground/VBoxContainer/OreContainer"]
+layout_mode = 2
+texture_normal = ExtResource("7_4c0wx")
+
+[node name="MerchantOre" type="Label" parent="CanvasLayer/MenuBackground/VBoxContainer/OreContainer"]
+layout_mode = 2
+text = "   20 lb"
 label_settings = ExtResource("8_4c0wx")
 
-[node name="MerchantCannons" type="Label" parent="CanvasLayer/MenuBackground/MerchantAmounts"]
+[node name="ClothesContainer" type="HBoxContainer" parent="CanvasLayer/MenuBackground/VBoxContainer"]
 layout_mode = 2
-text = "20 lb"
+alignment = 1
+
+[node name="PlayerClothes" type="Label" parent="CanvasLayer/MenuBackground/VBoxContainer/ClothesContainer"]
+layout_mode = 2
+text = "0 lb   "
 label_settings = ExtResource("8_4c0wx")
 
-[node name="MerchantCannonBalls" type="Label" parent="CanvasLayer/MenuBackground/MerchantAmounts"]
+[node name="AddToPlayer" type="TextureButton" parent="CanvasLayer/MenuBackground/VBoxContainer/ClothesContainer"]
 layout_mode = 2
-text = "20 lb"
+texture_normal = ExtResource("5_1e65h")
+
+[node name="Clothes" type="Label" parent="CanvasLayer/MenuBackground/VBoxContainer/ClothesContainer"]
+layout_mode = 2
+text = " Clothes "
+label_settings = SubResource("LabelSettings_0thvx")
+horizontal_alignment = 1
+
+[node name="AddToMerchant" type="TextureButton" parent="CanvasLayer/MenuBackground/VBoxContainer/ClothesContainer"]
+layout_mode = 2
+texture_normal = ExtResource("7_4c0wx")
+
+[node name="MerchantClothes" type="Label" parent="CanvasLayer/MenuBackground/VBoxContainer/ClothesContainer"]
+layout_mode = 2
+text = "   20 lb"
 label_settings = ExtResource("8_4c0wx")
 
 [node name="Leave" type="TextureButton" parent="CanvasLayer/MenuBackground"]
 layout_mode = 0
-offset_left = 218.0
-offset_top = 1030.0
-offset_right = 719.0
-offset_bottom = 1191.0
+offset_left = 168.0
+offset_top = 1096.0
+offset_right = 669.0
+offset_bottom = 1235.0
 texture_normal = ExtResource("7_h647s")
+
+[node name="Trade" type="TextureButton" parent="CanvasLayer/MenuBackground"]
+layout_mode = 0
+offset_left = 1804.0
+offset_top = 1106.0
+offset_right = 2335.0
+offset_bottom = 1241.0
+texture_normal = ExtResource("9_4c0wx")
 
 [node name="PlayerNameLabel" type="Label" parent="CanvasLayer/MenuBackground"]
 layout_mode = 0
