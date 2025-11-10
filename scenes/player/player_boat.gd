@@ -125,6 +125,7 @@ func fire_left_guns() -> void:
 	var t: SceneTreeTimer = get_tree().create_timer(left_fire_cooldown)
 	t.timeout.connect(func() -> void:
 		can_fire_left = true)
+	($Camera2D as ShakeCamera).add_trauma(0.3, 0.3)
 
 func fire_right_guns() -> void:
 	if not can_fire_right:
@@ -142,6 +143,8 @@ func fire_right_guns() -> void:
 	var t: SceneTreeTimer = get_tree().create_timer(right_fire_cooldown)
 	t.timeout.connect(func() -> void:
 		can_fire_right = true)
+	($Camera2D as ShakeCamera).add_trauma(0.3, 0.3)
 
 func play_hit_sound():
 	$HitSound.play()
+	($Camera2D as ShakeCamera).add_trauma(0.5, 0.3)

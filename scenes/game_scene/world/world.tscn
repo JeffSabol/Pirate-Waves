@@ -1,8 +1,9 @@
-[gd_scene load_steps=16 format=4 uid="uid://cu0u00s7rwajd"]
+[gd_scene load_steps=17 format=4 uid="uid://cu0u00s7rwajd"]
 
 [ext_resource type="Texture2D" uid="uid://dof2tt5ld5wst" path="res://assets/tiles/WaterAndIslands/Water and Island tiles.png" id="1_k8tay"]
 [ext_resource type="PackedScene" uid="uid://clxs5gwisal5m" path="res://scenes/game_scene/game_ui.tscn" id="2_oxjrw"]
 [ext_resource type="PackedScene" uid="uid://d3nh1rywkpqb0" path="res://scenes/player/player_boat.tscn" id="3_ptotq"]
+[ext_resource type="Script" uid="uid://dg8kekgsxtae0" path="res://scenes/game_scene/world/shake_camera.gd" id="4_3ihfx"]
 [ext_resource type="PackedScene" uid="uid://dsgh3pgqlfego" path="res://scenes/game_scene/npcs/TrafficManager.tscn" id="5_eegf6"]
 [ext_resource type="AudioStream" uid="uid://c3iohqiy1v26q" path="res://assets/music/sea_wave_pause_music.mp3" id="5_xhe80"]
 [ext_resource type="PackedScene" uid="uid://cdc0kjiub4x3w" path="res://scenes/buildings/town.tscn" id="6_2maww"]
@@ -369,6 +370,7 @@ autoplay = true
 [node name="Camera2D" type="Camera2D" parent="PlayerBoat"]
 position = Vector2(1, -1)
 zoom = Vector2(2, 2)
+script = ExtResource("4_3ihfx")
 
 [node name="Towns" type="Node2D" parent="."]
 
