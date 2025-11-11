@@ -1,6 +1,6 @@
 extends Control
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	# Player Live Updates
 	# Gold
 	$CanvasLayer/MenuBackground/PlayerNameLabel/PlayerGoldLabel.text = str($"../../PlayerBoat".gold)
