@@ -72,7 +72,7 @@ scale = Vector2(3, 3)
 layout_mode = 2
 alignment = 1
 
-[node name="PlayerFish" type="Label" parent="CanvasLayer/MenuBackground/VBoxContainer/FishContainer"]
+[node name="PlayerFishLBs" type="Label" parent="CanvasLayer/MenuBackground/VBoxContainer/FishContainer"]
 layout_mode = 2
 text = "0 lb   "
 label_settings = ExtResource("8_4c0wx")
@@ -91,7 +91,7 @@ horizontal_alignment = 1
 layout_mode = 2
 texture_normal = ExtResource("7_4c0wx")
 
-[node name="MerchantFish" type="Label" parent="CanvasLayer/MenuBackground/VBoxContainer/FishContainer"]
+[node name="MerchantFishLBs" type="Label" parent="CanvasLayer/MenuBackground/VBoxContainer/FishContainer"]
 layout_mode = 2
 text = "   20 lb"
 label_settings = ExtResource("8_4c0wx")
@@ -100,7 +100,7 @@ label_settings = ExtResource("8_4c0wx")
 layout_mode = 2
 alignment = 1
 
-[node name="PlayerRum" type="Label" parent="CanvasLayer/MenuBackground/VBoxContainer/RumContainer"]
+[node name="PlayerRumLBs" type="Label" parent="CanvasLayer/MenuBackground/VBoxContainer/RumContainer"]
 layout_mode = 2
 text = "0 lb   "
 label_settings = ExtResource("8_4c0wx")
@@ -119,7 +119,7 @@ horizontal_alignment = 1
 layout_mode = 2
 texture_normal = ExtResource("7_4c0wx")
 
-[node name="MerchantRum" type="Label" parent="CanvasLayer/MenuBackground/VBoxContainer/RumContainer"]
+[node name="MerchantRumLBs" type="Label" parent="CanvasLayer/MenuBackground/VBoxContainer/RumContainer"]
 layout_mode = 2
 text = "   20 lb"
 label_settings = ExtResource("8_4c0wx")
@@ -128,7 +128,7 @@ label_settings = ExtResource("8_4c0wx")
 layout_mode = 2
 alignment = 1
 
-[node name="PlayerOre" type="Label" parent="CanvasLayer/MenuBackground/VBoxContainer/OreContainer"]
+[node name="PlayerOreLBs" type="Label" parent="CanvasLayer/MenuBackground/VBoxContainer/OreContainer"]
 layout_mode = 2
 text = "0 lb   "
 label_settings = ExtResource("8_4c0wx")
@@ -147,7 +147,7 @@ horizontal_alignment = 1
 layout_mode = 2
 texture_normal = ExtResource("7_4c0wx")
 
-[node name="MerchantOre" type="Label" parent="CanvasLayer/MenuBackground/VBoxContainer/OreContainer"]
+[node name="MerchantOreLBs" type="Label" parent="CanvasLayer/MenuBackground/VBoxContainer/OreContainer"]
 layout_mode = 2
 text = "   20 lb"
 label_settings = ExtResource("8_4c0wx")
@@ -156,7 +156,7 @@ label_settings = ExtResource("8_4c0wx")
 layout_mode = 2
 alignment = 1
 
-[node name="PlayerClothes" type="Label" parent="CanvasLayer/MenuBackground/VBoxContainer/ClothesContainer"]
+[node name="PlayerClothesLBs" type="Label" parent="CanvasLayer/MenuBackground/VBoxContainer/ClothesContainer"]
 layout_mode = 2
 text = "0 lb   "
 label_settings = ExtResource("8_4c0wx")
@@ -175,7 +175,7 @@ horizontal_alignment = 1
 layout_mode = 2
 texture_normal = ExtResource("7_4c0wx")
 
-[node name="MerchantClothes" type="Label" parent="CanvasLayer/MenuBackground/VBoxContainer/ClothesContainer"]
+[node name="MerchantClothesLBs" type="Label" parent="CanvasLayer/MenuBackground/VBoxContainer/ClothesContainer"]
 layout_mode = 2
 text = "   20 lb"
 label_settings = ExtResource("8_4c0wx")
