@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://det64ltelxgj8"]
+[gd_scene load_steps=44 format=3 uid="uid://det64ltelxgj8"]
 
 [ext_resource type="Script" uid="uid://drfnyqhrabudn" path="res://scenes/town/townUI.gd" id="1_ki453"]
 [ext_resource type="Texture2D" uid="uid://wdneset53t7e" path="res://assets/ui/town/TownFull.png" id="2_ki453"]
@@ -23,6 +23,14 @@
 [ext_resource type="Texture2D" uid="uid://blgvsyijokyai" path="res://assets/ui/town/wave/wave8.png" id="21_lteju"]
 [ext_resource type="Texture2D" uid="uid://bgf1afp2sls5g" path="res://assets/ui/town/wave/wave9.png" id="22_hyja2"]
 [ext_resource type="Texture2D" uid="uid://bnp7nnc40yoc4" path="res://assets/ui/town/wave/wave10.png" id="23_ipcul"]
+[ext_resource type="Texture2D" uid="uid://dqvsss0qc332e" path="res://assets/ui/town/characters/sleepy1.png" id="24_086wm"]
+[ext_resource type="Texture2D" uid="uid://cqmnw7c1yyhqj" path="res://assets/ui/town/characters/sleepy2.png" id="25_lteju"]
+[ext_resource type="Texture2D" uid="uid://cfkyb0uvtq8sl" path="res://assets/ui/town/characters/sleepy3.png" id="26_hyja2"]
+[ext_resource type="Texture2D" uid="uid://5m2vqkgbat3l" path="res://assets/ui/town/characters/sleepy4.png" id="27_ipcul"]
+[ext_resource type="Texture2D" uid="uid://srgdu4k1hrg3" path="res://assets/ui/town/characters/spectators1.png" id="28_6k88b"]
+[ext_resource type="Texture2D" uid="uid://dti2m150meqr4" path="res://assets/ui/town/characters/spectators2.png" id="29_tswh5"]
+[ext_resource type="Texture2D" uid="uid://0gt33ynkg4xa" path="res://assets/ui/town/characters/spectators3.png" id="30_t15ev"]
+[ext_resource type="Texture2D" uid="uid://d3qlcq30erofe" path="res://assets/ui/town/characters/spectators4.png" id="31_5jhdi"]
 
 [sub_resource type="AnimatedTexture" id="AnimatedTexture_5vy64"]
 frames = 13
@@ -314,19 +322,25 @@ frame_11/duration = 1.0
 frame_12/texture = ExtResource("15_wui2e")
 frame_12/duration = 1.0
 
-[sub_resource type="AnimatedTexture" id="AnimatedTexture_lteju"]
-frames = 5
+[sub_resource type="AnimatedTexture" id="AnimatedTexture_4cewy"]
+frames = 4
+frame_0/texture = ExtResource("24_086wm")
+frame_1/texture = ExtResource("25_lteju")
 frame_1/duration = 1.0
+frame_2/texture = ExtResource("26_hyja2")
 frame_2/duration = 1.0
+frame_3/texture = ExtResource("27_ipcul")
 frame_3/duration = 1.0
-frame_4/duration = 1.0
 
-[sub_resource type="AnimatedTexture" id="AnimatedTexture_hyja2"]
-frames = 5
+[sub_resource type="AnimatedTexture" id="AnimatedTexture_15fyj"]
+frames = 4
+frame_0/texture = ExtResource("28_6k88b")
+frame_1/texture = ExtResource("29_tswh5")
 frame_1/duration = 1.0
+frame_2/texture = ExtResource("30_t15ev")
 frame_2/duration = 1.0
+frame_3/texture = ExtResource("31_5jhdi")
 frame_3/duration = 1.0
-frame_4/duration = 1.0
 
 [node name="Town" type="Control"]
 layout_mode = 3
@@ -528,17 +542,22 @@ offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="Sleepy" type="TextureRect" parent="CanvasLayer/Characters"]
-visible = false
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-texture = SubResource("AnimatedTexture_lteju")
+offset_left = 6.0
+offset_top = 300.0
+offset_right = 1286.0
+offset_bottom = 1020.0
+scale = Vector2(3, 3)
+texture = SubResource("AnimatedTexture_4cewy")
 
 [node name="Spectators" type="TextureRect" parent="CanvasLayer/Characters"]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-texture = SubResource("AnimatedTexture_hyja2")
+offset_left = 1016.00006
+offset_top = 173.0
+offset_right = 2296.0
+offset_bottom = 893.0
+scale = Vector2(3, 3)
+texture = SubResource("AnimatedTexture_15fyj")
 
 [connection signal="gui_input" from="CanvasLayer/TavernClickZone" to="CanvasLayer/TavernClickZone" method="_on_gui_input"]
 [connection signal="mouse_entered" from="CanvasLayer/TavernClickZone" to="CanvasLayer/TavernClickZone" method="_on_mouse_entered"]
