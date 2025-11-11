@@ -45,7 +45,7 @@ func _on_pickup_zone_body_entered(body: Node) -> void:
 		(ft as FloatingText).show_text(label)
 
 	print("Picked up %d %s" % [amount, treasure_type])
-	# body.add_loot(treasure_type, amount)   # hook up when ready
+	body.add_loot(treasure_type, amount)
 
 	await get_tree().create_timer(0.5).timeout
 	queue_free()
