@@ -4,52 +4,49 @@
 [ext_resource type="Texture2D" uid="uid://sku65574ibxx" path="res://assets/loot/open_chest.png" id="1_cff5l"]
 [ext_resource type="AudioStream" uid="uid://dl2o4s1p2p6b8" path="res://assets/sfx/coin_drop.mp3" id="2_r4in0"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_r4in0"]
-atlas = ExtResource("1_cff5l")
-region = Rect2(0, 0, 160, 160)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_02flo"]
 atlas = ExtResource("1_cff5l")
-region = Rect2(160, 0, 160, 160)
+region = Rect2(0, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_bsvli"]
 atlas = ExtResource("1_cff5l")
-region = Rect2(320, 0, 160, 160)
+region = Rect2(16, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_iphfj"]
 atlas = ExtResource("1_cff5l")
-region = Rect2(480, 0, 160, 160)
+region = Rect2(32, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0acef"]
 atlas = ExtResource("1_cff5l")
-region = Rect2(640, 0, 160, 160)
+region = Rect2(48, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_n3syx"]
 atlas = ExtResource("1_cff5l")
-region = Rect2(800, 0, 160, 160)
+region = Rect2(64, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_knfg8"]
 atlas = ExtResource("1_cff5l")
-region = Rect2(960, 0, 160, 160)
+region = Rect2(80, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_mkra6"]
 atlas = ExtResource("1_cff5l")
-region = Rect2(1120, 0, 160, 160)
+region = Rect2(96, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xmliw"]
 atlas = ExtResource("1_cff5l")
-region = Rect2(1280, 0, 160, 160)
+region = Rect2(112, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6w0ym"]
 atlas = ExtResource("1_cff5l")
-region = Rect2(1440, 0, 160, 160)
+region = Rect2(128, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p7uy6"]
+atlas = ExtResource("1_cff5l")
+region = Rect2(144, 0, 16, 16)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_p7uy6"]
 animations = [{
 "frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_r4in0")
-}, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_02flo")
 }, {
@@ -76,6 +73,9 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_6w0ym")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p7uy6")
 }],
 "loop": true,
 "name": &"default",
@@ -83,14 +83,13 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_r4in0"]
-size = Vector2(550, 470)
+size = Vector2(65.5, 50.5)
 
 [node name="Treasure" type="Node2D"]
 script = ExtResource("1_02flo")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_p7uy6")
-frame = 7
 frame_progress = 0.29505572
 
 [node name="PickupSound" type="AudioStreamPlayer" parent="."]

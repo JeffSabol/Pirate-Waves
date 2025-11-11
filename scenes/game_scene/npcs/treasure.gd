@@ -30,10 +30,11 @@ func roll_loot_amount() -> int:
 func _on_pickup_zone_body_entered(body: Node) -> void:
 	if not body.is_in_group("player"):
 		return
-
 	var amount := roll_loot_amount()
-	body.add_loot(treasure_type, amount)
 	$PickupSound.play()
+	$AnimatedSprite2D.play()
 	print("Picked up %d %s" % [amount, treasure_type])
+	#body.add_loot(treasure_type, amount)
 	# TODO wire into inventory
+	await get_tree().create_timer(0.5).timeout
 	queue_free()
