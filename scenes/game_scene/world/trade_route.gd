@@ -1,5 +1,5 @@
 extends Path2D
-class_name TradeRoute
+#class_name TradeRoute
 
 @export_enum("merchant", "pirate", "mixed") var route_type: String = "merchant"
 @export var max_ships: int = 3
