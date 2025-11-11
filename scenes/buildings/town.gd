@@ -4,6 +4,10 @@ extends Node2D
 var town_type: String = "Poor"
 @export var town_name: String = ""
 @export var merchant_gold: int
+@export var merchant_fish: int
+@export var merchant_rum: int
+@export var merchant_ore: int
+@export var merchant_clothes: int
 
 func _ready():
 	set_sprite_by_type()
@@ -32,3 +36,7 @@ func _on_enter_zone_body_entered(body):
 		$"../../PlayerBoat/AudioStreamPlayer2D".stop()
 		body.in_town_name = town_name 
 		body.in_town_gold = merchant_gold
+		body.in_town_fish = merchant_fish
+		body.in_town_rum = merchant_rum
+		body.in_town_ore = merchant_ore
+		body.in_town_clothes = merchant_clothes

@@ -7,8 +7,13 @@ extends CharacterBody2D
 @export var turn_speed := 1.0
 
 @export var hp := 100
-@export var gold := 0
 @export var guns := 2
+# Player Inventory
+@export var gold := 0
+@export var fish = 1
+@export var rum = 1
+@export var ore = 1
+@export var clothes = 1
 # KNOTS
 # 1 knot = 10 speed
 # Level 1 (small sloop / default): 6 knots
@@ -21,9 +26,14 @@ extends CharacterBody2D
 @export var right_fire_cooldown := 3
 # Let us toggle control in the editor or from another script
 @export var controls_enabled := true
-# Current Town
+# Current Town Values
 @export var in_town_name = ""
 @export var in_town_gold = 1
+@export var in_town_fish = 1
+@export var in_town_rum = 1
+@export var in_town_ore = 1
+@export var in_town_clothes = 1
+
 
 var can_fire_left := true
 var can_fire_right := true
