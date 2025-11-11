@@ -10,8 +10,9 @@ func _ready():
 
 func set_sprite_by_type():
 	match town_type:
-		"Pirate":
-			$Building.play("pirate")
+		# I never found an asset that looks like a pirate hangout yet.
+		#"Pirate":
+			#$Building.play("pirate")
 		"Poor":
 			$Building.play("poor")
 		"Middle":
