@@ -376,28 +376,37 @@ script = ExtResource("4_3ihfx")
 
 [node name="PortHaven" parent="Towns" instance=ExtResource("6_2maww")]
 position = Vector2(351, -882)
+town_name = "Port Haven"
+merchant_gold = 250
 
 [node name="Smugglers Reef" parent="Towns" instance=ExtResource("6_2maww")]
 position = Vector2(3058, 1541)
+town_name = "Smugglers Reef"
+merchant_gold = 300
 
-[node name="Emberport" parent="Towns" instance=ExtResource("6_2maww")]
+[node name="Ember Port" parent="Towns" instance=ExtResource("6_2maww")]
 position = Vector2(3625, 5227)
+town_name = "Ember Port"
 
 [node name="Volcanic Isle" parent="Towns" instance=ExtResource("6_2maww")]
 position = Vector2(8713, 4722)
+town_name = "Volcanic Isle"
 
 [node name="Kent" parent="Towns" instance=ExtResource("6_2maww")]
 position = Vector2(9000, 881)
 town_type = "Middle"
+town_name = "Kent"
 
-[node name="Upside Down Town" parent="Towns" instance=ExtResource("6_2maww")]
+[node name="Land Down Under" parent="Towns" instance=ExtResource("6_2maww")]
 position = Vector2(-1813, 6201)
 scale = Vector2(1, -1)
 town_type = "Good"
+town_name = "LandDownUnder"
 
-[node name="Skull Island Pirates" parent="Towns" instance=ExtResource("6_2maww")]
+[node name="Skull Island" parent="Towns" instance=ExtResource("6_2maww")]
 position = Vector2(4720, -1215)
 town_type = "Pirate"
+town_name = "Skull Island"
 
 [node name="TrafficManager" parent="." instance=ExtResource("5_eegf6")]
 merchant_scene = ExtResource("6_e34on")

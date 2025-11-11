@@ -2,6 +2,7 @@ extends Node2D
 
 @export_enum("Pirate", "Poor", "Middle", "Good", "Wealthy")
 var town_type: String = "Poor"
+@export var town_name: String = ""
 @export var merchant_gold: int
 
 func _ready():
@@ -28,4 +29,5 @@ func _on_enter_zone_body_entered(body):
 		$"../../GameUI".hide_world_ui()
 		$"../../GameUI".show_town_ui()
 		$"../../PlayerBoat/AudioStreamPlayer2D".stop()
-		
+		body.in_town_name = town_name 
+		body.in_town_gold = merchant_gold

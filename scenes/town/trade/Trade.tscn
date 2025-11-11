@@ -223,7 +223,7 @@ offset_bottom = 204.0
 text = "MerchantName"
 label_settings = SubResource("LabelSettings_1e65h")
 
-[node name="Label" type="Label" parent="CanvasLayer/MenuBackground/MerchantNameLabel"]
+[node name="MerchantGoldLabel" type="Label" parent="CanvasLayer/MenuBackground/MerchantNameLabel"]
 layout_mode = 0
 offset_left = 62.0
 offset_top = 94.0

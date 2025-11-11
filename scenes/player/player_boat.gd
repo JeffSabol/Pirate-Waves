@@ -21,6 +21,10 @@ extends CharacterBody2D
 @export var right_fire_cooldown := 3
 # Let us toggle control in the editor or from another script
 @export var controls_enabled := true
+# Current Town
+@export var in_town_name = ""
+@export var in_town_gold = 1
+
 var can_fire_left := true
 var can_fire_right := true
 
