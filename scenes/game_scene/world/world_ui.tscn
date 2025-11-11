@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://cu6c72fyiba2s"]
+[gd_scene load_steps=18 format=3 uid="uid://cu6c72fyiba2s"]
 
 [ext_resource type="Texture2D" uid="uid://is5yutlhkb27" path="res://assets/ui/map/MapBackground.png" id="1_cm2e8"]
 [ext_resource type="Texture2D" uid="uid://bbrjt84hpvqry" path="res://assets/ui/map/Map.png" id="1_ij4mi"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://bkn42h3dhpmfk" path="res://assets/ui/map/stats.png" id="5_8qdxx"]
 [ext_resource type="Texture2D" uid="uid://h56m310r62on" path="res://assets/boat/boat.png" id="6_eddq1"]
 [ext_resource type="Texture2D" uid="uid://bjjsk5ie5xwm1" path="res://assets/ui/map/map_closed.png" id="8_8qdxx"]
+[ext_resource type="Script" uid="uid://c2clrolu1yhh5" path="res://scenes/game_scene/world/inventory_ui.gd" id="9_lkfkc"]
 [ext_resource type="Texture2D" uid="uid://ktn0msyny4g7" path="res://assets/ui/inventory/inventorybackground.png" id="9_vomcc"]
 [ext_resource type="Texture2D" uid="uid://dau46jgypfq1d" path="res://assets/ui/map/map_open.png" id="9_y81kt"]
 [ext_resource type="FontFile" uid="uid://duln27t01nc1q" path="res://assets/fonts/Minecraftia-Regular.ttf" id="10_l840g"]
@@ -131,6 +132,7 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
+script = ExtResource("9_lkfkc")
 
 [node name="Inventory" type="TextureRect" parent="InventoryUI"]
 visible = false
@@ -201,18 +203,18 @@ layout_mode = 2
 text = "Clothes"
 label_settings = ExtResource("11_cvm3m")
 
-[node name="InventoryValues" type="VBoxContainer" parent="InventoryUI/Inventory/HBoxContainer"]
+[node name="InventoryValues2" type="VBoxContainer" parent="InventoryUI/Inventory/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 10
 
-[node name="PlayerGold" type="Label" parent="InventoryUI/Inventory/HBoxContainer/InventoryValues"]
+[node name="PlayerGold" type="Label" parent="InventoryUI/Inventory/HBoxContainer/InventoryValues2"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 text = "10"
 label_settings = ExtResource("11_cvm3m")
 horizontal_alignment = 1
 
-[node name="PlayerFish" type="Label" parent="InventoryUI/Inventory/HBoxContainer/InventoryValues"]
+[node name="PlayerFish" type="Label" parent="InventoryUI/Inventory/HBoxContainer/InventoryValues2"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 size_flags_horizontal = 0
@@ -220,21 +222,21 @@ text = "100 lbs"
 label_settings = ExtResource("11_cvm3m")
 horizontal_alignment = 2
 
-[node name="PlayerRum" type="Label" parent="InventoryUI/Inventory/HBoxContainer/InventoryValues"]
+[node name="PlayerRum" type="Label" parent="InventoryUI/Inventory/HBoxContainer/InventoryValues2"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 text = "25 lbs"
 label_settings = ExtResource("11_cvm3m")
 horizontal_alignment = 2
 
-[node name="PlayerOre" type="Label" parent="InventoryUI/Inventory/HBoxContainer/InventoryValues"]
+[node name="PlayerOre" type="Label" parent="InventoryUI/Inventory/HBoxContainer/InventoryValues2"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 text = "50 lbs"
 label_settings = ExtResource("11_cvm3m")
 horizontal_alignment = 2
 
-[node name="PlayerClothes" type="Label" parent="InventoryUI/Inventory/HBoxContainer/InventoryValues"]
+[node name="PlayerClothes" type="Label" parent="InventoryUI/Inventory/HBoxContainer/InventoryValues2"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 text = "15 lbs"
