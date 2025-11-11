@@ -2,6 +2,7 @@ extends Node2D
 
 @export_enum("Pirate", "Poor", "Middle", "Good", "Wealthy")
 var town_type: String = "Poor"
+@export var merchant_gold: int
 
 func _ready():
 	set_sprite_by_type()
