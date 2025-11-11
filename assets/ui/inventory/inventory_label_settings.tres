@@ -1,0 +1,11 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://c7hb6xny5bbqf"]
+
+[ext_resource type="FontFile" uid="uid://duln27t01nc1q" path="res://assets/fonts/Minecraftia-Regular.ttf" id="1_kj4p8"]
+
+[resource]
+font = ExtResource("1_kj4p8")
+font_size = 40
+font_color = Color(0.08733476, 0.052300714, 0.024352204, 1)
+outline_size = 1
+outline_color = Color(0.0253638, 0.0253638, 0.025363795, 1)
+shadow_size = 0

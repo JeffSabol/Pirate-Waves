@@ -1,0 +1,138 @@
+[gd_scene load_steps=6 format=3 uid="uid://323f5vsxqjae"]
+
+[ext_resource type="Texture2D" uid="uid://ktn0msyny4g7" path="res://assets/ui/inventory/inventorybackground.png" id="1_hfm8f"]
+[ext_resource type="FontFile" uid="uid://duln27t01nc1q" path="res://assets/fonts/Minecraftia-Regular.ttf" id="2_fdvc7"]
+[ext_resource type="Texture2D" uid="uid://cqqqupv2e1w56" path="res://assets/ui/inventory/InventoryExit.png" id="2_wf4d7"]
+[ext_resource type="LabelSettings" uid="uid://c7hb6xny5bbqf" path="res://assets/ui/inventory/inventory_label_settings.tres" id="3_8wlte"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_fvm7g"]
+font = ExtResource("2_fdvc7")
+font_size = 50
+font_color = Color(0.16862746, 0.11372549, 0.06666667, 1)
+
+[node name="Inventory" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+
+[node name="InventtoryWindow" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 361.0
+offset_top = 56.0
+offset_right = 899.0
+offset_bottom = 617.0
+texture = ExtResource("1_hfm8f")
+expand_mode = 5
+
+[node name="Heading" type="Label" parent="InventtoryWindow"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.22531293
+anchor_top = 0.07093185
+anchor_right = 0.767733
+anchor_bottom = 0.21696801
+grow_horizontal = 2
+grow_vertical = 2
+text = "INVENTORY"
+label_settings = SubResource("LabelSettings_fvm7g")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="InventtoryWindow"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -190.0
+offset_top = -167.70514
+offset_right = 183.0
+offset_bottom = 237.29486
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="InventoryLabels" type="VBoxContainer" parent="InventtoryWindow/HBoxContainer"]
+layout_mode = 2
+
+[node name="Gold" type="Label" parent="InventtoryWindow/HBoxContainer/InventoryLabels"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+text = "Gold"
+label_settings = ExtResource("3_8wlte")
+
+[node name="Fish" type="Label" parent="InventtoryWindow/HBoxContainer/InventoryLabels"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+text = "Fish"
+label_settings = ExtResource("3_8wlte")
+
+[node name="Rum" type="Label" parent="InventtoryWindow/HBoxContainer/InventoryLabels"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+text = "Rum"
+label_settings = ExtResource("3_8wlte")
+
+[node name="Ore" type="Label" parent="InventtoryWindow/HBoxContainer/InventoryLabels"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+text = "Ore"
+label_settings = ExtResource("3_8wlte")
+
+[node name="Clothes" type="Label" parent="InventtoryWindow/HBoxContainer/InventoryLabels"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+text = "Clothes"
+label_settings = ExtResource("3_8wlte")
+
+[node name="InventoryLabels2" type="VBoxContainer" parent="InventtoryWindow/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 10
+
+[node name="PlayerGold" type="Label" parent="InventtoryWindow/HBoxContainer/InventoryLabels2"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+text = "10"
+label_settings = ExtResource("3_8wlte")
+horizontal_alignment = 1
+
+[node name="PlayerFish" type="Label" parent="InventtoryWindow/HBoxContainer/InventoryLabels2"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+size_flags_horizontal = 0
+text = "100 lbs"
+label_settings = ExtResource("3_8wlte")
+horizontal_alignment = 2
+
+[node name="PlayerRum" type="Label" parent="InventtoryWindow/HBoxContainer/InventoryLabels2"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+text = "25 lbs"
+label_settings = ExtResource("3_8wlte")
+horizontal_alignment = 2
+
+[node name="PlayerOre" type="Label" parent="InventtoryWindow/HBoxContainer/InventoryLabels2"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+text = "50 lbs"
+label_settings = ExtResource("3_8wlte")
+horizontal_alignment = 2
+
+[node name="PlayerClothes" type="Label" parent="InventtoryWindow/HBoxContainer/InventoryLabels2"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+text = "15 lbs"
+label_settings = ExtResource("3_8wlte")
+horizontal_alignment = 2
+
+[node name="Exit" type="TextureButton" parent="InventtoryWindow"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.28789988
+anchor_top = 0.80111265
+anchor_right = 0.66481227
+anchor_bottom = 0.9388039
+offset_left = -36.748962
+offset_top = -11.950897
+offset_right = 36.748962
+offset_bottom = 11.950867
+grow_horizontal = 2
+grow_vertical = 2
+texture_normal = ExtResource("2_wf4d7")
