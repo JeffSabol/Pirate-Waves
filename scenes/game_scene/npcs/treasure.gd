@@ -6,7 +6,8 @@ var treasure_type: String = "Gold"
 @export_enum("Small", "Medium", "Large")
 var treasure_size: String = "Small"
 
-# Explicitly typed dictionaries to avoid Variant inference errors
+@export var FloatingTextScene: PackedScene
+
 const LOOT_TABLE: Dictionary[String, Vector2i] = {
 	"Gold": Vector2i(5, 25),
 	"Fish": Vector2i(1, 6),
@@ -30,11 +31,21 @@ func roll_loot_amount() -> int:
 func _on_pickup_zone_body_entered(body: Node) -> void:
 	if not body.is_in_group("player"):
 		return
+
 	var amount := roll_loot_amount()
 	$PickupSound.play()
 	$AnimatedSprite2D.play()
+
+	# Spawn floating text at this pickup's world position
+	if FloatingTextScene:
+		var ft := FloatingTextScene.instantiate() as Node2D
+		ft.position = global_position
+		get_tree().current_scene.add_child(ft)  # add to world so it follows camera naturally
+		var label := "%d %s" % [amount, treasure_type]
+		(ft as FloatingText).show_text(label)
+
 	print("Picked up %d %s" % [amount, treasure_type])
-	#body.add_loot(treasure_type, amount)
-	# TODO wire into inventory
+	# body.add_loot(treasure_type, amount)   # hook up when ready
+
 	await get_tree().create_timer(0.5).timeout
 	queue_free()

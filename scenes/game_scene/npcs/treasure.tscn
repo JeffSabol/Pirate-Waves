@@ -1,7 +1,8 @@
-[gd_scene load_steps=16 format=3 uid="uid://dyhosg5vjaflu"]
+[gd_scene load_steps=17 format=3 uid="uid://dyhosg5vjaflu"]
 
 [ext_resource type="Script" uid="uid://bh4w371xtscsb" path="res://scenes/game_scene/npcs/treasure.gd" id="1_02flo"]
 [ext_resource type="Texture2D" uid="uid://sku65574ibxx" path="res://assets/loot/open_chest.png" id="1_cff5l"]
+[ext_resource type="PackedScene" uid="uid://coqh2herton73" path="res://scenes/game_scene/misc/floating_text.tscn" id="2_bsvli"]
 [ext_resource type="AudioStream" uid="uid://dl2o4s1p2p6b8" path="res://assets/sfx/coin_drop.mp3" id="2_r4in0"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_02flo"]
@@ -87,6 +88,7 @@ size = Vector2(65.5, 50.5)
 
 [node name="Treasure" type="Node2D"]
 script = ExtResource("1_02flo")
+FloatingTextScene = ExtResource("2_bsvli")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_p7uy6")
