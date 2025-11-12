@@ -232,6 +232,7 @@ size_flags_horizontal = 10
 [node name="PlayerGold" type="Label" parent="InventoryUI/Inventory/HBoxContainer/InventoryValues2"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
+size_flags_horizontal = 8
 text = "10"
 label_settings = ExtResource("11_cvm3m")
 horizontal_alignment = 1
@@ -239,7 +240,7 @@ horizontal_alignment = 1
 [node name="PlayerFish" type="Label" parent="InventoryUI/Inventory/HBoxContainer/InventoryValues2"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
-size_flags_horizontal = 0
+size_flags_horizontal = 8
 text = "100 lbs"
 label_settings = ExtResource("11_cvm3m")
 horizontal_alignment = 2
@@ -247,6 +248,7 @@ horizontal_alignment = 2
 [node name="PlayerRum" type="Label" parent="InventoryUI/Inventory/HBoxContainer/InventoryValues2"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
+size_flags_horizontal = 8
 text = "25 lbs"
 label_settings = ExtResource("11_cvm3m")
 horizontal_alignment = 2
@@ -254,6 +256,7 @@ horizontal_alignment = 2
 [node name="PlayerOre" type="Label" parent="InventoryUI/Inventory/HBoxContainer/InventoryValues2"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
+size_flags_horizontal = 8
 text = "50 lbs"
 label_settings = ExtResource("11_cvm3m")
 horizontal_alignment = 2
@@ -261,6 +264,7 @@ horizontal_alignment = 2
 [node name="PlayerClothes" type="Label" parent="InventoryUI/Inventory/HBoxContainer/InventoryValues2"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
+size_flags_horizontal = 8
 text = "15 lbs"
 label_settings = ExtResource("11_cvm3m")
 horizontal_alignment = 2
