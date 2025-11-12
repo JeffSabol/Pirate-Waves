@@ -12,6 +12,14 @@ func _process(_dt: float) -> void:
 		return
 	update_ship_marker()
 	update_sail_stats()
+	if player.can_fire_left:
+		$HBoxContainer/FireLeftButton.disabled = false
+	else:
+		$HBoxContainer/FireLeftButton.disabled = true
+	if player.can_fire_right:
+		$HBoxContainer/FireRightButton.disabled = false
+	else:
+		$HBoxContainer/FireRightButton.disabled = true
 
 func update_ship_marker() -> void:
 	var world_pos: Vector2 = player.global_position
@@ -41,3 +49,11 @@ func update_sail_stats():
 
 func _on_map_button_pressed():
 	pass # Replace with function body.
+
+
+func _on_fire_left_button_pressed():
+	player.fire_left_guns()
+
+
+func _on_fire_right_button_pressed():
+	player.fire_right_guns()

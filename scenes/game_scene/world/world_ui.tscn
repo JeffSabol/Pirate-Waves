@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://cu6c72fyiba2s"]
+[gd_scene load_steps=20 format=3 uid="uid://cu6c72fyiba2s"]
 
 [ext_resource type="Texture2D" uid="uid://is5yutlhkb27" path="res://assets/ui/map/MapBackground.png" id="1_cm2e8"]
 [ext_resource type="Texture2D" uid="uid://bbrjt84hpvqry" path="res://assets/ui/map/Map.png" id="1_ij4mi"]
@@ -7,9 +7,11 @@
 [ext_resource type="Texture2D" uid="uid://bkn42h3dhpmfk" path="res://assets/ui/map/stats.png" id="5_8qdxx"]
 [ext_resource type="Texture2D" uid="uid://h56m310r62on" path="res://assets/boat/boat.png" id="6_eddq1"]
 [ext_resource type="Texture2D" uid="uid://bjjsk5ie5xwm1" path="res://assets/ui/map/map_closed.png" id="8_8qdxx"]
+[ext_resource type="Texture2D" uid="uid://cx80vmti284f1" path="res://assets/ui/worldui/FireButtonReady.png" id="9_4nqjw"]
 [ext_resource type="Script" uid="uid://c2clrolu1yhh5" path="res://scenes/game_scene/world/inventory_ui.gd" id="9_lkfkc"]
 [ext_resource type="Texture2D" uid="uid://ktn0msyny4g7" path="res://assets/ui/inventory/inventorybackground.png" id="9_vomcc"]
 [ext_resource type="Texture2D" uid="uid://dau46jgypfq1d" path="res://assets/ui/map/map_open.png" id="9_y81kt"]
+[ext_resource type="Texture2D" uid="uid://cedkmknnh064l" path="res://assets/ui/worldui/FireButtonDisabled.png" id="10_ir6cy"]
 [ext_resource type="FontFile" uid="uid://duln27t01nc1q" path="res://assets/fonts/Minecraftia-Regular.ttf" id="10_l840g"]
 [ext_resource type="LabelSettings" uid="uid://c7hb6xny5bbqf" path="res://assets/ui/inventory/inventory_label_settings.tres" id="11_cvm3m"]
 [ext_resource type="Texture2D" uid="uid://ddkwhejoo8w10" path="res://assets/ui/map/BlankModal.png" id="12_l840g"]
@@ -126,6 +128,26 @@ scale = Vector2(2, 2)
 texture_normal = ExtResource("8_8qdxx")
 texture_hover = ExtResource("9_y81kt")
 script = ExtResource("2_ydqjq")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MapUI"]
+layout_mode = 0
+offset_left = 207.0
+offset_top = 626.0
+offset_right = 339.0
+offset_bottom = 690.0
+
+[node name="FireLeftButton" type="TextureButton" parent="MapUI/HBoxContainer"]
+layout_mode = 2
+texture_normal = ExtResource("9_4nqjw")
+texture_pressed = ExtResource("10_ir6cy")
+texture_disabled = ExtResource("10_ir6cy")
+flip_h = true
+
+[node name="FireRightButton" type="TextureButton" parent="MapUI/HBoxContainer"]
+layout_mode = 2
+texture_normal = ExtResource("9_4nqjw")
+texture_pressed = ExtResource("10_ir6cy")
+texture_disabled = ExtResource("10_ir6cy")
 
 [node name="InventoryUI" type="Control" parent="."]
 layout_mode = 3
@@ -246,9 +268,9 @@ horizontal_alignment = 2
 [node name="InventoryButton" type="TextureButton" parent="InventoryUI"]
 layout_mode = 0
 offset_left = 130.0
-offset_top = 636.0
+offset_top = 638.0
 offset_right = 174.0
-offset_bottom = 680.0
+offset_bottom = 682.0
 texture_normal = ExtResource("9_vomcc")
 texture_hover = ExtResource("12_l840g")
 ignore_texture_size = true
@@ -270,4 +292,6 @@ autowrap_trim_flags = 0
 justification_flags = 0
 
 [connection signal="pressed" from="MapUI/MapButton" to="MapUI/MapButton" method="_on_pressed"]
+[connection signal="pressed" from="MapUI/HBoxContainer/FireLeftButton" to="MapUI" method="_on_fire_left_button_pressed"]
+[connection signal="pressed" from="MapUI/HBoxContainer/FireRightButton" to="MapUI" method="_on_fire_right_button_pressed"]
 [connection signal="pressed" from="InventoryUI/InventoryButton" to="InventoryUI/InventoryButton" method="_on_pressed"]

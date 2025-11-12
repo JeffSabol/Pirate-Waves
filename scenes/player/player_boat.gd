@@ -35,8 +35,8 @@ extends CharacterBody2D
 @export var in_town_clothes = 1
 
 
-var can_fire_left := true
-var can_fire_right := true
+@export var can_fire_left := true
+@export var can_fire_right := true
 
 const FORWARD_BASE := Vector2.UP
 
