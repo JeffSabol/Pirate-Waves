@@ -42,16 +42,6 @@ frame_2/duration = 1.0
 frame_3/texture = ExtResource("27_ipcul")
 frame_3/duration = 1.0
 
-[sub_resource type="AnimatedTexture" id="AnimatedTexture_15fyj"]
-frames = 4
-frame_0/texture = ExtResource("28_6k88b")
-frame_1/texture = ExtResource("29_tswh5")
-frame_1/duration = 1.0
-frame_2/texture = ExtResource("30_t15ev")
-frame_2/duration = 1.0
-frame_3/texture = ExtResource("31_5jhdi")
-frame_3/duration = 1.0
-
 [sub_resource type="AnimatedTexture" id="AnimatedTexture_5vy64"]
 frames = 13
 frame_0/texture = ExtResource("11_5vy64")
@@ -342,6 +332,16 @@ frame_11/duration = 1.0
 frame_12/texture = ExtResource("15_wui2e")
 frame_12/duration = 1.0
 
+[sub_resource type="AnimatedTexture" id="AnimatedTexture_15fyj"]
+frames = 4
+frame_0/texture = ExtResource("28_6k88b")
+frame_1/texture = ExtResource("29_tswh5")
+frame_1/duration = 1.0
+frame_2/texture = ExtResource("30_t15ev")
+frame_2/duration = 1.0
+frame_3/texture = ExtResource("31_5jhdi")
+frame_3/duration = 1.0
+
 [node name="Town" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -362,29 +362,13 @@ grow_vertical = 2
 texture = ExtResource("2_ki453")
 metadata/_edit_use_anchors_ = true
 
-[node name="Characters" type="Control" parent="CanvasLayer"]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="Sleepy" type="TextureRect" parent="CanvasLayer/Characters"]
-layout_mode = 0
+[node name="Sleepy" type="TextureRect" parent="CanvasLayer"]
 offset_left = 6.0
 offset_top = 300.0
 offset_right = 1286.0
 offset_bottom = 1020.0
 scale = Vector2(3, 3)
 texture = SubResource("AnimatedTexture_4cewy")
-
-[node name="Spectators" type="TextureRect" parent="CanvasLayer/Characters"]
-layout_mode = 0
-offset_left = 1016.00006
-offset_top = 173.0
-offset_right = 2296.0
-offset_bottom = 893.0
-scale = Vector2(3, 3)
-texture = SubResource("AnimatedTexture_15fyj")
 
 [node name="Waves" type="Control" parent="CanvasLayer"]
 layout_mode = 3
@@ -526,9 +510,9 @@ mouse_filter = 2
 texture = ExtResource("4_25glc")
 
 [node name="QuestClickZone" type="ColorRect" parent="CanvasLayer"]
-offset_left = 668.0
+offset_left = 667.0
 offset_top = 207.0
-offset_right = 881.0
+offset_right = 880.0
 offset_bottom = 427.0
 tooltip_text = "Look at quests"
 color = Color(1, 1, 1, 0)
@@ -551,6 +535,14 @@ offset_right = 386.0
 offset_bottom = 759.0
 mouse_filter = 2
 texture = ExtResource("7_8mv33")
+
+[node name="Spectators" type="TextureRect" parent="CanvasLayer"]
+offset_left = 1016.00006
+offset_top = 173.0
+offset_right = 2296.0
+offset_bottom = 893.0
+scale = Vector2(3, 3)
+texture = SubResource("AnimatedTexture_15fyj")
 
 [node name="LeaveClickZone" type="ColorRect" parent="CanvasLayer"]
 offset_top = 462.0
