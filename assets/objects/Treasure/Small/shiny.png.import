@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://sku65574ibxx"
-path="res://.godot/imported/open_chest.png-289e3539ccbc983416bb9017b5937416.ctex"
+uid="uid://bmfwjvv5tt17h"
+path="res://.godot/imported/shiny.png-348196f0613b892cb832ff0e18017744.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/loot/open_chest.png"
-dest_files=["res://.godot/imported/open_chest.png-289e3539ccbc983416bb9017b5937416.ctex"]
+source_file="res://assets/objects/Treasure/Small/shiny.png"
+dest_files=["res://.godot/imported/shiny.png-348196f0613b892cb832ff0e18017744.ctex"]
 
 [params]
 

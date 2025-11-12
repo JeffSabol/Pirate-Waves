@@ -20,7 +20,7 @@ var _aggro_time_left: float = 0.0
 var _muzzle: Node2D
 var _cruise_speed: float = 0.0
 
-func _ready() -> void:
+func _ready() -> void: 
 	# Find components
 	if ship == null:
 		ship = get_parent() as ShipAI
