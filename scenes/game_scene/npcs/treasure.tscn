@@ -527,7 +527,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"large_destroy",
-"speed": 5.0
+"speed": 11.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -568,7 +568,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"large_open",
-"speed": 5.0
+"speed": 11.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -618,7 +618,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"large_shine",
-"speed": 5.0
+"speed": 11.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -668,7 +668,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"medium_destroy",
-"speed": 5.0
+"speed": 11.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -709,7 +709,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"medium_open",
-"speed": 5.0
+"speed": 11.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -759,7 +759,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"medium_shine",
-"speed": 5.0
+"speed": 11.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -797,7 +797,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"small_destroy",
-"speed": 5.0
+"speed": 11.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -838,7 +838,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"small_open",
-"speed": 5.0
+"speed": 11.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -870,7 +870,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"small_shine",
-"speed": 5.0
+"speed": 11.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_r4in0"]
@@ -884,6 +884,7 @@ FloatingTextScene = ExtResource("2_bsvli")
 scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_p7uy6")
 animation = &"large_destroy"
+frame_progress = 0.2973933
 
 [node name="PickupSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("2_r4in0")

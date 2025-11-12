@@ -21,6 +21,13 @@ const SIZE_MULTIPLIER: Dictionary[String, float] = {
 	"Medium": 1.75,
 	"Large": 3.0,
 }
+func _ready():
+	if treasure_size == "Small":
+		$AnimatedSprite2D.play("small_shine")
+	elif treasure_size == "Medium":
+		$AnimatedSprite2D.play("medium_shine")
+	else:
+		$AnimatedSprite2D.play("large_shine")
 
 func roll_loot_amount() -> int:
 	var base_range: Vector2i = LOOT_TABLE.get(treasure_type, Vector2i(1, 1))
@@ -34,7 +41,13 @@ func _on_pickup_zone_body_entered(body: Node) -> void:
 
 	var amount := roll_loot_amount()
 	$PickupSound.play()
-	$AnimatedSprite2D.play()
+	if treasure_size == "Small":
+		$AnimatedSprite2D.play("small_open")
+	elif treasure_size == "Medium":
+		$AnimatedSprite2D.play("medium_open")
+	else:
+		$AnimatedSprite2D.play("large_open")
+	await get_tree().create_timer(1.5).timeout
 
 	# Spawn floating text at this pickup's world position
 	if FloatingTextScene:
@@ -47,5 +60,14 @@ func _on_pickup_zone_body_entered(body: Node) -> void:
 	print("Picked up %d %s" % [amount, treasure_type])
 	body.add_loot(treasure_type, amount)
 
-	await get_tree().create_timer(0.5).timeout
+	if treasure_size == "Small":
+		$AnimatedSprite2D.play("small_destroy")
+		await get_tree().create_timer(0.9).timeout
+	elif treasure_size == "Medium":
+		$AnimatedSprite2D.play("medium_destroy")
+		await get_tree().create_timer(1.2).timeout
+	else:
+		$AnimatedSprite2D.play("large_destroy")
+		await get_tree().create_timer(1.2).timeout
+		
 	queue_free()
