@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://c6qexg224wfyy"]
+[gd_scene load_steps=6 format=3 uid="uid://c6qexg224wfyy"]
 
-[ext_resource type="Texture2D" uid="uid://c4dvj2ech50xs" path="res://assets/backgrounds/ShipyardBackground.png" id="1_xb5ba"]
+[ext_resource type="Texture2D" uid="uid://4pi37xpixlf8" path="res://assets/ui/town/shipyard/ShipYard.png" id="1_44gni"]
 [ext_resource type="Texture2D" uid="uid://bi4skf1dgo3a3" path="res://assets/ui/town/shipyard/Menu.png" id="2_4ju20"]
 [ext_resource type="FontFile" uid="uid://duln27t01nc1q" path="res://assets/fonts/Minecraftia-Regular.ttf" id="3_44gni"]
 [ext_resource type="Script" uid="uid://yas2vi8amvgj" path="res://scenes/town/shipyard/leave.gd" id="3_ee18e"]
+[ext_resource type="Script" uid="uid://dbq7c1adboyop" path="res://scenes/town/shipyard/menu_background.gd" id="3_ixawh"]
 
 [node name="Shipyard" type="Control"]
 layout_mode = 3
@@ -19,16 +20,17 @@ offset_top = -39.0
 offset_bottom = 73.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("1_xb5ba")
+texture = ExtResource("1_44gni")
 metadata/_edit_use_anchors_ = true
 
 [node name="MenuBackground" type="TextureRect" parent="CanvasLayer"]
-offset_left = -6.0
-offset_top = 68.0
-offset_right = 1018.0
-offset_bottom = 1604.0
+offset_left = 718.99994
+offset_top = 88.0
+offset_right = 1743.0
+offset_bottom = 1624.0
 scale = Vector2(0.4, 0.4)
 texture = ExtResource("2_4ju20")
+script = ExtResource("3_ixawh")
 
 [node name="GoldBalance" type="Label" parent="CanvasLayer/MenuBackground"]
 layout_mode = 1
