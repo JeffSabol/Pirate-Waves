@@ -13,21 +13,23 @@ anchors_preset = 0
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="BackgroundArt" type="TextureRect" parent="CanvasLayer"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -39.0
-offset_bottom = 73.0
+anchors_preset = -1
+anchor_right = 1.701389
+anchor_bottom = 1.7013888
+offset_left = -1.0
+offset_top = 1.0
+offset_right = -897.0
+offset_bottom = -503.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("1_44gni")
 metadata/_edit_use_anchors_ = true
 
 [node name="MenuBackground" type="TextureRect" parent="CanvasLayer"]
-offset_left = 718.99994
-offset_top = 88.0
-offset_right = 1743.0
-offset_bottom = 1624.0
+offset_left = 874.00006
+offset_top = 108.0
+offset_right = 1898.0
+offset_bottom = 1644.0
 scale = Vector2(0.4, 0.4)
 texture = ExtResource("2_4ju20")
 script = ExtResource("3_ixawh")
@@ -105,4 +107,5 @@ tooltip_text = "Exit the shipyard"
 color = Color(1, 1, 0, 0)
 script = ExtResource("3_ee18e")
 
+[connection signal="gui_input" from="CanvasLayer/MenuBackground/SpeedUpgrade" to="CanvasLayer/MenuBackground" method="_on_speed_upgrade_gui_input"]
 [connection signal="gui_input" from="CanvasLayer/MenuBackground/Leave" to="CanvasLayer/MenuBackground/Leave" method="_on_gui_input"]
