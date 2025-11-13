@@ -164,7 +164,6 @@ func play_hit_sound():
 	($Camera2D as ShakeCamera).add_trauma(0.5, 0.3)
 
 func add_loot(treasure_type: String, amount: int):
-	print("inside add_loot! ")
 	match treasure_type:
 		"Gold":
 			gold += amount
