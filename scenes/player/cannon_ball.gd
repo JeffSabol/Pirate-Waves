@@ -2,7 +2,7 @@ extends Area2D
 class_name CannonBall
 
 @export var speed: float = 375.0
-@export var damage: int = 200
+@export var damage: int = 20
 @export var shooter_group: String = ""
 
 @onready var notifier: VisibleOnScreenNotifier2D = $VisibleOnScreenNotifier2D
