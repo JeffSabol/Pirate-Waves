@@ -29,14 +29,17 @@ func set_sprite_by_type():
 
 func _on_enter_zone_body_entered(body):
 	if body.name == "PlayerBoat":
-		$Building.play()
-		await get_tree().create_timer(0.5).timeout
-		$"../../GameUI".hide_world_ui()
-		$"../../GameUI".show_town_ui()
-		$"../../PlayerBoat/AudioStreamPlayer2D".stop()
-		body.in_town_name = town_name 
-		body.in_town_gold = merchant_gold
-		body.in_town_fish = merchant_fish
-		body.in_town_rum = merchant_rum
-		body.in_town_ore = merchant_ore
-		body.in_town_clothes = merchant_clothes
+		# Don't allow town scene if they were recently shot
+		print(str(body.has_recently_been_shot()))
+		if !body.has_recently_been_shot():
+			$Building.play()
+			await get_tree().create_timer(0.5).timeout
+			$"../../GameUI".hide_world_ui()
+			$"../../GameUI".show_town_ui()
+			$"../../PlayerBoat/AudioStreamPlayer2D".stop()
+			body.in_town_name = town_name 
+			body.in_town_gold = merchant_gold
+			body.in_town_fish = merchant_fish
+			body.in_town_rum = merchant_rum
+			body.in_town_ore = merchant_ore
+			body.in_town_clothes = merchant_clothes

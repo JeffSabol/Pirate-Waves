@@ -361,7 +361,8 @@ tile_set = SubResource("TileSet_jwiim")
 [node name="Towns" type="Node2D" parent="."]
 
 [node name="PortHaven" parent="Towns" instance=ExtResource("6_2maww")]
-position = Vector2(351, -882)
+position = Vector2(541, -975)
+town_type = "Middle"
 town_name = "Port Haven"
 merchant_gold = 250
 merchant_fish = 3
