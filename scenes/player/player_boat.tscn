@@ -1,32 +1,64 @@
-[gd_scene load_steps=10 format=3 uid="uid://d3nh1rywkpqb0"]
+[gd_scene load_steps=15 format=3 uid="uid://d3nh1rywkpqb0"]
 
-[ext_resource type="Texture2D" uid="uid://h56m310r62on" path="res://assets/boat/boat.png" id="1_n1myn"]
 [ext_resource type="Script" uid="uid://3lm8sk43yjjr" path="res://scenes/player/player_boat.gd" id="1_tfbt8"]
-[ext_resource type="Texture2D" uid="uid://cpl3o1k0trd55" path="res://assets/boat/Boat1.png" id="3_xfafm"]
+[ext_resource type="Texture2D" uid="uid://urv6bwnjy44o" path="res://assets/boat/Boat1_furl.png" id="4_wjis0"]
 [ext_resource type="PackedScene" uid="uid://b6nvp82ty2110" path="res://scenes/player/gun.tscn" id="4_wniug"]
+[ext_resource type="Texture2D" uid="uid://lmh1o14fg80w" path="res://assets/boat/Boat1_raise.png" id="5_3y1jq"]
 [ext_resource type="Script" uid="uid://dx48q0tsf6rf8" path="res://scenes/game_scene/npcs/health.gd" id="5_wniug"]
 [ext_resource type="AudioStream" uid="uid://ju3ogqg6d686" path="res://assets/sfx/HitSoundPlayer.mp3" id="6_hnfsw"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_tyh3w"]
-atlas = ExtResource("3_xfafm")
-region = Rect2(0, 0, 30, 64)
+[sub_resource type="AtlasTexture" id="AtlasTexture_4axgh"]
+atlas = ExtResource("4_wjis0")
+region = Rect2(0, 0, 34, 68)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_huuu2"]
+atlas = ExtResource("4_wjis0")
+region = Rect2(34, 0, 34, 68)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6n2j7"]
+atlas = ExtResource("4_wjis0")
+region = Rect2(68, 0, 34, 68)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wcan8"]
+atlas = ExtResource("5_3y1jq")
+region = Rect2(0, 0, 34, 68)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_537jv"]
+atlas = ExtResource("5_3y1jq")
+region = Rect2(34, 0, 34, 68)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_deyoh"]
+atlas = ExtResource("5_3y1jq")
+region = Rect2(68, 0, 34, 68)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_tfbt8"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("1_n1myn")
+"texture": SubResource("AtlasTexture_4axgh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_huuu2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6n2j7")
 }],
-"loop": true,
-"name": &"default",
+"loop": false,
+"name": &"furl",
 "speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_tyh3w")
+"texture": SubResource("AtlasTexture_wcan8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_537jv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_deyoh")
 }],
-"loop": true,
-"name": &"new_animation",
+"loop": false,
+"name": &"raise",
 "speed": 5.0
 }]
 
@@ -44,7 +76,7 @@ morale = 100
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 rotation = 3.1415927
 sprite_frames = SubResource("SpriteFrames_tfbt8")
-animation = &"new_animation"
+animation = &"furl"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -1)

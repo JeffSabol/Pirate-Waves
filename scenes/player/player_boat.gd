@@ -38,6 +38,8 @@ extends CharacterBody2D
 @export var can_fire_left := true
 @export var can_fire_right := true
 
+var sails_furled: bool = true
+
 const FORWARD_BASE := Vector2.UP
 
 var current_speed: float = 0.0
@@ -54,6 +56,14 @@ func enable_controls() -> void:
 
 func disable_controls() -> void:
 	controls_enabled = false
+	
+func _ready():
+	sails_furled = true
+	current_speed = 0.0
+	var anim := $AnimatedSprite2D
+	anim.play("furl")
+	anim.frame = anim.sprite_frames.get_frame_count("furl") - 1
+	anim.pause()
 
 func _physics_process(delta: float) -> void:
 	# Camera sway (waves / motion feel)
@@ -86,16 +96,32 @@ func _physics_process(delta: float) -> void:
 		turn_inertia = lerp(turn_inertia, 0.0, clamp(turn_inertia_decay * delta, 0.0, 1.0))
 
 	rotation += effective_turn * turn_inertia * delta
+	
+	# --- sail state & animations (one-shots) ---
+	if Input.is_action_just_pressed("ui_up") or Input.is_action_just_pressed("move_up"):
+		sails_furled = false
+		if $AnimatedSprite2D.animation != "raise":
+			$AnimatedSprite2D.play("raise")
+	elif Input.is_action_just_pressed("ui_down") or Input.is_action_just_pressed("move_down"):
+		sails_furled = true
+		if $AnimatedSprite2D.animation != "furl":
+			$AnimatedSprite2D.play("furl")
 
 	# throttle/brake
-	if Input.is_action_pressed("ui_up") or Input.is_action_pressed("move_up"):
-		current_speed += acceleration * delta
-	elif Input.is_action_pressed("ui_down") or Input.is_action_pressed("move_down"):
-		current_speed -= deceleration * delta
+	if not sails_furled:
+		# normal sailing
+		if Input.is_action_pressed("ui_up") or Input.is_action_pressed("move_up"):
+			current_speed += acceleration * delta
+		elif Input.is_action_pressed("ui_down") or Input.is_action_pressed("move_down"):
+			current_speed -= deceleration * delta
+		else:
+			# glide down toward a tiny idle drift forward for “always slightly moving”
+			var target_idle := idle_drift_speed
+			current_speed = move_toward(current_speed, target_idle, 20.0 * delta)
 	else:
-		# glide down toward a tiny idle drift forward for “always slightly moving”
-		var target_idle := idle_drift_speed
-		current_speed = move_toward(current_speed, target_idle, 20.0 * delta)
+		# sails furled → bleed off all motion, no drift
+		current_speed = move_toward(current_speed, 0.0, 20.0 * delta)
+
 
 	# fire controls
 	if Input.is_action_just_pressed("fire_left"):
