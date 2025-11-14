@@ -95,9 +95,9 @@ texture = ExtResource("5_4nqjw")
 [node name="VBoxContainer" type="VBoxContainer" parent="MapUI/SailStats"]
 layout_mode = 0
 offset_left = 58.0
-offset_top = 72.5
+offset_top = 78.5
 offset_right = 110.0
-offset_bottom = 172.5
+offset_bottom = 178.5
 
 [node name="HP" type="Label" parent="MapUI/SailStats/VBoxContainer"]
 layout_mode = 2
@@ -110,11 +110,6 @@ theme_override_font_sizes/font_size = 8
 text = "test"
 
 [node name="Knots" type="Label" parent="MapUI/SailStats/VBoxContainer"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 8
-text = "test"
-
-[node name="Morale" type="Label" parent="MapUI/SailStats/VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 8
 text = "test"
