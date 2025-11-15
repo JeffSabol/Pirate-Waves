@@ -56,10 +56,18 @@ grow_vertical = 2
 texture = ExtResource("1_44gni")
 metadata/_edit_use_anchors_ = true
 
+[node name="Shipwright" type="TextureRect" parent="CanvasLayer"]
+offset_left = 628.0
+offset_top = 395.00003
+offset_right = 728.0
+offset_bottom = 495.00003
+scale = Vector2(3, 3)
+texture = SubResource("AnimatedTexture_bf8my")
+
 [node name="MenuBackground" type="TextureRect" parent="CanvasLayer"]
-offset_left = 658.0
+offset_left = -193.00002
 offset_top = 90.99999
-offset_right = 808.0
+offset_right = -43.000015
 offset_bottom = 219.0
 scale = Vector2(5, 5)
 texture = ExtResource("2_ixawh")
@@ -251,12 +259,3 @@ scale = Vector2(0.5, 0.5)
 theme_override_constants/outline_size = 0
 theme_override_font_sizes/font_size = 8
 text = "EXIT"
-
-[node name="Shipwright" type="TextureRect" parent="CanvasLayer/MenuBackground"]
-layout_mode = 0
-offset_left = -6.800002
-offset_top = 59.0
-offset_right = 33.199997
-offset_bottom = 99.000015
-scale = Vector2(0.5, 0.5)
-texture = SubResource("AnimatedTexture_bf8my")
