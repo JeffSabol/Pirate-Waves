@@ -39,7 +39,7 @@ func _on_guns_upgrade_btn_pressed():
 
 func _on_exit_click_zone_gui_input(event):
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
-		$"./../'queue_free()
+		print("exit the shipyard!!!")
 
 func _on_repair_click_zone_gui_input(event):
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
