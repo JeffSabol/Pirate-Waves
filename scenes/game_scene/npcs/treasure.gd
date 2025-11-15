@@ -1,6 +1,7 @@
 extends Node2D
 
-@export_enum("Gold", "Fish", "Rum", "Ore", "Clothes")
+@export_enum("Gold")
+#@export_enum("Gold", "Fish", "Rum", "Ore", "Clothes")
 var treasure_type: String = "Gold"
 
 @export_enum("Small", "Medium", "Large")

@@ -39,7 +39,8 @@ func _spawn_treasure(position: Vector2) -> void:
 	var treasure := TreasureScene.instantiate()
 
 	# Optional: randomize type + size on spawn
-	var types = ["Gold", "Fish", "Rum", "Ore", "Clothes"]
+	var types = ["Gold"]
+	#var types = ["Gold", "Fish", "Rum", "Ore", "Clothes"]
 	var sizes = ["Small", "Medium", "Large"]
 
 	treasure.treasure_type = types[randi() % types.size()]
