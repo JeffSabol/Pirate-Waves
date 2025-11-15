@@ -44,8 +44,6 @@ func update_sail_stats():
 	$SailStats/VBoxContainer/HP.text = "HP:                   %d" % player.hp
 	$SailStats/VBoxContainer/Guns.text = "Guns:            %d" % player.guns
 	$SailStats/VBoxContainer/Knots.text = "Knots:        %d" % player.knots
-	$SailStats/VBoxContainer/Morale.text = "Morale:     %d" % player.morale
-
 
 func _on_map_button_pressed():
 	pass # Replace with function body.
