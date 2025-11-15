@@ -116,16 +116,16 @@ theme_override_constants/outline_size = 0
 theme_override_font_sizes/font_size = 8
 text = "SPEED"
 
-[node name="SpeedPriceLabel2" type="Label" parent="CanvasLayer/MenuBackground"]
+[node name="SpeedPriceLabel" type="Label" parent="CanvasLayer/MenuBackground"]
 layout_mode = 0
-offset_left = 49.40001
-offset_top = 38.6
-offset_right = 135.40001
-offset_bottom = 60.599995
+offset_left = 48.600006
+offset_top = 37.8
+offset_right = 134.60002
+offset_bottom = 59.799995
 scale = Vector2(0.5, 0.5)
 theme_override_colors/font_color = Color(1, 0.99607843, 0, 1)
 theme_override_constants/outline_size = 0
-theme_override_font_sizes/font_size = 6
+theme_override_font_sizes/font_size = 8
 text = "1"
 
 [node name="SpeedUpgradeBtn" type="TextureButton" parent="CanvasLayer/MenuBackground"]
@@ -152,13 +152,13 @@ text = "TURNING"
 [node name="TurningPriceLabel" type="Label" parent="CanvasLayer/MenuBackground"]
 layout_mode = 0
 offset_left = 49.200012
-offset_top = 55.6
+offset_top = 55.4
 offset_right = 111.20001
-offset_bottom = 77.59999
+offset_bottom = 77.399994
 scale = Vector2(0.5, 0.5)
 theme_override_colors/font_color = Color(1, 0.99607843, 0, 1)
 theme_override_constants/outline_size = 0
-theme_override_font_sizes/font_size = 6
+theme_override_font_sizes/font_size = 8
 text = "1"
 
 [node name="TurningUpgradeBtn" type="TextureButton" parent="CanvasLayer/MenuBackground"]
@@ -185,13 +185,13 @@ text = "hull"
 [node name="HullPriceLabel" type="Label" parent="CanvasLayer/MenuBackground"]
 layout_mode = 0
 offset_left = 48.800003
-offset_top = 73.0
+offset_top = 72.399994
 offset_right = 104.8
-offset_bottom = 94.99999
+offset_bottom = 97.399994
 scale = Vector2(0.5, 0.5)
 theme_override_colors/font_color = Color(1, 0.99607843, 0, 1)
 theme_override_constants/outline_size = 0
-theme_override_font_sizes/font_size = 6
+theme_override_font_sizes/font_size = 8
 text = "1
 "
 
@@ -219,13 +219,13 @@ text = "GUNS"
 [node name="GunsPriceLabel" type="Label" parent="CanvasLayer/MenuBackground"]
 layout_mode = 0
 offset_left = 49.4
-offset_top = 89.8
+offset_top = 89.4
 offset_right = 89.399994
-offset_bottom = 111.8
+offset_bottom = 111.4
 scale = Vector2(0.5, 0.5)
 theme_override_colors/font_color = Color(1, 0.99607843, 0, 1)
 theme_override_constants/outline_size = 0
-theme_override_font_sizes/font_size = 6
+theme_override_font_sizes/font_size = 8
 text = "1"
 
 [node name="GunsUpgradeBtn" type="TextureButton" parent="CanvasLayer/MenuBackground"]

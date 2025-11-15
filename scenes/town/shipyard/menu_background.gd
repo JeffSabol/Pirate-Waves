@@ -23,6 +23,10 @@ func _gui_input(event: InputEvent) -> void:
 
 func _physics_process(delta):
 	$GoldBalance.text = str($"../../../../PlayerBoat".gold)
+	$SpeedPriceLabel.text = str($"../../../../PlayerBoat".speed_upgrade_cost)
+	$TurningPriceLabel.text = str($"../../../../PlayerBoat".turning_upgrade_cost)
+	$HullPriceLabel.text = str($"../../../../PlayerBoat".hull_upgrade_cost)
+	$GunsPriceLabel.text = str($"../../../../PlayerBoat".guns_upgrade_cost)
 
 func _on_speed_upgrade_btn_pressed():
 	$"../../../../PlayerBoat".upgrade_speed()
@@ -34,7 +38,7 @@ func _on_hull_upgrade_btn_pressed():
 	$"../../../../PlayerBoat".upgrade_hull()
 
 func _on_guns_upgrade_btn_pressed():
-	$"../../../../PlayerBoat".upgrade_hull()
+	$"../../../../PlayerBoat".upgrade_guns()
 
 
 func _on_exit_click_zone_gui_input(event):
