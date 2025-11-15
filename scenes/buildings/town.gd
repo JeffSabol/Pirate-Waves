@@ -42,3 +42,9 @@ func _on_enter_zone_body_entered(body):
 			body.in_town_rum = merchant_rum
 			body.in_town_ore = merchant_ore
 			body.in_town_clothes = merchant_clothes
+
+func _on_enter_zone_body_exited(body):
+	if body.name == "PlayerBoat":
+		var wm := $"../../WaveManager" as WaveManager
+		if wm:
+			wm.start_waves()

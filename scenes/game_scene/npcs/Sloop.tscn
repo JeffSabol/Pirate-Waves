@@ -1,0 +1,103 @@
+[gd_scene load_steps=13 format=3 uid="uid://c6whfp3pxsx1o"]
+
+[ext_resource type="Script" uid="uid://tjy3np0h2fe1" path="res://scenes/game_scene/npcs/ship_ai.gd" id="1_sbd3i"]
+[ext_resource type="Texture2D" uid="uid://dygk1ru6yp6op" path="res://assets/boat/pirate1_defeated.png" id="3_sbd3i"]
+[ext_resource type="Texture2D" uid="uid://civqmykm6ed18" path="res://assets/boat/pirate1.png" id="3_xjxqj"]
+[ext_resource type="Texture2D" uid="uid://bbku3bqu5atpq" path="res://assets/boat/pirate1_hurt.png" id="4_fm3p0"]
+[ext_resource type="Script" uid="uid://dx48q0tsf6rf8" path="res://scenes/game_scene/npcs/health.gd" id="5_3sxv0"]
+[ext_resource type="PackedScene" uid="uid://b6nvp82ty2110" path="res://scenes/player/gun.tscn" id="6_p0ydb"]
+[ext_resource type="AudioStream" uid="uid://ljnrvt0jhnln" path="res://assets/sfx/debris_break.wav" id="7_3d6n1"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sbd3i"]
+atlas = ExtResource("3_xjxqj")
+region = Rect2(0, 0, 40, 72)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mdtiy"]
+atlas = ExtResource("3_sbd3i")
+region = Rect2(0, 0, 40, 72)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cw41g"]
+atlas = ExtResource("4_fm3p0")
+region = Rect2(0, 0, 40, 72)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_mxv8p"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sbd3i")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mdtiy")
+}],
+"loop": true,
+"name": &"defeated",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cw41g")
+}],
+"loop": true,
+"name": &"hurt",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_jopw0"]
+radius = 15.0
+height = 68.0
+
+[node name="SloopShip" type="Area2D"]
+script = ExtResource("1_sbd3i")
+turn_speed = 8.0
+chase_speed = 90.0
+aggro_preferred_range = 240.0
+aggro_range_tolerance = 50.0
+orbit_clockwise = false
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+rotation = -3.1415925
+sprite_frames = SubResource("SpriteFrames_mxv8p")
+
+[node name="ShipHealth" type="Node2D" parent="."]
+script = ExtResource("5_3sxv0")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_jopw0")
+
+[node name="Guns" type="Node2D" parent="."]
+
+[node name="Gun1" parent="Guns" instance=ExtResource("6_p0ydb")]
+
+[node name="Gun2" parent="Guns" instance=ExtResource("6_p0ydb")]
+scale = Vector2(-1, 1)
+
+[node name="Gun3" parent="Guns" instance=ExtResource("6_p0ydb")]
+position = Vector2(0, -7)
+
+[node name="Gun4" parent="Guns" instance=ExtResource("6_p0ydb")]
+position = Vector2(0, -7)
+scale = Vector2(-1, 1)
+
+[node name="Gun5" parent="Guns" instance=ExtResource("6_p0ydb")]
+position = Vector2(0, 7)
+
+[node name="Gun6" parent="Guns" instance=ExtResource("6_p0ydb")]
+position = Vector2(0, 7)
+scale = Vector2(-1, 1)
+
+[node name="HitSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("7_3d6n1")
+volume_db = -6.0
+
+[node name="LeftSight" type="RayCast2D" parent="."]
+rotation = 1.5707964
+target_position = Vector2(0, 250)
+
+[node name="RightSight" type="RayCast2D" parent="."]
+rotation = -1.5707964
+target_position = Vector2(0, 260)

@@ -11,8 +11,8 @@
 [ext_resource type="AudioStream" uid="uid://c3iohqiy1v26q" path="res://assets/music/sea_wave_pause_music.mp3" id="5_xhe80"]
 [ext_resource type="PackedScene" uid="uid://cdc0kjiub4x3w" path="res://scenes/buildings/town.tscn" id="6_2maww"]
 [ext_resource type="PackedScene" uid="uid://cu6c72fyiba2s" path="res://scenes/game_scene/world/world_ui.tscn" id="6_7ih7l"]
-[ext_resource type="PackedScene" uid="uid://jb7ks6loxwux" path="res://scenes/game_scene/npcs/MerchantShip.tscn" id="6_e34on"]
 [ext_resource type="Texture2D" uid="uid://c04j4e6topvgh" path="res://assets/buildings/Wealthy.png" id="6_ey1od"]
+[ext_resource type="PackedScene" uid="uid://c6whfp3pxsx1o" path="res://scenes/game_scene/npcs/Sloop.tscn" id="8_h3f8j"]
 [ext_resource type="Script" uid="uid://c44uciwjilc0t" path="res://scenes/game_scene/world/trade_route.gd" id="8_p2q0g"]
 [ext_resource type="AudioStream" uid="uid://sr4yo0xgqpws" path="res://assets/sfx/error.mp3" id="12_vrmdf"]
 [ext_resource type="AudioStream" uid="uid://dya4dixr7ky0d" path="res://assets/sfx/saw.wav" id="13_wx6fr"]
@@ -856,6 +856,8 @@ town_name = "Port Haven"
 merchant_gold = 250
 merchant_fish = 3
 merchant_rum = 50
+merchant_ore = null
+merchant_clothes = null
 
 [node name="Building" parent="Towns/PortHaven" index="0"]
 position = Vector2(-227, 16)
@@ -879,8 +881,10 @@ sprite_frames = SubResource("SpriteFrames_megev")
 animation = &"wealthy"
 
 [node name="WaveManager" parent="." instance=ExtResource("5_eegf6")]
-sloop_scene = ExtResource("6_e34on")
-corsair_scene = ExtResource("6_e34on")
+sloop_scene = ExtResource("8_h3f8j")
+corsair_scene = ExtResource("8_h3f8j")
+brig_scene = ExtResource("8_h3f8j")
+boss_scene = ExtResource("8_h3f8j")
 spawn_avoid_radius = 300.0
 
 [node name="WorldUI" parent="." instance=ExtResource("6_7ih7l")]
@@ -926,5 +930,7 @@ stream = ExtResource("12_vrmdf")
 
 [node name="SawSFX" type="AudioStreamPlayer" parent="PlayerBoat"]
 stream = ExtResource("13_wx6fr")
+
+[connection signal="body_exited" from="Towns/PortHaven/EnterZone" to="Towns/PortHaven" method="_on_enter_zone_body_exited"]
 
 [editable path="Towns/PortHaven"]

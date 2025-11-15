@@ -1,4 +1,5 @@
 extends Node
+class_name WaveManager
 # Wave-based spawner that uses trade routes as spawn splines.
 
 # Enemy scenes (set these in the inspector)
@@ -18,6 +19,7 @@ var _routes: Array[Path2D] = [] as Array[Path2D]
 
 var _current_wave: int = 1
 var _enemies_alive: int = 0
+var _waves_started: bool = false
 
 # 5-wave pattern that repeats; counts are base values for wave 1–5.
 # Higher waves will scale these up.
@@ -43,9 +45,20 @@ func _ready() -> void:
 			print("  Skipping node in TradeRoutes group, not a Path2D with curve:", n)
 
 	print("[WaveManager] Total routes tracked:", _routes.size())
+	# IMPORTANT: we DO NOT start waves here anymore.
+	# Town will explicitly call start_waves() when the player leaves.
 
-	# Start wave 1 after the scene is fully ready
-	call_deferred("_start_wave", _current_wave)
+
+# ------------------------
+# PUBLIC API – called by Town
+# ------------------------
+
+func start_waves() -> void:
+	if _waves_started:
+		return
+	_waves_started = true
+	print("[WaveManager] Waves started by town trigger. Starting wave", _current_wave)
+	_start_wave(_current_wave)
 
 
 # ------------------------
