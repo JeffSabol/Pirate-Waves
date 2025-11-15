@@ -22,11 +22,34 @@ func _gui_input(event: InputEvent) -> void:
 		accept_event()
 
 func _physics_process(delta):
-	$GoldBalance.text = str($"../../../../PlayerBoat".gold)
-	$SpeedPriceLabel.text = str($"../../../../PlayerBoat".speed_upgrade_cost)
-	$TurningPriceLabel.text = str($"../../../../PlayerBoat".turning_upgrade_cost)
-	$HullPriceLabel.text = str($"../../../../PlayerBoat".hull_upgrade_cost)
-	$GunsPriceLabel.text = str($"../../../../PlayerBoat".guns_upgrade_cost)
+	var player = $"../../../../PlayerBoat"
+
+	$GoldBalance.text = str(player.gold)
+
+	# SPEED
+	if player.speed_upgrade_level >= player.max_upgrade_level:
+		$SpeedPriceLabel.text = "MAX"
+	else:
+		$SpeedPriceLabel.text = str(player.speed_upgrade_cost)
+
+	# TURNING
+	if player.turning_upgrade_level >= player.max_upgrade_level:
+		$TurningPriceLabel.text = "MAX"
+	else:
+		$TurningPriceLabel.text = str(player.turning_upgrade_cost)
+
+	# HULL
+	if player.hull_upgrade_level >= player.max_upgrade_level:
+		$HullPriceLabel.text = "MAX"
+	else:
+		$HullPriceLabel.text = str(player.hull_upgrade_cost)
+
+	# GUNS
+	if player.guns_upgrade_level >= player.max_upgrade_level:
+		$GunsPriceLabel.text = "MAX"
+	else:
+		$GunsPriceLabel.text = str(player.guns_upgrade_cost)
+
 
 func _on_speed_upgrade_btn_pressed():
 	$"../../../../PlayerBoat".upgrade_speed()
@@ -71,3 +94,4 @@ func _on_repair_click_zone_gui_input(event):
 		player.gold -= amount_affordable
 		
 		print("Repaired ", amount_affordable, " HP for ", amount_affordable, " gold.")
+		$"../../../../PlayerBoat/SawSFX".play()

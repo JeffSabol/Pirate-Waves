@@ -218,7 +218,7 @@ text = "GUNS"
 
 [node name="GunsPriceLabel" type="Label" parent="CanvasLayer/MenuBackground"]
 layout_mode = 0
-offset_left = 49.4
+offset_left = 49.400005
 offset_top = 89.4
 offset_right = 89.399994
 offset_bottom = 111.4

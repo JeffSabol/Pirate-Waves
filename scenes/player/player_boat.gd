@@ -5,7 +5,19 @@ extends CharacterBody2D
 @export var turning_upgrade_cost: int = 50
 @export var hull_upgrade_cost: int = 75
 @export var guns_upgrade_cost: int = 100
-@export var upgrade_cost_multiplier: float = 1.5  # cost scales each time
+
+# --- Upgrade limits / tracking ---
+@export var max_upgrade_level: int = 3
+@export var speed_upgrade_level: int = 0
+@export var turning_upgrade_level: int = 0
+@export var hull_upgrade_level: int = 0
+@export var guns_upgrade_level: int = 0
+
+# flat increments per level (not exported; we just display the current costs above)
+var speed_upgrade_step: int = 25
+var turning_upgrade_step: int = 25
+var hull_upgrade_step: int = 50
+var guns_upgrade_step: int = 50
 
 @export var acceleration := 30.0
 @export var deceleration := 10.0
@@ -235,6 +247,11 @@ func _spend_gold(cost: int) -> void:
 # --- Upgrades ----------------------------------------------------------------
 
 func upgrade_speed() -> void:
+	if speed_upgrade_level >= max_upgrade_level:
+		print("Speed already fully upgraded")
+		$NotEnoughSFX.play()
+		return
+
 	if not _can_afford(speed_upgrade_cost):
 		print("not enough gold for speed upgrade")
 		$NotEnoughSFX.play()
@@ -247,10 +264,17 @@ func upgrade_speed() -> void:
 	acceleration += 5.0
 	reverse_speed += 10.0
 
-	# Scale the next cost
-	speed_upgrade_cost = int(round(speed_upgrade_cost * upgrade_cost_multiplier))
+	speed_upgrade_level += 1
+	# Only increase price if we're not at max yet
+	if speed_upgrade_level < max_upgrade_level:
+		speed_upgrade_cost += speed_upgrade_step
 
 func upgrade_turning() -> void:
+	if turning_upgrade_level >= max_upgrade_level:
+		print("Turning already fully upgraded")
+		$NotEnoughSFX.play()
+		return
+
 	if not _can_afford(turning_upgrade_cost):
 		print("not enough gold for turning upgrade")
 		$NotEnoughSFX.play()
@@ -262,9 +286,16 @@ func upgrade_turning() -> void:
 	# Turning buff
 	turn_speed += 0.2
 
-	turning_upgrade_cost = int(round(turning_upgrade_cost * upgrade_cost_multiplier))
+	turning_upgrade_level += 1
+	if turning_upgrade_level < max_upgrade_level:
+		turning_upgrade_cost += turning_upgrade_step
 
 func upgrade_hull() -> void:
+	if hull_upgrade_level >= max_upgrade_level:
+		print("Hull already fully upgraded")
+		$NotEnoughSFX.play()
+		return
+
 	if not _can_afford(hull_upgrade_cost):
 		print("not enough gold for hull upgrade")
 		$NotEnoughSFX.play()
@@ -277,7 +308,9 @@ func upgrade_hull() -> void:
 	max_hp += 25
 	hp += 25
 
-	hull_upgrade_cost = int(round(hull_upgrade_cost * upgrade_cost_multiplier))
+	hull_upgrade_level += 1
+	if hull_upgrade_level < max_upgrade_level:
+		hull_upgrade_cost += hull_upgrade_step
 
 func upgrade_guns() -> void:
 	var guns_node: Node = $Guns
@@ -286,6 +319,12 @@ func upgrade_guns() -> void:
 	# Don't charge gold if we're already at max guns
 	if guns >= max_guns:
 		print("Already at maximum guns")
+		$NotEnoughSFX.play()
+		return
+
+	if guns_upgrade_level >= max_upgrade_level:
+		print("Guns already fully upgraded")
+		$NotEnoughSFX.play()
 		return
 
 	if not _can_afford(guns_upgrade_cost):
@@ -299,4 +338,6 @@ func upgrade_guns() -> void:
 	guns += 1
 	update_guns_visibility()
 
-	guns_upgrade_cost = int(round(guns_upgrade_cost * upgrade_cost_multiplier))
+	guns_upgrade_level += 1
+	if guns_upgrade_level < max_upgrade_level:
+		guns_upgrade_cost += guns_upgrade_step
