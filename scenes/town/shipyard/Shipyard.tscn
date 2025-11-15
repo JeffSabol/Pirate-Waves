@@ -1,9 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://c6qexg224wfyy"]
+[gd_scene load_steps=5 format=3 uid="uid://c6qexg224wfyy"]
 
 [ext_resource type="Texture2D" uid="uid://4pi37xpixlf8" path="res://assets/ui/town/shipyard/ShipYard.png" id="1_44gni"]
-[ext_resource type="Texture2D" uid="uid://bi4skf1dgo3a3" path="res://assets/ui/town/shipyard/Menu.png" id="2_4ju20"]
+[ext_resource type="Texture2D" uid="uid://bqal11e3q3jc" path="res://assets/ui/town/shipyard/BaseUpgradeUI.png" id="2_ixawh"]
 [ext_resource type="FontFile" uid="uid://duln27t01nc1q" path="res://assets/fonts/Minecraftia-Regular.ttf" id="3_44gni"]
-[ext_resource type="Script" uid="uid://yas2vi8amvgj" path="res://scenes/town/shipyard/leave.gd" id="3_ee18e"]
 [ext_resource type="Script" uid="uid://dbq7c1adboyop" path="res://scenes/town/shipyard/menu_background.gd" id="3_ixawh"]
 
 [node name="Shipyard" type="Control"]
@@ -26,13 +25,24 @@ texture = ExtResource("1_44gni")
 metadata/_edit_use_anchors_ = true
 
 [node name="MenuBackground" type="TextureRect" parent="CanvasLayer"]
-offset_left = 874.00006
-offset_top = 108.0
-offset_right = 1898.0
-offset_bottom = 1644.0
-scale = Vector2(0.4, 0.4)
-texture = ExtResource("2_4ju20")
+offset_left = 658.0
+offset_top = 90.99999
+offset_right = 808.0
+offset_bottom = 219.0
+scale = Vector2(5, 5)
+texture = ExtResource("2_ixawh")
 script = ExtResource("3_ixawh")
+
+[node name="GoldLabel" type="Label" parent="CanvasLayer/MenuBackground"]
+layout_mode = 0
+offset_left = 42.999985
+offset_top = 10.800002
+offset_right = 82.999985
+offset_bottom = 32.8
+theme_override_colors/font_color = Color(1, 0.8081555, 0, 1)
+theme_override_constants/outline_size = 0
+theme_override_font_sizes/font_size = 6
+text = "GOLD"
 
 [node name="GoldBalance" type="Label" parent="CanvasLayer/MenuBackground"]
 layout_mode = 1
@@ -41,71 +51,131 @@ anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_left = -216.5
-offset_top = -700.5
-offset_right = -161.5
-offset_bottom = -570.5
+offset_left = -59.000015
+offset_top = -53.999996
+offset_right = -29.200027
+offset_bottom = -22.999996
 grow_horizontal = 0
 grow_vertical = 2
 theme_override_colors/font_color = Color(0.98039216, 0.7764706, 0.34901962, 1)
 theme_override_colors/font_outline_color = Color(0.47284538, 0.30912796, 0, 1)
+theme_override_constants/outline_size = 0
 theme_override_fonts/font = ExtResource("3_44gni")
-theme_override_font_sizes/font_size = 74
-text = "0"
+theme_override_font_sizes/font_size = 8
+text = "123
+"
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/MenuBackground"]
+[node name="SpeedLabel" type="Label" parent="CanvasLayer/MenuBackground"]
 layout_mode = 0
-offset_left = 7.500061
-offset_top = 4.9999695
-offset_right = 343.33344
-offset_bottom = 514.1666
-scale = Vector2(3, 3)
+offset_left = 47.16666
+offset_top = 28.666666
+offset_right = 133.16666
+offset_bottom = 50.666664
+scale = Vector2(0.5, 0.5)
+theme_override_constants/outline_size = 0
+theme_override_font_sizes/font_size = 8
+text = "SPEED"
 
-[node name="SpeedUpgrade" type="ColorRect" parent="CanvasLayer/MenuBackground"]
+[node name="SpeedPriceLabel2" type="Label" parent="CanvasLayer/MenuBackground"]
 layout_mode = 0
-offset_left = 592.5
-offset_top = 284.99997
-offset_right = 665.0
-offset_bottom = 334.99997
-tooltip_text = "Increases your ship’s max speed"
-color = Color(1, 1, 0, 0)
+offset_left = 49.40001
+offset_top = 38.6
+offset_right = 135.40001
+offset_bottom = 60.599995
+scale = Vector2(0.5, 0.5)
+theme_override_colors/font_color = Color(1, 0.99607843, 0, 1)
+theme_override_constants/outline_size = 0
+theme_override_font_sizes/font_size = 6
+text = "1"
 
-[node name="TurningUpgrade" type="ColorRect" parent="CanvasLayer/MenuBackground"]
+[node name="TurningLabel" type="Label" parent="CanvasLayer/MenuBackground"]
 layout_mode = 0
-offset_left = 592.5
-offset_top = 504.99994
-offset_right = 667.5
-offset_bottom = 559.99994
-tooltip_text = "Improves turning rate"
-color = Color(1, 1, 0, 0)
+offset_left = 47.000008
+offset_top = 47.000004
+offset_right = 109.000015
+offset_bottom = 69.0
+scale = Vector2(0.5, 0.5)
+theme_override_constants/outline_size = 0
+theme_override_font_sizes/font_size = 8
+text = "TURNING"
 
-[node name="HullUpgrade" type="ColorRect" parent="CanvasLayer/MenuBackground"]
+[node name="TurningPriceLabel" type="Label" parent="CanvasLayer/MenuBackground"]
 layout_mode = 0
-offset_left = 590.0
-offset_top = 732.5
-offset_right = 665.0
-offset_bottom = 782.5
-tooltip_text = "Boosts max health"
-color = Color(1, 1, 0, 0)
+offset_left = 49.200012
+offset_top = 55.6
+offset_right = 111.20001
+offset_bottom = 77.59999
+scale = Vector2(0.5, 0.5)
+theme_override_colors/font_color = Color(1, 0.99607843, 0, 1)
+theme_override_constants/outline_size = 0
+theme_override_font_sizes/font_size = 6
+text = "1"
 
-[node name="GunsUpgrade" type="ColorRect" parent="CanvasLayer/MenuBackground"]
+[node name="HullLabel" type="Label" parent="CanvasLayer/MenuBackground"]
 layout_mode = 0
-offset_left = 592.5
-offset_top = 952.5
-offset_right = 665.0
-offset_bottom = 1007.5
-tooltip_text = "Increases cannon damage and firing rate"
-color = Color(1, 1, 0, 0)
+offset_left = 46.666664
+offset_top = 63.666664
+offset_right = 102.666664
+offset_bottom = 85.66666
+scale = Vector2(0.5, 0.5)
+theme_override_constants/outline_size = 0
+theme_override_font_sizes/font_size = 8
+text = "hull"
 
-[node name="Leave" type="ColorRect" parent="CanvasLayer/MenuBackground"]
+[node name="HullPriceLabel" type="Label" parent="CanvasLayer/MenuBackground"]
 layout_mode = 0
-offset_left = 237.50006
-offset_top = 1277.5
-offset_right = 782.5
-offset_bottom = 1447.5
-tooltip_text = "Exit the shipyard"
-color = Color(1, 1, 0, 0)
-script = ExtResource("3_ee18e")
+offset_left = 48.800003
+offset_top = 73.0
+offset_right = 104.8
+offset_bottom = 94.99999
+scale = Vector2(0.5, 0.5)
+theme_override_colors/font_color = Color(1, 0.99607843, 0, 1)
+theme_override_constants/outline_size = 0
+theme_override_font_sizes/font_size = 6
+text = "1
+"
 
-[connection signal="gui_input" from="CanvasLayer/MenuBackground/SpeedUpgrade" to="CanvasLayer/MenuBackground" method="_on_speed_upgrade_gui_input"]
-[connection signal="gui_input" from="CanvasLayer/MenuBackground/Leave" to="CanvasLayer/MenuBackground/Leave" method="_on_gui_input"]
+[node name="GunsLabel" type="Label" parent="CanvasLayer/MenuBackground"]
+layout_mode = 0
+offset_left = 46.599987
+offset_top = 80.83333
+offset_right = 86.59998
+offset_bottom = 102.83333
+scale = Vector2(0.5, 0.5)
+theme_override_constants/outline_size = 0
+theme_override_font_sizes/font_size = 8
+text = "GUNS"
+
+[node name="GunsPriceLabel" type="Label" parent="CanvasLayer/MenuBackground"]
+layout_mode = 0
+offset_left = 49.4
+offset_top = 89.8
+offset_right = 89.399994
+offset_bottom = 111.8
+scale = Vector2(0.5, 0.5)
+theme_override_colors/font_color = Color(1, 0.99607843, 0, 1)
+theme_override_constants/outline_size = 0
+theme_override_font_sizes/font_size = 6
+text = "1"
+
+[node name="RepairLabel" type="Label" parent="CanvasLayer/MenuBackground"]
+layout_mode = 0
+offset_left = 83.399994
+offset_top = 111.6
+offset_right = 169.4
+offset_bottom = 133.59999
+scale = Vector2(0.5, 0.5)
+theme_override_constants/outline_size = 0
+theme_override_font_sizes/font_size = 8
+text = "FIX"
+
+[node name="ExitLabel" type="Label" parent="CanvasLayer/MenuBackground"]
+layout_mode = 0
+offset_left = 55.40001
+offset_top = 112.2
+offset_right = 141.4
+offset_bottom = 137.2
+scale = Vector2(0.5, 0.5)
+theme_override_constants/outline_size = 0
+theme_override_font_sizes/font_size = 8
+text = "EXIT"
