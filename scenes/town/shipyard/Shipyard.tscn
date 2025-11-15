@@ -1,9 +1,39 @@
-[gd_scene load_steps=5 format=3 uid="uid://c6qexg224wfyy"]
+[gd_scene load_steps=15 format=3 uid="uid://c6qexg224wfyy"]
 
 [ext_resource type="Texture2D" uid="uid://4pi37xpixlf8" path="res://assets/ui/town/shipyard/ShipYard.png" id="1_44gni"]
 [ext_resource type="Texture2D" uid="uid://bqal11e3q3jc" path="res://assets/ui/town/shipyard/BaseUpgradeUI.png" id="2_ixawh"]
 [ext_resource type="FontFile" uid="uid://duln27t01nc1q" path="res://assets/fonts/Minecraftia-Regular.ttf" id="3_44gni"]
 [ext_resource type="Script" uid="uid://dbq7c1adboyop" path="res://scenes/town/shipyard/menu_background.gd" id="3_ixawh"]
+[ext_resource type="Texture2D" uid="uid://d22hp7egxln7q" path="res://assets/ui/town/shipyard/SHIPWRIGHT1.png" id="5_2tcl3"]
+[ext_resource type="Texture2D" uid="uid://c2x4l1ukd6gwi" path="res://assets/ui/town/shipyard/SHIPWRIGHT2.png" id="6_8sxeu"]
+[ext_resource type="Texture2D" uid="uid://cnx1ilteuot8y" path="res://assets/ui/town/shipyard/SHIPWRIGHT3.png" id="7_p6ufq"]
+[ext_resource type="Texture2D" uid="uid://btiogevx62wbw" path="res://assets/ui/town/shipyard/SHIPWRIGHT4.png" id="8_7enfh"]
+[ext_resource type="Texture2D" uid="uid://d0fjfpu8vfmi" path="res://assets/ui/town/shipyard/SHIPWRIGHT5.png" id="9_4kvys"]
+[ext_resource type="Texture2D" uid="uid://drx36gd0sy6to" path="res://assets/ui/town/shipyard/SHIPWRIGHT6.png" id="10_s4r6o"]
+[ext_resource type="Texture2D" uid="uid://8jjgkso7iww1" path="res://assets/ui/town/shipyard/SHIPWRIGHT7.png" id="11_ielbi"]
+[ext_resource type="Texture2D" uid="uid://balupdxjbhy04" path="res://assets/ui/town/shipyard/SHIPWRIGHT8.png" id="12_1ahyg"]
+[ext_resource type="Texture2D" uid="uid://bteq4c38n3ijq" path="res://assets/ui/town/shipyard/SHIPWRIGHT9.png" id="13_nnck5"]
+
+[sub_resource type="AnimatedTexture" id="AnimatedTexture_bf8my"]
+frames = 9
+frame_0/texture = ExtResource("5_2tcl3")
+frame_0/duration = 0.2
+frame_1/texture = ExtResource("6_8sxeu")
+frame_1/duration = 0.2
+frame_2/texture = ExtResource("7_p6ufq")
+frame_2/duration = 0.2
+frame_3/texture = ExtResource("8_7enfh")
+frame_3/duration = 0.2
+frame_4/texture = ExtResource("9_4kvys")
+frame_4/duration = 0.2
+frame_5/texture = ExtResource("10_s4r6o")
+frame_5/duration = 0.2
+frame_6/texture = ExtResource("11_ielbi")
+frame_6/duration = 0.2
+frame_7/texture = ExtResource("12_1ahyg")
+frame_7/duration = 0.2
+frame_8/texture = ExtResource("13_nnck5")
+frame_8/duration = 0.2
 
 [node name="Shipyard" type="Control"]
 layout_mode = 3
@@ -179,3 +209,12 @@ scale = Vector2(0.5, 0.5)
 theme_override_constants/outline_size = 0
 theme_override_font_sizes/font_size = 8
 text = "EXIT"
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/MenuBackground"]
+layout_mode = 0
+offset_left = -6.800002
+offset_top = 59.0
+offset_right = 33.199997
+offset_bottom = 99.000015
+scale = Vector2(0.5, 0.5)
+texture = SubResource("AnimatedTexture_bf8my")
