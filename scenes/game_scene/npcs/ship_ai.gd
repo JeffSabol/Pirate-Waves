@@ -31,8 +31,9 @@ var can_fire_right := true
 
 # ---- Aggro / Chase ----
 @export var chase_speed: float = 70.0
-@export var aggro_preferred_range: float = 380.0   # try to hold a broadside-ish distance
+@export var aggro_preferred_range: float = 380.0   # orbit radius
 @export var aggro_range_tolerance: float = 80.0    # band around preferred range
+@export var orbit_clockwise: bool = true           # flip to change circling direction
 
 # auto-aggro-on-spawn tuning
 @export var always_aggro_on_spawn: bool = true
@@ -44,6 +45,7 @@ var can_fire_right := true
 var _aggro_target: Node2D = null
 var _was_aggro: bool = false   # for debug: track mode transitions
 
+
 # ---- Helpers ----
 func _get_player() -> Node2D:
 	var tree := get_tree()
@@ -51,13 +53,16 @@ func _get_player() -> Node2D:
 		return null
 	return tree.get_first_node_in_group("PlayerBoat") as Node2D
 
+
 func is_aggro() -> bool:
 	return is_instance_valid(_aggro_target)
+
 
 func set_aggro(target: Node2D) -> void:
 	_aggro_target = target
 	if debug_ai and target:
 		print("[ShipAI]", name, "set_aggro on", target.name, " (permanent)")
+
 
 func on_hit(attacker: Node) -> void:
 	var p := attacker as Node2D
@@ -66,9 +71,11 @@ func on_hit(attacker: Node) -> void:
 			print("[ShipAI]", name, "hit by", p.name, "-> entering aggro")
 		set_aggro(p)
 
+
 func _ready() -> void:
 	if debug_ai:
 		print("[ShipAI]", name, "READY at", global_position)
+
 
 # ---- Public API ----
 func set_path(curve: Curve2D, loop: bool, speed: float, start_t: float) -> void:
@@ -106,8 +113,9 @@ func set_path(curve: Curve2D, loop: bool, speed: float, start_t: float) -> void:
 					print("[ShipAI]", name, "auto-aggro on spawn (permanent)")
 				set_aggro(player)
 
+
 func _physics_process(delta: float) -> void:
-	# Optional distance despawn (kept but very high & disabled for now)
+	# Optional distance despawn (still disabled)
 	# var player := _get_player()
 	# if player and global_position.distance_to(player.global_position) > max_distance_from_player:
 	# 	if debug_ai:
@@ -120,46 +128,65 @@ func _physics_process(delta: float) -> void:
 		print("[ShipAI]", name, "mode changed to", ("AGGRO" if now_aggro else "CRUISE"))
 	_was_aggro = now_aggro
 
-	# ---- AGGRO / CHASE MODE (permanent) ----
 	if now_aggro:
-		if not is_instance_valid(_aggro_target):
-			# Try to reacquire player if target went invalid
-			var p := _get_player()
-			if p:
-				if debug_ai:
-					print("[ShipAI]", name, "reacquiring player as aggro target")
-				_aggro_target = p
-			else:
-				# No valid target at all -> fall back to cruise
-				_aggro_target = null
-				return
+		_process_aggro(delta)
+	else:
+		_process_cruise(delta)
 
-		var to_target: Vector2 = _aggro_target.global_position - global_position
-		var dist := to_target.length()
+	_fire_if_allowed()
 
-		var lower := float(max(0.0, aggro_preferred_range - aggro_range_tolerance))
-		var upper := aggro_preferred_range + aggro_range_tolerance
 
-		var move := Vector2.ZERO
-		if dist > upper:
-			move = (to_target / max(1.0, dist)) * chase_speed
-		elif dist < lower:
-			move = -(to_target / max(1.0, dist)) * chase_speed * 0.6
+# ---- AGGRO BEHAVIOR (CHASE + ORBIT) ----
+func _process_aggro(delta: float) -> void:
+	if not is_instance_valid(_aggro_target):
+		# Try to reacquire player if target went invalid
+		var p := _get_player()
+		if p:
+			if debug_ai:
+				print("[ShipAI]", name, "reacquiring player as aggro target")
+			_aggro_target = p
 		else:
-			var tangent := Vector2(-to_target.y, to_target.x).normalized()
-			move = tangent * chase_speed * 0.35
+			_aggro_target = null
+			return
 
-		global_position += move * delta
+	var target_pos: Vector2 = _aggro_target.global_position
+	var to_target: Vector2 = target_pos - global_position
+	var dist: float = to_target.length()
 
-		if face_direction and move.length() > 0.001:
-			var desired: float = move.angle() + deg_to_rad(rotation_offset_deg)
-			var step: float = clamp(turn_speed * delta, 0.0, 1.0)
-			rotation = lerp_angle(rotation, desired, step)
-
-		_fire_if_allowed()
+	if dist <= 1.0:
 		return
 
-	# ---- CRUISE MODE (path-following) ----
+	var lower: float = max(0.0, aggro_preferred_range - aggro_range_tolerance)
+	var upper: float = aggro_preferred_range + aggro_range_tolerance
+
+	var move_dir: Vector2
+
+	if dist > upper:
+		# TOO FAR: charge directly in
+		move_dir = to_target.normalized()
+	elif dist < lower:
+		# TOO CLOSE: back off away from player
+		move_dir = -to_target.normalized()
+	else:
+		# IN THE BAND: ORBIT AROUND THE PLAYER
+		var tangent: Vector2
+		if orbit_clockwise:
+			tangent = Vector2(-to_target.y, to_target.x).normalized()
+		else:
+			tangent = Vector2(to_target.y, -to_target.x).normalized()
+		move_dir = tangent
+
+	global_position += move_dir * chase_speed * delta
+
+	# Face the movement direction (boat turns into its velocity)
+	if face_direction and move_dir.length() > 0.001:
+		var desired: float = move_dir.angle() + deg_to_rad(rotation_offset_deg)
+		var step: float = clamp(turn_speed * delta, 0.0, 1.0)
+		rotation = lerp_angle(rotation, desired, step)
+
+
+# ---- CRUISE (PATH-FOLLOWING) ----
+func _process_cruise(delta: float) -> void:
 	if _curve == null or _length <= 0.001:
 		return
 
@@ -189,21 +216,24 @@ func _physics_process(delta: float) -> void:
 			var step: float = clamp(turn_speed * delta, 0.0, 1.0)
 			rotation = lerp_angle(rotation, desired, step)
 
-	_fire_if_allowed()
 
+# ---- FIRING ----
 func _fire_if_allowed() -> void:
-	if is_aggro():
-		if $LeftSight.is_colliding() && $LeftSight.get_collider().name == "PlayerBoat":
-			if debug_ai:
-				print("[ShipAI]", name, "LEFT broadside on player -> fire")
-			set_aggro($LeftSight.get_collider()) # keep target fresh
-			fire_left_guns()
+	if not is_aggro():
+		return
 
-		if $RightSight.is_colliding() && $RightSight.get_collider().name == "PlayerBoat":
-			if debug_ai:
-				print("[ShipAI]", name, "RIGHT broadside on player -> fire")
-			set_aggro($RightSight.get_collider())
-			fire_right_guns()
+	if $LeftSight.is_colliding() and $LeftSight.get_collider().name == "PlayerBoat":
+		if debug_ai:
+			print("[ShipAI]", name, "LEFT broadside on player -> fire")
+		set_aggro($LeftSight.get_collider()) # keep target fresh
+		fire_left_guns()
+
+	if $RightSight.is_colliding() and $RightSight.get_collider().name == "PlayerBoat":
+		if debug_ai:
+			print("[ShipAI]", name, "RIGHT broadside on player -> fire")
+		set_aggro($RightSight.get_collider())
+		fire_right_guns()
+
 
 func _emit_and_free() -> void:
 	if debug_ai:
@@ -211,11 +241,14 @@ func _emit_and_free() -> void:
 	despawned.emit()
 	queue_free()
 
+
 func set_speed(speed: float) -> void:
 	_speed = speed
 
+
 func set_face_direction(enabled: bool) -> void:
 	face_direction = enabled
+
 
 func update_guns_visibility() -> void:
 	var guns_node: Node = $Guns
@@ -225,6 +258,7 @@ func update_guns_visibility() -> void:
 		var child := guns_node.get_child(i) as CanvasItem
 		if child:
 			child.visible = (i < guns)
+
 
 func fire_left_guns() -> void:
 	if not can_fire_left:
@@ -245,6 +279,7 @@ func fire_left_guns() -> void:
 	t.timeout.connect(func() -> void:
 		can_fire_left = true)
 		
+
 func fire_right_guns() -> void:
 	if not can_fire_right:
 		return

@@ -1,4 +1,4 @@
-[gd_scene load_steps=84 format=4 uid="uid://cu0u00s7rwajd"]
+[gd_scene load_steps=83 format=4 uid="uid://cu0u00s7rwajd"]
 
 [ext_resource type="Texture2D" uid="uid://dof2tt5ld5wst" path="res://assets/tiles/WaterAndIslands/Water and Island tiles.png" id="1_k8tay"]
 [ext_resource type="PackedScene" uid="uid://clxs5gwisal5m" path="res://scenes/game_scene/game_ui.tscn" id="2_oxjrw"]
@@ -13,7 +13,6 @@
 [ext_resource type="PackedScene" uid="uid://cu6c72fyiba2s" path="res://scenes/game_scene/world/world_ui.tscn" id="6_7ih7l"]
 [ext_resource type="PackedScene" uid="uid://jb7ks6loxwux" path="res://scenes/game_scene/npcs/MerchantShip.tscn" id="6_e34on"]
 [ext_resource type="Texture2D" uid="uid://c04j4e6topvgh" path="res://assets/buildings/Wealthy.png" id="6_ey1od"]
-[ext_resource type="PackedScene" uid="uid://bgc5mpi31rqd6" path="res://scenes/game_scene/npcs/PirateShip.tscn" id="7_3ihfx"]
 [ext_resource type="Script" uid="uid://c44uciwjilc0t" path="res://scenes/game_scene/world/trade_route.gd" id="8_p2q0g"]
 [ext_resource type="AudioStream" uid="uid://sr4yo0xgqpws" path="res://assets/sfx/error.mp3" id="12_vrmdf"]
 [ext_resource type="AudioStream" uid="uid://dya4dixr7ky0d" path="res://assets/sfx/saw.wav" id="13_wx6fr"]
@@ -879,9 +878,10 @@ position = Vector2(-177, -70)
 sprite_frames = SubResource("SpriteFrames_megev")
 animation = &"wealthy"
 
-[node name="TrafficManager" parent="." instance=ExtResource("5_eegf6")]
-merchant_scene = ExtResource("6_e34on")
-pirate_scene = ExtResource("7_3ihfx")
+[node name="WaveManager" parent="." instance=ExtResource("5_eegf6")]
+sloop_scene = ExtResource("6_e34on")
+corsair_scene = ExtResource("6_e34on")
+spawn_avoid_radius = 300.0
 
 [node name="WorldUI" parent="." instance=ExtResource("6_7ih7l")]
 
