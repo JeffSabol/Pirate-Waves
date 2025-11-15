@@ -48,9 +48,8 @@ anchors_preset = -1
 anchor_right = 1.701389
 anchor_bottom = 1.7013888
 offset_left = -1.0
-offset_top = 1.0
 offset_right = -897.0
-offset_bottom = -503.0
+offset_bottom = -504.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("1_44gni")
@@ -260,3 +259,26 @@ scale = Vector2(0.5, 0.5)
 theme_override_constants/outline_size = 0
 theme_override_font_sizes/font_size = 8
 text = "EXIT"
+
+[node name="RepairClickZone" type="ColorRect" parent="CanvasLayer/MenuBackground"]
+layout_mode = 0
+offset_left = 75.200005
+offset_top = 110.399994
+offset_right = 104.2
+offset_bottom = 119.399994
+color = Color(1, 1, 1, 0)
+
+[node name="ExitClickZone" type="ColorRect" parent="CanvasLayer/MenuBackground"]
+layout_mode = 0
+offset_left = 45.2
+offset_top = 110.200005
+offset_right = 73.200005
+offset_bottom = 119.200005
+color = Color(1, 1, 1, 0)
+
+[connection signal="pressed" from="CanvasLayer/MenuBackground/SpeedUpgradeBtn" to="CanvasLayer/MenuBackground" method="_on_speed_upgrade_btn_pressed"]
+[connection signal="pressed" from="CanvasLayer/MenuBackground/TurningUpgradeBtn" to="CanvasLayer/MenuBackground" method="_on_turning_upgrade_btn_pressed"]
+[connection signal="pressed" from="CanvasLayer/MenuBackground/HullUpgradeBtn" to="CanvasLayer/MenuBackground" method="_on_hull_upgrade_btn_pressed"]
+[connection signal="pressed" from="CanvasLayer/MenuBackground/GunsUpgradeBtn" to="CanvasLayer/MenuBackground" method="_on_guns_upgrade_btn_pressed"]
+[connection signal="gui_input" from="CanvasLayer/MenuBackground/RepairClickZone" to="CanvasLayer/MenuBackground" method="_on_repair_click_zone_gui_input"]
+[connection signal="gui_input" from="CanvasLayer/MenuBackground/ExitClickZone" to="CanvasLayer/MenuBackground" method="_on_exit_click_zone_gui_input"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=4 uid="uid://cu0u00s7rwajd"]
+[gd_scene load_steps=19 format=4 uid="uid://cu0u00s7rwajd"]
 
 [ext_resource type="Texture2D" uid="uid://dof2tt5ld5wst" path="res://assets/tiles/WaterAndIslands/Water and Island tiles.png" id="1_k8tay"]
 [ext_resource type="PackedScene" uid="uid://clxs5gwisal5m" path="res://scenes/game_scene/game_ui.tscn" id="2_oxjrw"]
@@ -11,6 +11,8 @@
 [ext_resource type="PackedScene" uid="uid://jb7ks6loxwux" path="res://scenes/game_scene/npcs/MerchantShip.tscn" id="6_e34on"]
 [ext_resource type="PackedScene" uid="uid://bgc5mpi31rqd6" path="res://scenes/game_scene/npcs/PirateShip.tscn" id="7_3ihfx"]
 [ext_resource type="Script" uid="uid://c44uciwjilc0t" path="res://scenes/game_scene/world/trade_route.gd" id="8_p2q0g"]
+[ext_resource type="AudioStream" uid="uid://sr4yo0xgqpws" path="res://assets/sfx/error.mp3" id="12_vrmdf"]
+[ext_resource type="AudioStream" uid="uid://dya4dixr7ky0d" path="res://assets/sfx/saw.wav" id="13_wx6fr"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_oxjrw"]
 texture = ExtResource("1_k8tay")
@@ -420,6 +422,7 @@ spawn_interval = 0.25
 
 [node name="PlayerBoat" parent="." groups=["PlayerBoat", "player"] instance=ExtResource("3_ptotq")]
 position = Vector2(290, -670)
+gold = 1000
 fish = 0
 rum = 0
 ore = 0
@@ -435,3 +438,9 @@ autoplay = true
 position = Vector2(1, -1)
 zoom = Vector2(2, 2)
 script = ExtResource("4_3ihfx")
+
+[node name="NotEnoughSFX" type="AudioStreamPlayer" parent="PlayerBoat"]
+stream = ExtResource("12_vrmdf")
+
+[node name="SawSFX" type="AudioStreamPlayer" parent="PlayerBoat"]
+stream = ExtResource("13_wx6fr")

@@ -1,11 +1,19 @@
 extends CharacterBody2D
 
+# --- Upgrade Costs (for town shipyard) ---
+@export var speed_upgrade_cost: int = 50
+@export var turning_upgrade_cost: int = 50
+@export var hull_upgrade_cost: int = 75
+@export var guns_upgrade_cost: int = 100
+@export var upgrade_cost_multiplier: float = 1.5  # cost scales each time
+
 @export var acceleration := 30.0
 @export var deceleration := 10.0
 @export var max_speed := 60.0
 @export var reverse_speed := 60.0
 @export var turn_speed := 1.0
 
+@export var max_hp := 100
 @export var hp := 100
 @export var guns := 2
 # Player Inventory
@@ -211,3 +219,84 @@ func add_loot(treasure_type: String, amount: int):
 func has_recently_been_shot() -> bool:
 	var now := Time.get_ticks_msec() / 1000.0
 	return now - last_hit_time < combat_lock_seconds
+
+
+# --- Upgrade helpers ---------------------------------------------------------
+
+func _can_afford(cost: int) -> bool:
+	return gold >= cost
+
+func _spend_gold(cost: int) -> void:
+	gold -= cost
+	if gold < 0:
+		gold = 0
+
+
+# --- Upgrades ----------------------------------------------------------------
+
+func upgrade_speed() -> void:
+	if not _can_afford(speed_upgrade_cost):
+		print("not enough gold for speed upgrade")
+		$NotEnoughSFX.play()
+		return
+
+	_spend_gold(speed_upgrade_cost)
+	$SawSFX.play()
+	# Actual stat buffs (tweak to taste)
+	max_speed += 10.0
+	acceleration += 5.0
+	reverse_speed += 10.0
+
+	# Scale the next cost
+	speed_upgrade_cost = int(round(speed_upgrade_cost * upgrade_cost_multiplier))
+
+func upgrade_turning() -> void:
+	if not _can_afford(turning_upgrade_cost):
+		print("not enough gold for turning upgrade")
+		$NotEnoughSFX.play()
+		return
+
+	_spend_gold(turning_upgrade_cost)
+	$SawSFX.play()
+
+	# Turning buff
+	turn_speed += 0.2
+
+	turning_upgrade_cost = int(round(turning_upgrade_cost * upgrade_cost_multiplier))
+
+func upgrade_hull() -> void:
+	if not _can_afford(hull_upgrade_cost):
+		print("not enough gold for hull upgrade")
+		$NotEnoughSFX.play()
+		return
+
+	_spend_gold(hull_upgrade_cost)
+	$SawSFX.play()
+
+	# More HP / hull strength
+	max_hp += 25
+	hp += 25
+
+	hull_upgrade_cost = int(round(hull_upgrade_cost * upgrade_cost_multiplier))
+
+func upgrade_guns() -> void:
+	var guns_node: Node = $Guns
+	var max_guns: int = guns_node.get_child_count()
+
+	# Don't charge gold if we're already at max guns
+	if guns >= max_guns:
+		print("Already at maximum guns")
+		return
+
+	if not _can_afford(guns_upgrade_cost):
+		print("not enough gold for guns upgrade")
+		$NotEnoughSFX.play()
+		return
+
+	_spend_gold(guns_upgrade_cost)
+	$SawSFX.play()
+
+	guns += 1
+	update_guns_visibility()
+
+	guns_upgrade_cost = int(round(guns_upgrade_cost * upgrade_cost_multiplier))
