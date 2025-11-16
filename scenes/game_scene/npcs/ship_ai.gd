@@ -3,47 +3,46 @@ class_name ShipAI
 
 signal despawned
 
-# ---- Internals (typed) ----
-var _curve: Curve2D
-var _loop: bool = true
-var _speed: float = 40.0      # pixels per second along the curve
-var _dist: float = 0.0        # distance traveled along the baked curve (pixels)
-var _length: float = 0.0      # total baked length (pixels)
+# NOTE:
+# This AI does NOT follow Path2D/Curve2D.
+# set_path() is ONLY used to place the ship at spawn time based on a route.
+# After spawning, movement is purely chase + orbit around the player.
 
 # ---- Tuning ----
-@export var max_distance_from_player: float = 50000.0  # bump this big if you re-enable distance despawn later
+@export var max_distance_from_player: float = 50000.0
 
 # Facing controls
 @export var face_direction: bool = true
-@export var turn_speed: float = 6.0              # 0 = snap; higher = smoother snap
-@export var rotation_offset_deg: float = 90.0    # set so your sprite "forward" matches +X
-@export var look_ahead_px: float = 16.0          # pixels ahead to sample for heading
-
-# Curve fidelity (helps heading match tight turns)
-@export var override_bake_interval: float = 0.0  # 0 = keep default; else set in pixels (e.g., 2.0)
+@export var turn_speed: float = 6.0
+@export var rotation_offset_deg: float = 90.0
 
 # Cannons
-@export var left_fire_cooldown := 3
-@export var right_fire_cooldown := 3
-var can_fire_left := true
-var can_fire_right := true
-@export var guns := 2
+@export var left_fire_cooldown: float = 3.0
+@export var right_fire_cooldown: float = 3.0
+var can_fire_left: bool = true
+var can_fire_right: bool = true
+@export var guns: int = 2
 
 # ---- Aggro / Chase ----
 @export var chase_speed: float = 70.0
 @export var aggro_preferred_range: float = 380.0   # orbit radius
-@export var aggro_range_tolerance: float = 80.0    # band around preferred range
-@export var orbit_clockwise: bool = true           # flip to change circling direction
+@export var aggro_range_tolerance: float = 80.0
+@export var orbit_clockwise: bool = true
 
 # auto-aggro-on-spawn tuning
 @export var always_aggro_on_spawn: bool = true
-@export var spawn_aggro_distance: float = 800.0    # if spawned farther than this, start chasing
+@export var spawn_aggro_distance: float = 800.0
+
+# Death / FX
+@export var death_fade_time: float = 1.0  # seconds
 
 # Debug
 @export var debug_ai: bool = false
 
 var _aggro_target: Node2D = null
-var _was_aggro: bool = false   # for debug: track mode transitions
+var _was_aggro: bool = false
+var _is_dying: bool = false
+var _has_been_hurt: bool = false
 
 
 # ---- Helpers ----
@@ -61,7 +60,22 @@ func is_aggro() -> bool:
 func set_aggro(target: Node2D) -> void:
 	_aggro_target = target
 	if debug_ai and target:
-		print("[ShipAI]", name, "set_aggro on", target.name, " (permanent)")
+		print("[ShipAI]", name, "set_aggro on", target.name, "(permanent)")
+
+
+func _play_hurt_state() -> void:
+	if _has_been_hurt:
+		return
+	_has_been_hurt = true
+
+	if has_node("AnimatedSprite2D"):
+		var anim := $AnimatedSprite2D as AnimatedSprite2D
+		if anim and anim.sprite_frames:
+			var names: PackedStringArray = anim.sprite_frames.get_animation_names()
+			if "hurt" in names:
+				anim.play("hurt")
+			if debug_ai:
+				print("[ShipAI]", name, "entered HURT state")
 
 
 func on_hit(attacker: Node) -> void:
@@ -71,6 +85,9 @@ func on_hit(attacker: Node) -> void:
 			print("[ShipAI]", name, "hit by", p.name, "-> entering aggro")
 		set_aggro(p)
 
+	# Any hit = visually hurt
+	_play_hurt_state()
+
 
 func _ready() -> void:
 	if debug_ai:
@@ -78,34 +95,24 @@ func _ready() -> void:
 
 
 # ---- Public API ----
+# We keep set_path ONLY to allow route-based spawning; no path-following later.
 func set_path(curve: Curve2D, loop: bool, speed: float, start_t: float) -> void:
-	_curve = curve
-	_loop = loop
-	_speed = speed 
-	_dist = 0.0
-	_length = 0.0
-
-	if _curve:
-		if override_bake_interval > 0.0:
-			_curve.bake_interval = override_bake_interval
-	
-		_length = max(float(_curve.get_baked_length()), 0.001)
-		_dist = clamp(start_t, 0.0, 1.0) * _length
-		global_position = _curve.sample_baked(_dist)
+	if curve:
+		var length: float = max(float(curve.get_baked_length()), 0.001)
+		var dist: float = clamp(start_t, 0.0, 1.0) * length
+		global_position = curve.sample_baked(dist)
 
 		if debug_ai:
-			print("[ShipAI]", name, "set_path:",
-				"loop =", _loop,
-				"speed =", _speed,
+			print("[ShipAI]", name, "set_path spawn:",
 				"start_t =", start_t,
-				"length =", _length,
+				"length =", length,
 				"pos =", global_position)
 
-	# --- auto-aggro when spawned far away ---
+	# Auto-aggro on spawn if far away
 	if always_aggro_on_spawn:
 		var player := _get_player()
 		if player:
-			var dist_to_player := global_position.distance_to(player.global_position)
+			var dist_to_player: float = global_position.distance_to(player.global_position)
 			if debug_ai:
 				print("[ShipAI]", name, "spawned dist to player:", dist_to_player)
 			if dist_to_player > spawn_aggro_distance:
@@ -114,32 +121,104 @@ func set_path(curve: Curve2D, loop: bool, speed: float, start_t: float) -> void:
 				set_aggro(player)
 
 
-func _physics_process(delta: float) -> void:
-	# Optional distance despawn (still disabled)
-	# var player := _get_player()
-	# if player and global_position.distance_to(player.global_position) > max_distance_from_player:
-	# 	if debug_ai:
-	# 		print("[ShipAI]", name, "despawning due to distance at", global_position)
-	# 	_emit_and_free()
-	# 	return
+# Call this when HP <= 0 instead of queue_free()
+func begin_death() -> void:
+	if _is_dying:
+		if debug_ai:
+			print("[ShipAI]", name, "begin_death() called again but already dying")
+		return
 
-	var now_aggro := is_aggro()
+	_is_dying = true
+
+	if debug_ai:
+		print("\n========== SHIPAI DEATH START ==========")
+		print("[ShipAI]", name, "begin_death; switching sprite to 'defeated'")
+
+	# Stop firing; AI logic early-returns while _is_dying is true
+	can_fire_left = false
+	can_fire_right = false
+
+	# Swap to defeated frame (1-frame anim)
+	if has_node("AnimatedSprite2D"):
+		var anim := $AnimatedSprite2D as AnimatedSprite2D
+		if debug_ai:
+			print("[ShipAI]", name, "AnimatedSprite2D found; checking animations...")
+
+		if anim and anim.sprite_frames:
+			var names: PackedStringArray = anim.sprite_frames.get_animation_names()
+			if debug_ai:
+				print("[ShipAI]", name, "animations:", names)
+
+			if "defeated" in names:
+				if debug_ai:
+					print("[ShipAI]", name, "PLAYING 'defeated' animation")
+				anim.animation = "defeated"
+				anim.frame = 0
+				anim.play()
+			elif "hurt" in names:
+				if debug_ai:
+					print("[ShipAI]", name, "NO 'defeated' animation, using 'hurt'")
+				anim.animation = "hurt"
+				anim.frame = 0
+				anim.play()
+			elif debug_ai:
+				print("[ShipAI]", name, "NO hurt/defeated animation — leaving current sprite")
+	elif debug_ai:
+		print("[ShipAI]", name, "NO AnimatedSprite2D found!")
+
+	_start_death_fade()
+
+
+func _start_death_fade() -> void:
+	if debug_ai:
+		print("[ShipAI]", name, "_start_death_fade entered")
+
+	var fade_time: float = max(0.0, death_fade_time)
+
+	if fade_time == 0.0:
+		if debug_ai:
+			print("[ShipAI]", name, "fade_time=0 -> instant despawn")
+		_emit_and_free()
+		return
+
+	if debug_ai:
+		print("[ShipAI]", name, "Creating fade tween, duration =", fade_time)
+
+	var tween := get_tree().create_tween()
+	if tween == null:
+		print("[ShipAI]", name, "ERROR: tween is NULL! SceneTree issue?")
+		_emit_and_free()
+		return
+
+	tween.tween_property(self, "modulate:a", 0.0, fade_time)
+	tween.finished.connect(func() -> void:
+		if debug_ai:
+			print("[ShipAI]", name, "FADE COMPLETE — now removing ship")
+		_emit_and_free())
+
+	if debug_ai:
+		print("[ShipAI]", name, "fade tween started!")
+
+
+func _physics_process(delta: float) -> void:
+	if _is_dying:
+		# Death sequence is running; don't move or shoot.
+		return
+
+	var now_aggro: bool = is_aggro()
 	if debug_ai and now_aggro != _was_aggro:
-		print("[ShipAI]", name, "mode changed to", ("AGGRO" if now_aggro else "CRUISE"))
+		print("[ShipAI]", name, "mode changed to", ("AGGRO" if now_aggro else "IDLE"))
 	_was_aggro = now_aggro
 
 	if now_aggro:
 		_process_aggro(delta)
-	else:
-		_process_cruise(delta)
-
-	_fire_if_allowed()
+		_fire_if_allowed()
+	# else: idle
 
 
 # ---- AGGRO BEHAVIOR (CHASE + ORBIT) ----
 func _process_aggro(delta: float) -> void:
 	if not is_instance_valid(_aggro_target):
-		# Try to reacquire player if target went invalid
 		var p := _get_player()
 		if p:
 			if debug_ai:
@@ -152,87 +231,57 @@ func _process_aggro(delta: float) -> void:
 	var target_pos: Vector2 = _aggro_target.global_position
 	var to_target: Vector2 = target_pos - global_position
 	var dist: float = to_target.length()
-
 	if dist <= 1.0:
 		return
 
-	var lower: float = max(0.0, aggro_preferred_range - aggro_range_tolerance)
-	var upper: float = aggro_preferred_range + aggro_range_tolerance
+	var forward: Vector2 = to_target / dist
 
-	var move_dir: Vector2
+	var desired_radius: float = aggro_preferred_range
+	var radius_error: float = dist - desired_radius   # >0 = too far, <0 = too close
 
-	if dist > upper:
-		# TOO FAR: charge directly in
-		move_dir = to_target.normalized()
-	elif dist < lower:
-		# TOO CLOSE: back off away from player
-		move_dir = -to_target.normalized()
-	else:
-		# IN THE BAND: ORBIT AROUND THE PLAYER
-		var tangent: Vector2
-		if orbit_clockwise:
-			tangent = Vector2(-to_target.y, to_target.x).normalized()
-		else:
-			tangent = Vector2(to_target.y, -to_target.x).normalized()
-		move_dir = tangent
+	var tangent: Vector2 = Vector2(-forward.y, forward.x)
+	if not orbit_clockwise:
+		tangent = -tangent
+	tangent = tangent.normalized()
 
+	var radial_factor: float = clamp(radius_error / max(1.0, aggro_preferred_range), -1.0, 1.0)
+	var radial: Vector2 = forward * radial_factor
+
+	var tangent_weight: float = 1.0
+	var radial_weight: float = 0.6
+
+	if abs(radius_error) < aggro_range_tolerance * 0.5:
+		radial_weight *= 0.25
+
+	var move_dir: Vector2 = (tangent * tangent_weight + radial * radial_weight).normalized()
 	global_position += move_dir * chase_speed * delta
 
-	# Face the movement direction (boat turns into its velocity)
 	if face_direction and move_dir.length() > 0.001:
-		var desired: float = move_dir.angle() + deg_to_rad(rotation_offset_deg)
+		var desired_angle: float = move_dir.angle() + deg_to_rad(rotation_offset_deg)
 		var step: float = clamp(turn_speed * delta, 0.0, 1.0)
-		rotation = lerp_angle(rotation, desired, step)
-
-
-# ---- CRUISE (PATH-FOLLOWING) ----
-func _process_cruise(delta: float) -> void:
-	if _curve == null or _length <= 0.001:
-		return
-
-	_dist += _speed * delta
-	if _loop:
-		_dist = fposmod(_dist, _length)
-	else:
-		if _dist >= _length:
-			if debug_ai:
-				print("[ShipAI]", name, "reached end of non-looping path, despawning.")
-			_emit_and_free()
-			return
-
-	global_position = _curve.sample_baked(_dist)
-
-	if face_direction:
-		var ahead: float = _dist + look_ahead_px
-		if _loop:
-			ahead = fposmod(ahead, _length)
-		else:
-			ahead = clamp(ahead, 0.0, _length)
-
-		var ahead_pos: Vector2 = _curve.sample_baked(ahead)
-		var dir: Vector2 = ahead_pos - global_position
-		if dir.length() > 0.001:
-			var desired: float = dir.angle() + deg_to_rad(rotation_offset_deg)
-			var step: float = clamp(turn_speed * delta, 0.0, 1.0)
-			rotation = lerp_angle(rotation, desired, step)
+		rotation = lerp_angle(rotation, desired_angle, step)
 
 
 # ---- FIRING ----
 func _fire_if_allowed() -> void:
-	if not is_aggro():
+	if not is_aggro() or _is_dying:
 		return
 
-	if $LeftSight.is_colliding() and $LeftSight.get_collider().name == "PlayerBoat":
-		if debug_ai:
-			print("[ShipAI]", name, "LEFT broadside on player -> fire")
-		set_aggro($LeftSight.get_collider()) # keep target fresh
-		fire_left_guns()
+	if has_node("LeftSight"):
+		var left := $LeftSight
+		if left.is_colliding() and left.get_collider().name == "PlayerBoat":
+			if debug_ai:
+				print("[ShipAI]", name, "LEFT broadside on player -> fire")
+			set_aggro(left.get_collider())
+			fire_left_guns()
 
-	if $RightSight.is_colliding() and $RightSight.get_collider().name == "PlayerBoat":
-		if debug_ai:
-			print("[ShipAI]", name, "RIGHT broadside on player -> fire")
-		set_aggro($RightSight.get_collider())
-		fire_right_guns()
+	if has_node("RightSight"):
+		var right := $RightSight
+		if right.is_colliding() and right.get_collider().name == "PlayerBoat":
+			if debug_ai:
+				print("[ShipAI]", name, "RIGHT broadside on player -> fire")
+			set_aggro(right.get_collider())
+			fire_right_guns()
 
 
 func _emit_and_free() -> void:
@@ -243,7 +292,7 @@ func _emit_and_free() -> void:
 
 
 func set_speed(speed: float) -> void:
-	_speed = speed
+	chase_speed = speed
 
 
 func set_face_direction(enabled: bool) -> void:
@@ -251,9 +300,10 @@ func set_face_direction(enabled: bool) -> void:
 
 
 func update_guns_visibility() -> void:
-	var guns_node: Node = $Guns
+	if not has_node("Guns"):
+		return
+	var guns_node := $Guns
 	var total: int = guns_node.get_child_count()
-
 	for i in range(total):
 		var child := guns_node.get_child(i) as CanvasItem
 		if child:
@@ -261,39 +311,41 @@ func update_guns_visibility() -> void:
 
 
 func fire_left_guns() -> void:
-	if not can_fire_left:
+	if not can_fire_left or _is_dying:
 		return
 	can_fire_left = false
 
 	if debug_ai:
 		print("[ShipAI]", name, "fire_left_guns")
 
-	var guns_node: Node = $Guns
-	for i in range(1, guns + 1):
-		if i % 2 == 1:
-			var gun: Node = guns_node.get_node("Gun%d" % i)
-			if gun:
-				gun.call("fire")
+	if has_node("Guns"):
+		var guns_node := $Guns
+		for i in range(1, guns + 1):
+			if i % 2 == 1:
+				var gun: Node = guns_node.get_node("Gun%d" % i)
+				if gun:
+					gun.call("fire")
 
 	var t: SceneTreeTimer = get_tree().create_timer(left_fire_cooldown)
 	t.timeout.connect(func() -> void:
 		can_fire_left = true)
-		
+
 
 func fire_right_guns() -> void:
-	if not can_fire_right:
+	if not can_fire_right or _is_dying:
 		return
 	can_fire_right = false
 
 	if debug_ai:
 		print("[ShipAI]", name, "fire_right_guns")
 
-	var guns_node: Node = $Guns
-	for i in range(1, guns + 1):
-		if i % 2 == 0:
-			var gun: Node = guns_node.get_node("Gun%d" % i)
-			if gun:
-				gun.call("fire")
+	if has_node("Guns"):
+		var guns_node := $Guns
+		for i in range(1, guns + 1):
+			if i % 2 == 0:
+				var gun: Node = guns_node.get_node("Gun%d" % i)
+				if gun:
+					gun.call("fire")
 
 	var t: SceneTreeTimer = get_tree().create_timer(right_fire_cooldown)
 	t.timeout.connect(func() -> void:
