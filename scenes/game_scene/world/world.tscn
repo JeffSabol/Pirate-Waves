@@ -1,4 +1,4 @@
-[gd_scene load_steps=83 format=4 uid="uid://cu0u00s7rwajd"]
+[gd_scene load_steps=82 format=4 uid="uid://cu0u00s7rwajd"]
 
 [ext_resource type="Texture2D" uid="uid://dof2tt5ld5wst" path="res://assets/tiles/WaterAndIslands/Water and Island tiles.png" id="1_k8tay"]
 [ext_resource type="PackedScene" uid="uid://clxs5gwisal5m" path="res://scenes/game_scene/game_ui.tscn" id="2_oxjrw"]
@@ -12,7 +12,6 @@
 [ext_resource type="PackedScene" uid="uid://cdc0kjiub4x3w" path="res://scenes/buildings/town.tscn" id="6_2maww"]
 [ext_resource type="PackedScene" uid="uid://cu6c72fyiba2s" path="res://scenes/game_scene/world/world_ui.tscn" id="6_7ih7l"]
 [ext_resource type="Texture2D" uid="uid://c04j4e6topvgh" path="res://assets/buildings/Wealthy.png" id="6_ey1od"]
-[ext_resource type="PackedScene" uid="uid://c6whfp3pxsx1o" path="res://scenes/game_scene/npcs/Sloop.tscn" id="8_h3f8j"]
 [ext_resource type="Script" uid="uid://c44uciwjilc0t" path="res://scenes/game_scene/world/trade_route.gd" id="8_p2q0g"]
 [ext_resource type="AudioStream" uid="uid://sr4yo0xgqpws" path="res://assets/sfx/error.mp3" id="12_vrmdf"]
 [ext_resource type="AudioStream" uid="uid://dya4dixr7ky0d" path="res://assets/sfx/saw.wav" id="13_wx6fr"]
@@ -879,10 +878,6 @@ sprite_frames = SubResource("SpriteFrames_megev")
 animation = &"wealthy"
 
 [node name="WaveManager" parent="." instance=ExtResource("5_eegf6")]
-sloop_scene = ExtResource("8_h3f8j")
-corsair_scene = ExtResource("8_h3f8j")
-brig_scene = ExtResource("8_h3f8j")
-boss_scene = ExtResource("8_h3f8j")
 spawn_avoid_radius = 300.0
 
 [node name="WorldUI" parent="." instance=ExtResource("6_7ih7l")]
@@ -906,7 +901,6 @@ spawn_interval = 0.25
 [node name="PlayerBoat" parent="." groups=["PlayerBoat", "player"] instance=ExtResource("3_ptotq")]
 position = Vector2(443, -912.00006)
 rotation = -3.1463218
-gold = 1000
 fish = 0
 rum = 0
 ore = 0

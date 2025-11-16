@@ -29,7 +29,7 @@ var guns_upgrade_step: int = 50
 @export var hp := 100
 @export var guns := 2
 # Player Inventory
-@export var gold := 0
+@export var gold := 1
 @export var fish = 1
 @export var rum = 1
 @export var ore = 1
@@ -328,7 +328,7 @@ func upgrade_guns() -> void:
 	_spend_gold(guns_upgrade_cost)
 	$SawSFX.play()
 
-	guns += 1
+	guns += 2
 	update_guns_visibility()
 
 	guns_upgrade_level += 1
