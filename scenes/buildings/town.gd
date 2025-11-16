@@ -45,6 +45,6 @@ func _on_enter_zone_body_entered(body):
 
 func _on_enter_zone_body_exited(body):
 	if body.name == "PlayerBoat":
-		var wm := $"../../WaveManager" as WaveManager
+		var wm := $"../../WaveManager"
 		if wm:
-			wm.start_waves()
+			wm.request_start_wave_from_town()

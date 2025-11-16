@@ -856,8 +856,6 @@ town_name = "Port Haven"
 merchant_gold = 250
 merchant_fish = 3
 merchant_rum = 50
-merchant_ore = null
-merchant_clothes = null
 
 [node name="Building" parent="Towns/PortHaven" index="0"]
 position = Vector2(-227, 16)

@@ -1,6 +1,6 @@
 extends Node
-class_name WaveManager
 # Wave-based spawner that uses trade routes as spawn splines.
+# Waves ONLY start when the town tells us (player leaves town).
 
 # Enemy scenes (set these in the inspector)
 @export var sloop_scene: PackedScene
@@ -11,18 +11,27 @@ class_name WaveManager
 # How far from the player we try to keep spawns
 @export var spawn_avoid_radius: float = 600.0
 
-# Delay between clearing a wave and starting the next (seconds)
-@export var wave_delay: float = 2.0
+# Debug
+@export var debug_waves: bool = false
 
 var _player: Node2D
 var _routes: Array[Path2D] = [] as Array[Path2D]
 
-var _current_wave: int = 1
+var _current_wave: int = 0               # starts at 0; first town exit -> wave 1
+var _wave_active: bool = false
 var _enemies_alive: int = 0
-var _waves_started: bool = false
+
+var _enemies_remaining_total: int = 0
+var _enemies_remaining_per_type: Dictionary = {
+	"sloop": 0,
+	"corsair": 0,
+	"brig": 0,
+	"boss": 0,
+}
+
+var _awaiting_return_to_town: bool = false
 
 # 5-wave pattern that repeats; counts are base values for wave 1–5.
-# Higher waves will scale these up.
 const BASE_WAVE_PATTERN: Array[Dictionary] = [
 	{ "sloop": 3, "corsair": 0, "brig": 0, "boss": false }, # Wave 1
 	{ "sloop": 4, "corsair": 1, "brig": 0, "boss": false }, # Wave 2
@@ -30,6 +39,11 @@ const BASE_WAVE_PATTERN: Array[Dictionary] = [
 	{ "sloop": 6, "corsair": 2, "brig": 1, "boss": false }, # Wave 4
 	{ "sloop": 6, "corsair": 3, "brig": 2, "boss": true  }, # Wave 5 (boss)
 ]
+
+# ---- Signals for HUD ----
+signal wave_started(wave: int, total: int, per_type: Dictionary)
+signal enemy_counts_changed(total: int, per_type: Dictionary)
+signal wave_cleared(wave: int)
 
 
 func _ready() -> void:
@@ -45,35 +59,43 @@ func _ready() -> void:
 			print("  Skipping node in TradeRoutes group, not a Path2D with curve:", n)
 
 	print("[WaveManager] Total routes tracked:", _routes.size())
-	# IMPORTANT: we DO NOT start waves here anymore.
-	# Town will explicitly call start_waves() when the player leaves.
+	print("[WaveManager] Waiting for town to start first wave (request_start_wave_from_town())")
 
 
-# ------------------------
-# PUBLIC API – called by Town
-# ------------------------
-
-func start_waves() -> void:
-	if _waves_started:
+# PUBLIC: called from town when player leaves
+func request_start_wave_from_town() -> void:
+	if _wave_active:
+		if debug_waves:
+			print("[WaveManager] request_start_wave_from_town ignored; wave already active:", _current_wave)
 		return
-	_waves_started = true
-	print("[WaveManager] Waves started by town trigger. Starting wave", _current_wave)
+
+	if _player == null:
+		_player = get_tree().get_first_node_in_group("PlayerBoat") as Node2D
+
+	if _player == null:
+		print("[WaveManager] No player; cannot start wave.")
+		return
+
+	_awaiting_return_to_town = false
+	_current_wave += 1
+
+	if debug_waves:
+		print("\n[WaveManager] Town requested wave start. Starting wave", _current_wave)
+
 	_start_wave(_current_wave)
 
 
 # ------------------------
 # WAVE LOGIC
 # ------------------------
-
 func _start_wave(wave: int) -> void:
-	if _player == null:
-		print("[WaveManager] No player; cannot start wave", wave)
-		return
-
 	if BASE_WAVE_PATTERN.is_empty():
 		print("[WaveManager] BASE_WAVE_PATTERN is empty; cannot start wave.")
 		return
 
+	if _routes.is_empty():
+		print("[WaveManager] WARNING: no routes; will spawn in ring around player.")
+	
 	var pattern_index: int = (wave - 1) % BASE_WAVE_PATTERN.size()
 	var cycle: int = int((wave - 1) / BASE_WAVE_PATTERN.size())  # 0 for waves 1–5, 1 for 6–10, etc.
 
@@ -87,49 +109,68 @@ func _start_wave(wave: int) -> void:
 	var num_brig: int = int(ceil(float(base["brig"]) * multiplier))
 	var has_boss: bool = bool(base["boss"])
 
-	print("\n[WaveManager] Starting wave", wave,
-		"cycle =", cycle,
-		"multiplier =", multiplier,
-		"sloop =", num_sloop,
-		"corsair =", num_corsair,
-		"brig =", num_brig,
-		"boss =", has_boss)
+	if debug_waves:
+		print("\n[WaveManager] Starting wave", wave,
+			"cycle =", cycle,
+			"multiplier =", multiplier,
+			"sloop =", num_sloop,
+			"corsair =", num_corsair,
+			"brig =", num_brig,
+			"boss =", has_boss)
 
-	var enemies_to_spawn: Array[PackedScene] = []
+	var enemies_to_spawn: Array[Dictionary] = []   # { "scene": PackedScene, "kind": String }
 
 	if sloop_scene:
 		for i in range(num_sloop):
-			enemies_to_spawn.append(sloop_scene)
+			enemies_to_spawn.append({ "scene": sloop_scene, "kind": "sloop" })
 
 	if corsair_scene:
 		for i in range(num_corsair):
-			enemies_to_spawn.append(corsair_scene)
+			enemies_to_spawn.append({ "scene": corsair_scene, "kind": "corsair" })
 
 	if brig_scene:
 		for i in range(num_brig):
-			enemies_to_spawn.append(brig_scene)
+			enemies_to_spawn.append({ "scene": brig_scene, "kind": "brig" })
 
 	if has_boss and boss_scene:
-		enemies_to_spawn.append(boss_scene)
+		enemies_to_spawn.append({ "scene": boss_scene, "kind": "boss" })
 
 	if enemies_to_spawn.is_empty():
 		print("[WaveManager] No enemy scenes assigned; wave has nothing to spawn.")
 		return
 
+	# Track counts
+	_enemies_remaining_per_type["sloop"] = num_sloop
+	_enemies_remaining_per_type["corsair"] = num_corsair
+	_enemies_remaining_per_type["brig"] = num_brig
+	var boss_count := 0
+	if has_boss:
+		boss_count = 1
+
+	_enemies_remaining_per_type["boss"] = boss_count
+	_enemies_remaining_total = num_sloop + num_corsair + num_brig + boss_count
+
+	_enemies_alive = _enemies_remaining_total
+	_wave_active = true
+
 	# Pick spawn positions for all enemies
 	var spawn_positions: Array[Vector2] = _pick_spawn_positions(enemies_to_spawn.size())
 
-	_enemies_alive = 0
-
 	for i in range(enemies_to_spawn.size()):
-		var scene: PackedScene = enemies_to_spawn[i]
+		var info: Dictionary = enemies_to_spawn[i]
+		var scene: PackedScene = info["scene"]
+		var kind: String = info["kind"]
 		var pos: Vector2 = spawn_positions[i]
-		_spawn_enemy(scene, pos)
+		_spawn_enemy(scene, pos, kind)
 
 	print("[WaveManager] Wave", wave, "spawned", _enemies_alive, "enemies.")
 
+	# Let HUD know
+	wave_started.emit(wave, _enemies_remaining_total, _enemies_remaining_per_type.duplicate(true))
+	enemy_counts_changed.emit(_enemies_remaining_total, _enemies_remaining_per_type.duplicate(true))
 
-func _spawn_enemy(scene: PackedScene, position: Vector2) -> void:
+
+func _spawn_enemy(scene: PackedScene, position: Vector2, kind: String) -> void:
 	if scene == null:
 		return
 
@@ -137,41 +178,48 @@ func _spawn_enemy(scene: PackedScene, position: Vector2) -> void:
 	if ship == null:
 		return
 
-	# Use deferred add_child to avoid "SceneTree is busy" errors
 	var root: Node = get_tree().current_scene
 	if root == null:
 		root = self
 	root.call_deferred("add_child", ship)
-
 	ship.global_position = position
 
 	var ship_ai := ship as ShipAI
 	if ship_ai and _player:
-		ship_ai.set_aggro(_player)  # permanent chase in your current ShipAI
+		ship_ai.set_aggro(_player)
 
-		_enemies_alive += 1
+		# Connect despawn signal with enemy type
 		if ship_ai.has_signal("despawned"):
-			ship_ai.despawned.connect(Callable(self, "_on_enemy_despawned"))
+			ship_ai.despawned.connect(Callable(self, "_on_enemy_despawned").bind(kind))
 	else:
 		print("[WaveManager] Spawned ship has no ShipAI or no player:", ship)
 
 
-func _on_enemy_despawned() -> void:
-	_enemies_alive = max(0, _enemies_alive - 1)
-	print("[WaveManager] Enemy despawned. Remaining:", _enemies_alive)
+func _on_enemy_despawned(kind: String) -> void:
+	if not _wave_active:
+		return
 
-	if _enemies_alive == 0:
-		_current_wave += 1
-		print("[WaveManager] Wave cleared! Next wave:", _current_wave)
-		var t: SceneTreeTimer = get_tree().create_timer(wave_delay)
-		t.timeout.connect(func() -> void:
-			_start_wave(_current_wave))
+	_enemies_alive = max(0, _enemies_alive - 1)
+	_enemies_remaining_total = max(0, _enemies_remaining_total - 1)
+
+	if _enemies_remaining_per_type.has(kind):
+		_enemies_remaining_per_type[kind] = max(0, int(_enemies_remaining_per_type[kind]) - 1)
+
+	if debug_waves:
+		print("[WaveManager] Enemy of type", kind, "despawned. Remaining total:", _enemies_remaining_total)
+
+	enemy_counts_changed.emit(_enemies_remaining_total, _enemies_remaining_per_type.duplicate(true))
+
+	if _enemies_remaining_total == 0:
+		_wave_active = false
+		_awaiting_return_to_town = true
+		print("[WaveManager] Wave", _current_wave, "CLEARED! Return to town.")
+		wave_cleared.emit(_current_wave)
 
 
 # ------------------------
 # SPAWN POSITION LOGIC
 # ------------------------
-
 func _pick_spawn_positions(count: int) -> Array[Vector2]:
 	var result: Array[Vector2] = []
 	if count <= 0:
