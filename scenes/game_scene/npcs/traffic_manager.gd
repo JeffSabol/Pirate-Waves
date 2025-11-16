@@ -83,6 +83,7 @@ func request_start_wave_from_town() -> void:
 		print("\n[WaveManager] Town requested wave start. Starting wave", _current_wave)
 
 	_start_wave(_current_wave)
+	_play_wave_start_sfx(_current_wave, _current_wave % 5 == 0)
 
 
 # ------------------------
@@ -269,3 +270,13 @@ func _update_wave_hud() -> void:
 	print("updating the wave hud")
 	$"../WorldUI/WaveHUD/WaveCount".text = "Wave: %d" % _current_wave
 	$"../WorldUI/WaveHUD/EnemiesLeft".text = "Enemies Left: %d" % _enemies_remaining_total
+
+func _play_wave_start_sfx(wave: int, has_boss: bool) -> void:
+	# Every 5th wave that actually has a boss: play the boss horn
+	if has_boss and wave % 5 == 0 and has_node("BossFogHorn"):
+		$BossFogHorn.play()
+		return
+
+	# All other waves: normal fog horn
+	if has_node("FogHorn"):
+		$FogHorn.play()

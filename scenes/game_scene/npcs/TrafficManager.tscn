@@ -1,6 +1,16 @@
-[gd_scene load_steps=2 format=3 uid="uid://dsgh3pgqlfego"]
+[gd_scene load_steps=4 format=3 uid="uid://dsgh3pgqlfego"]
 
 [ext_resource type="Script" uid="uid://cruanil7pwatv" path="res://scenes/game_scene/npcs/traffic_manager.gd" id="1_wg2mg"]
+[ext_resource type="AudioStream" uid="uid://boow5cls0otbt" path="res://assets/sfx/horns/fog_horn.mp3" id="2_8uxni"]
+[ext_resource type="AudioStream" uid="uid://dxjyrv284r48p" path="res://assets/sfx/horns/boss_fog_horn.mp3" id="3_61a25"]
 
 [node name="TrafficManager" type="Node"]
 script = ExtResource("1_wg2mg")
+
+[node name="FogHorn" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_8uxni")
+volume_db = -14.0
+
+[node name="BossFogHorn" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_61a25")
+volume_db = -10.0
