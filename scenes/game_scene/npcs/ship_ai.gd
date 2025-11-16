@@ -84,6 +84,7 @@ func on_hit(attacker: Node) -> void:
 func _ready() -> void:
 	if debug_ai:
 		print("[ShipAI]", name, "READY at", global_position)
+	update_guns_visibility()
 
 
 # ---- Public API ----
