@@ -296,6 +296,34 @@ vertical_alignment = 1
 autowrap_trim_flags = 0
 justification_flags = 0
 
+[node name="WaveHUD" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="WaveCount" type="Label" parent="WaveHUD"]
+layout_mode = 0
+offset_left = 11.0
+offset_top = 8.0
+offset_right = 51.0
+offset_bottom = 30.0
+
+[node name="EnemiesLeft" type="Label" parent="WaveHUD"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 1024.0
+offset_top = -12.0
+offset_right = 1233.0
+offset_bottom = 14.228241
+grow_horizontal = 0
+grow_vertical = 2
+horizontal_alignment = 2
+
 [connection signal="pressed" from="MapUI/MapButton" to="MapUI/MapButton" method="_on_pressed"]
 [connection signal="pressed" from="MapUI/HBoxContainer/FireLeftButton" to="MapUI" method="_on_fire_left_button_pressed"]
 [connection signal="pressed" from="MapUI/HBoxContainer/FireRightButton" to="MapUI" method="_on_fire_right_button_pressed"]

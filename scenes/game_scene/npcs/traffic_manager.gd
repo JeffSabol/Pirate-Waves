@@ -168,6 +168,7 @@ func _start_wave(wave: int) -> void:
 	# Let HUD know
 	wave_started.emit(wave, _enemies_remaining_total, _enemies_remaining_per_type.duplicate(true))
 	enemy_counts_changed.emit(_enemies_remaining_total, _enemies_remaining_per_type.duplicate(true))
+	call_deferred("_update_wave_hud")
 
 
 func _spawn_enemy(scene: PackedScene, position: Vector2, kind: String) -> void:
@@ -196,6 +197,7 @@ func _spawn_enemy(scene: PackedScene, position: Vector2, kind: String) -> void:
 
 
 func _on_enemy_despawned(kind: String) -> void:
+	call_deferred("_update_wave_hud")
 	if not _wave_active:
 		return
 
@@ -262,3 +264,8 @@ func _pick_spawn_positions(count: int) -> Array[Vector2]:
 		result.append(pos)
 
 	return result
+
+func _update_wave_hud() -> void:
+	print("updating the wave hud")
+	$"../WorldUI/WaveHUD/WaveCount".text = "Wave: %d" % _current_wave
+	$"../WorldUI/WaveHUD/EnemiesLeft".text = "Enemies Left: %d" % _enemies_remaining_total
