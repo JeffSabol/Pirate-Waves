@@ -29,3 +29,5 @@ autoplay = true
 stream = ExtResource("4_ii6q4")
 volume_db = -5.0
 autoplay = true
+
+[connection signal="gui_input" from="TextureRect" to="." method="_unhandled_input"]
