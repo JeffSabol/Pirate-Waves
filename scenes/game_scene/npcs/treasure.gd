@@ -18,9 +18,9 @@ const LOOT_TABLE: Dictionary[String, Vector2i] = {
 }
 
 const SIZE_MULTIPLIER: Dictionary[String, float] = {
-	"Small": 1.0,
-	"Medium": 1.75,
-	"Large": 3.0,
+	"Small": 2.0,
+	"Medium": 3.75,
+	"Large": 5.0,
 }
 
 var _collected: bool = false  # prevents double pick-up

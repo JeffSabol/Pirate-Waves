@@ -240,23 +240,28 @@ func _compute_aggro_velocity(delta: float) -> Vector2:
 
 	return move_dir * chase_speed
 
-
 # ---- FIRING ----
 func _fire_if_allowed() -> void:
 	if not is_aggro() or _is_dying:
 		return
 
-	if $LeftSight.is_colliding() and $LeftSight.get_collider().name == "PlayerBoat":
-		if debug_ai:
-			print("[ShipAI]", name, "LEFT broadside on player -> fire")
-		set_aggro($LeftSight.get_collider())
-		fire_left_guns()
+	# LEFT
+	var left_collider = $LeftSight.get_collider()
+	if $LeftSight.is_colliding() and left_collider and is_instance_valid(left_collider):
+		if left_collider.name == "PlayerBoat":
+			if debug_ai:
+				print("[ShipAI]", name, "LEFT broadside on player -> fire")
+			set_aggro(left_collider)
+			fire_left_guns()
 
-	if $RightSight.is_colliding() and $RightSight.get_collider().name == "PlayerBoat":
-		if debug_ai:
-			print("[ShipAI]", name, "RIGHT broadside on player -> fire")
-		set_aggro($RightSight.get_collider())
-		fire_right_guns()
+	# RIGHT
+	var right_collider = $RightSight.get_collider()
+	if $RightSight.is_colliding() and right_collider and is_instance_valid(right_collider):
+		if right_collider.name == "PlayerBoat":
+			if debug_ai:
+				print("[ShipAI]", name, "RIGHT broadside on player -> fire")
+			set_aggro(right_collider)
+			fire_right_guns()
 
 
 func _emit_and_free() -> void:
