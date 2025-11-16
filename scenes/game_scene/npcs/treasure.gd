@@ -22,7 +22,12 @@ const SIZE_MULTIPLIER: Dictionary[String, float] = {
 	"Medium": 1.75,
 	"Large": 3.0,
 }
-func _ready():
+
+var _collected: bool = false  # prevents double pick-up
+
+
+func _ready() -> void:
+	# Idle shine anim
 	if treasure_size == "Small":
 		$AnimatedSprite2D.play("small_shine")
 	elif treasure_size == "Medium":
@@ -30,37 +35,68 @@ func _ready():
 	else:
 		$AnimatedSprite2D.play("large_shine")
 
+	# Auto-collect after 3 seconds even if player never touches it
+	var timer := get_tree().create_timer(3.0)
+	timer.timeout.connect(_on_auto_collect_timeout)
+
+
 func roll_loot_amount() -> int:
 	var base_range: Vector2i = LOOT_TABLE.get(treasure_type, Vector2i(1, 1))
 	var amount := randi_range(base_range.x, base_range.y)
 	amount = int(amount * SIZE_MULTIPLIER.get(treasure_size, 1.0))
 	return max(amount, 1)
 
+
 func _on_pickup_zone_body_entered(body: Node) -> void:
+	if _collected:
+		return
 	if not body.is_in_group("player"):
 		return
 
+	await _collect(body)
+
+
+func _on_auto_collect_timeout() -> void:
+	if _collected:
+		return
+
+	# Grab the player manually and auto-award the loot
+	var player := get_tree().get_first_node_in_group("player")
+	if player == null:
+		return
+
+	await _collect(player)
+
+
+# Shared collection logic for both manual + auto pickup
+func _collect(body: Node) -> void:
+	_collected = true
+
 	var amount := roll_loot_amount()
 	$PickupSound.play()
+
+	# Open animation
 	if treasure_size == "Small":
 		$AnimatedSprite2D.play("small_open")
 	elif treasure_size == "Medium":
 		$AnimatedSprite2D.play("medium_open")
 	else:
 		$AnimatedSprite2D.play("large_open")
+
 	await get_tree().create_timer(1.5).timeout
 
-	# Spawn floating text at this pickup's world position
+	# Floating text at world position
 	if FloatingTextScene:
 		var ft := FloatingTextScene.instantiate() as Node2D
 		ft.position = global_position
-		get_tree().current_scene.add_child(ft)  # add to world so it follows camera naturally
+		get_tree().current_scene.add_child(ft)
 		var label := "%d %s" % [amount, treasure_type]
 		(ft as FloatingText).show_text(label)
 
 	print("Picked up %d %s" % [amount, treasure_type])
 	body.add_loot(treasure_type, amount)
 
+	# Destroy animation
 	if treasure_size == "Small":
 		$AnimatedSprite2D.play("small_destroy")
 		await get_tree().create_timer(0.9).timeout
@@ -70,5 +106,5 @@ func _on_pickup_zone_body_entered(body: Node) -> void:
 	else:
 		$AnimatedSprite2D.play("large_destroy")
 		await get_tree().create_timer(1.2).timeout
-		
+
 	queue_free()
