@@ -218,6 +218,7 @@ func _on_enemy_despawned(kind: String) -> void:
 		_awaiting_return_to_town = true
 		print("[WaveManager] Wave", _current_wave, "CLEARED! Return to town.")
 		wave_cleared.emit(_current_wave)
+		$WaveWin.play()
 
 
 # ------------------------
