@@ -2,7 +2,7 @@ extends Node2D
 
 @export var cannonball_scene: PackedScene
 @export var smoke_scene: PackedScene
-@export var shoot_speed: float = 375.0
+@export var shoot_speed: float = 320.0
 
 var cannon_sounds: Array[String] = [
 	"res://assets/sfx/Cannon/cannon_1.mp3",
@@ -41,7 +41,7 @@ func fire() -> void:
 		t.timeout.connect(func(): smoke.queue_free())
 
 	# small firing delay
-	await get_tree().create_timer(0.2).timeout
+	await get_tree().create_timer(0.1).timeout
 
 	# Spawn cannonball (typed)
 	if cannonball_scene:

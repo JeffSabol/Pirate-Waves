@@ -18,7 +18,7 @@ var _player: Node2D
 var _routes: Array[Path2D] = [] as Array[Path2D]
 
 var _current_wave: int = 0               # starts at 0; first town exit -> wave 1
-var _wave_active: bool = false
+@export var wave_active: bool = false
 var _enemies_alive: int = 0
 
 var _enemies_remaining_total: int = 0
@@ -64,7 +64,7 @@ func _ready() -> void:
 
 # PUBLIC: called from town when player leaves
 func request_start_wave_from_town() -> void:
-	if _wave_active:
+	if wave_active:
 		if debug_waves:
 			print("[WaveManager] request_start_wave_from_town ignored; wave already active:", _current_wave)
 		return
@@ -152,7 +152,7 @@ func _start_wave(wave: int) -> void:
 	_enemies_remaining_total = num_sloop + num_corsair + num_brig + boss_count
 
 	_enemies_alive = _enemies_remaining_total
-	_wave_active = true
+	wave_active = true
 
 	# Pick spawn positions for all enemies
 	var spawn_positions: Array[Vector2] = _pick_spawn_positions(enemies_to_spawn.size())
@@ -199,7 +199,7 @@ func _spawn_enemy(scene: PackedScene, position: Vector2, kind: String) -> void:
 
 func _on_enemy_despawned(kind: String) -> void:
 	call_deferred("_update_wave_hud")
-	if not _wave_active:
+	if not wave_active:
 		return
 
 	_enemies_alive = max(0, _enemies_alive - 1)
@@ -214,7 +214,7 @@ func _on_enemy_despawned(kind: String) -> void:
 	enemy_counts_changed.emit(_enemies_remaining_total, _enemies_remaining_per_type.duplicate(true))
 
 	if _enemies_remaining_total == 0:
-		_wave_active = false
+		wave_active = false
 		_awaiting_return_to_town = true
 		print("[WaveManager] Wave", _current_wave, "CLEARED! Return to town.")
 		wave_cleared.emit(_current_wave)

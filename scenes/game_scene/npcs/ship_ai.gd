@@ -268,7 +268,7 @@ func _emit_and_free() -> void:
 	if debug_ai:
 		print("[ShipAI]", name, "despawning at", global_position)
 	despawned.emit()
-	queue_free()
+	queue_free() 
 
 
 func set_speed(speed: float) -> void:
@@ -307,7 +307,7 @@ func fire_left_guns() -> void:
 
 
 func fire_right_guns() -> void:
-	if not can_fire_right or _is_dying:
+	if not can_fire_right or _is_dying or not $VisibleOnScreenNotifier2D.is_on_screen():
 		return
 	can_fire_right = false
 

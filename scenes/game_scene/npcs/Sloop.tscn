@@ -54,7 +54,7 @@ height = 68.0
 [node name="SloopShip" type="CharacterBody2D"]
 script = ExtResource("1_sbd3i")
 turn_speed = 8.0
-chase_speed = 90.0
+chase_speed = 30.0
 aggro_preferred_range = 240.0
 aggro_range_tolerance = 50.0
 orbit_clockwise = false
@@ -101,3 +101,5 @@ target_position = Vector2(0, 250)
 [node name="RightSight" type="RayCast2D" parent="."]
 rotation = -1.5707964
 target_position = Vector2(0, 260)
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
