@@ -59,7 +59,6 @@ var guns_upgrade_step: int = 50
 @export var can_fire_right := true
 @export var combat_lock_seconds: float = 10.0
 
-var last_hit_time: float = -1000.0  # time (in seconds) of last hit
 var sails_furled: bool = true
 
 const FORWARD_BASE := Vector2.UP
@@ -210,8 +209,6 @@ func fire_right_guns() -> void:
 func play_hit_sound():
 	$HitSound.play()
 	($Camera2D as ShakeCamera).add_trauma(0.5, 0.3)
-	#Record when hit
-	last_hit_time = Time.get_ticks_msec() / 1000.0
 
 func add_loot(treasure_type: String, amount: int):
 	match treasure_type:
@@ -228,10 +225,6 @@ func add_loot(treasure_type: String, amount: int):
 		_:
 			push_warning("Unknown loot type: %s" % treasure_type)
 	
-func has_recently_been_shot() -> bool:
-	var now := Time.get_ticks_msec() / 1000.0
-	return now - last_hit_time < combat_lock_seconds
-
 
 # --- Upgrade helpers ---------------------------------------------------------
 

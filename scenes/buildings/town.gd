@@ -30,18 +30,16 @@ func set_sprite_by_type():
 func _on_enter_zone_body_entered(body):
 	if body.name == "PlayerBoat":
 		# Don't allow town scene if they were recently shot
-		print(str(body.has_recently_been_shot()))
-		if !body.has_recently_been_shot():
-			$Building.play()
-			$"../../GameUI".hide_world_ui()
-			$"../../GameUI".show_town_ui()
-			$"../../PlayerBoat/AudioStreamPlayer2D".stop()
-			body.in_town_name = town_name 
-			body.in_town_gold = merchant_gold
-			body.in_town_fish = merchant_fish
-			body.in_town_rum = merchant_rum
-			body.in_town_ore = merchant_ore
-			body.in_town_clothes = merchant_clothes
+		$Building.play()
+		$"../../GameUI".hide_world_ui()
+		$"../../GameUI".show_town_ui()
+		$"../../PlayerBoat/AudioStreamPlayer2D".stop()
+		body.in_town_name = town_name 
+		body.in_town_gold = merchant_gold
+		body.in_town_fish = merchant_fish
+		body.in_town_rum = merchant_rum
+		body.in_town_ore = merchant_ore
+		body.in_town_clothes = merchant_clothes
 
 func _on_enter_zone_body_exited(body):
 	if body.name == "PlayerBoat":

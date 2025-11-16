@@ -279,8 +279,9 @@ func _pick_spawn_positions(count: int) -> Array[Vector2]:
 
 func _update_wave_hud() -> void:
 	print("updating the wave hud")
-	$"../WorldUI/WaveHUD/WaveCount".text = "Wave: %d" % _current_wave
-	$"../WorldUI/WaveHUD/EnemiesLeft".text = "Enemies Left: %d" % _enemies_remaining_total
+	if $"../WorldUI/WaveHUD/WaveCount":
+		$"../WorldUI/WaveHUD/WaveCount".text = "Wave: %d" % _current_wave
+		$"../WorldUI/WaveHUD/EnemiesLeft".text = "Enemies Left: %d" % _enemies_remaining_total
 
 func _play_wave_start_sfx(wave: int, has_boss: bool) -> void:
 	# Every 5th wave that actually has a boss: play the boss horn
