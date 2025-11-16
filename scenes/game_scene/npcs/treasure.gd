@@ -83,7 +83,7 @@ func _collect(body: Node) -> void:
 	else:
 		$AnimatedSprite2D.play("large_open")
 
-	await get_tree().create_timer(1.5).timeout
+	await get_tree().create_timer(1.0).timeout
 
 	# Floating text at world position
 	if FloatingTextScene:
