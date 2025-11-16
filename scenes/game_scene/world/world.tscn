@@ -904,7 +904,7 @@ max_ships = 20
 spawn_interval = 0.25
 
 [node name="PlayerBoat" parent="." groups=["PlayerBoat", "player"] instance=ExtResource("3_ptotq")]
-position = Vector2(444, -912)
+position = Vector2(443, -912.00006)
 rotation = -3.1463218
 gold = 1000
 fish = 0

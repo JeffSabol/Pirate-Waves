@@ -219,6 +219,13 @@ func _on_enemy_despawned(kind: String) -> void:
 		print("[WaveManager] Wave", _current_wave, "CLEARED! Return to town.")
 		wave_cleared.emit(_current_wave)
 		$WaveWin.play()
+		# Fade to hide teleporting the player to spawn.
+		if $"../WorldUI/FadeRect":
+			$"../WorldUI/FadeRect".visible = false
+			var m: Color = $"../WorldUI/FadeRect".modulate
+			m.a = 0.0
+			$"../WorldUI/FadeRect".modulate = m
+		$"../PlayerBoat".global_position = Vector2(443, -912)
 
 
 # ------------------------

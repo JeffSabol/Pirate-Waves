@@ -324,6 +324,12 @@ grow_horizontal = 0
 grow_vertical = 2
 horizontal_alignment = 2
 
+[node name="FadeRect" type="ColorRect" parent="."]
+visible = false
+offset_right = 1280.0
+offset_bottom = 720.0
+color = Color(0, 0, 0, 1)
+
 [connection signal="pressed" from="MapUI/MapButton" to="MapUI/MapButton" method="_on_pressed"]
 [connection signal="pressed" from="MapUI/HBoxContainer/FireLeftButton" to="MapUI" method="_on_fire_left_button_pressed"]
 [connection signal="pressed" from="MapUI/HBoxContainer/FireRightButton" to="MapUI" method="_on_fire_right_button_pressed"]
