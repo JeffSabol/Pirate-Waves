@@ -1,4 +1,4 @@
-extends Node2D
+extends CharacterBody2D
 class_name ShipAI
 
 signal despawned
@@ -52,31 +52,26 @@ func _get_player() -> Node2D:
 		return null
 	return tree.get_first_node_in_group("PlayerBoat") as Node2D
 
-
 func is_aggro() -> bool:
 	return is_instance_valid(_aggro_target)
-
 
 func set_aggro(target: Node2D) -> void:
 	_aggro_target = target
 	if debug_ai and target:
-		print("[ShipAI]", name, "set_aggro on", target.name, "(permanent)")
-
+		print("[ShipAI]", name, "set_aggro on", target.name, " (permanent)")
 
 func _play_hurt_state() -> void:
 	if _has_been_hurt:
 		return
 	_has_been_hurt = true
-
 	if has_node("AnimatedSprite2D"):
-		var anim := $AnimatedSprite2D as AnimatedSprite2D
-		if anim and anim.sprite_frames:
+		var anim: AnimatedSprite2D = $AnimatedSprite2D
+		if anim:
 			var names: PackedStringArray = anim.sprite_frames.get_animation_names()
 			if "hurt" in names:
 				anim.play("hurt")
 			if debug_ai:
 				print("[ShipAI]", name, "entered HURT state")
-
 
 func on_hit(attacker: Node) -> void:
 	var p := attacker as Node2D
@@ -84,10 +79,7 @@ func on_hit(attacker: Node) -> void:
 		if debug_ai:
 			print("[ShipAI]", name, "hit by", p.name, "-> entering aggro")
 		set_aggro(p)
-
-	# Any hit = visually hurt
 	_play_hurt_state()
-
 
 func _ready() -> void:
 	if debug_ai:
@@ -95,7 +87,7 @@ func _ready() -> void:
 
 
 # ---- Public API ----
-# We keep set_path ONLY to allow route-based spawning; no path-following later.
+# Only used to choose a spawn point along the route
 func set_path(curve: Curve2D, loop: bool, speed: float, start_t: float) -> void:
 	if curve:
 		var length: float = max(float(curve.get_baked_length()), 0.001)
@@ -108,7 +100,6 @@ func set_path(curve: Curve2D, loop: bool, speed: float, start_t: float) -> void:
 				"length =", length,
 				"pos =", global_position)
 
-	# Auto-aggro on spawn if far away
 	if always_aggro_on_spawn:
 		var player := _get_player()
 		if player:
@@ -125,33 +116,29 @@ func set_path(curve: Curve2D, loop: bool, speed: float, start_t: float) -> void:
 func begin_death() -> void:
 	if _is_dying:
 		if debug_ai:
-			print("[ShipAI]", name, "begin_death() called again but already dying")
+			print("[ShipAI]", name, "begin_death() called AGAIN but already dying")
 		return
 
 	_is_dying = true
-
 	if debug_ai:
 		print("\n========== SHIPAI DEATH START ==========")
 		print("[ShipAI]", name, "begin_death; switching sprite to 'defeated'")
 
-	# Stop firing; AI logic early-returns while _is_dying is true
 	can_fire_left = false
 	can_fire_right = false
+	velocity = Vector2.ZERO
 
-	# Swap to defeated frame (1-frame anim)
 	if has_node("AnimatedSprite2D"):
-		var anim := $AnimatedSprite2D as AnimatedSprite2D
+		var anim: AnimatedSprite2D = $AnimatedSprite2D
 		if debug_ai:
 			print("[ShipAI]", name, "AnimatedSprite2D found; checking animations...")
-
 		if anim and anim.sprite_frames:
 			var names: PackedStringArray = anim.sprite_frames.get_animation_names()
 			if debug_ai:
 				print("[ShipAI]", name, "animations:", names)
-
 			if "defeated" in names:
 				if debug_ai:
-					print("[ShipAI]", name, "PLAYING 'defeated' animation")
+					print("[ShipAI]", name, "PLAYING 'defeated' animation now")
 				anim.animation = "defeated"
 				anim.frame = 0
 				anim.play()
@@ -161,18 +148,12 @@ func begin_death() -> void:
 				anim.animation = "hurt"
 				anim.frame = 0
 				anim.play()
-			elif debug_ai:
-				print("[ShipAI]", name, "NO hurt/defeated animation — leaving current sprite")
-	elif debug_ai:
-		print("[ShipAI]", name, "NO AnimatedSprite2D found!")
 
 	_start_death_fade()
-
 
 func _start_death_fade() -> void:
 	if debug_ai:
 		print("[ShipAI]", name, "_start_death_fade entered")
-
 	var fade_time: float = max(0.0, death_fade_time)
 
 	if fade_time == 0.0:
@@ -181,12 +162,9 @@ func _start_death_fade() -> void:
 		_emit_and_free()
 		return
 
-	if debug_ai:
-		print("[ShipAI]", name, "Creating fade tween, duration =", fade_time)
-
 	var tween := get_tree().create_tween()
 	if tween == null:
-		print("[ShipAI]", name, "ERROR: tween is NULL! SceneTree issue?")
+		print("[ShipAI]", name, "ERROR: tween is NULL!!")
 		_emit_and_free()
 		return
 
@@ -196,13 +174,11 @@ func _start_death_fade() -> void:
 			print("[ShipAI]", name, "FADE COMPLETE — now removing ship")
 		_emit_and_free())
 
-	if debug_ai:
-		print("[ShipAI]", name, "fade tween started!")
-
 
 func _physics_process(delta: float) -> void:
 	if _is_dying:
-		# Death sequence is running; don't move or shoot.
+		velocity = Vector2.ZERO
+		move_and_slide()
 		return
 
 	var now_aggro: bool = is_aggro()
@@ -211,13 +187,16 @@ func _physics_process(delta: float) -> void:
 	_was_aggro = now_aggro
 
 	if now_aggro:
-		_process_aggro(delta)
+		velocity = _compute_aggro_velocity(delta)
 		_fire_if_allowed()
-	# else: idle
+	else:
+		velocity = Vector2.ZERO
+
+	move_and_slide()  # this is what actually collides with the TileMap
 
 
 # ---- AGGRO BEHAVIOR (CHASE + ORBIT) ----
-func _process_aggro(delta: float) -> void:
+func _compute_aggro_velocity(delta: float) -> Vector2:
 	if not is_instance_valid(_aggro_target):
 		var p := _get_player()
 		if p:
@@ -226,18 +205,18 @@ func _process_aggro(delta: float) -> void:
 			_aggro_target = p
 		else:
 			_aggro_target = null
-			return
+			return Vector2.ZERO
 
 	var target_pos: Vector2 = _aggro_target.global_position
 	var to_target: Vector2 = target_pos - global_position
 	var dist: float = to_target.length()
 	if dist <= 1.0:
-		return
+		return Vector2.ZERO
 
 	var forward: Vector2 = to_target / dist
 
 	var desired_radius: float = aggro_preferred_range
-	var radius_error: float = dist - desired_radius   # >0 = too far, <0 = too close
+	var radius_error: float = dist - desired_radius
 
 	var tangent: Vector2 = Vector2(-forward.y, forward.x)
 	if not orbit_clockwise:
@@ -249,17 +228,16 @@ func _process_aggro(delta: float) -> void:
 
 	var tangent_weight: float = 1.0
 	var radial_weight: float = 0.6
-
 	if abs(radius_error) < aggro_range_tolerance * 0.5:
 		radial_weight *= 0.25
 
 	var move_dir: Vector2 = (tangent * tangent_weight + radial * radial_weight).normalized()
-	global_position += move_dir * chase_speed * delta
-
 	if face_direction and move_dir.length() > 0.001:
 		var desired_angle: float = move_dir.angle() + deg_to_rad(rotation_offset_deg)
 		var step: float = clamp(turn_speed * delta, 0.0, 1.0)
 		rotation = lerp_angle(rotation, desired_angle, step)
+
+	return move_dir * chase_speed
 
 
 # ---- FIRING ----
@@ -267,21 +245,17 @@ func _fire_if_allowed() -> void:
 	if not is_aggro() or _is_dying:
 		return
 
-	if has_node("LeftSight"):
-		var left := $LeftSight
-		if left.is_colliding() and left.get_collider().name == "PlayerBoat":
-			if debug_ai:
-				print("[ShipAI]", name, "LEFT broadside on player -> fire")
-			set_aggro(left.get_collider())
-			fire_left_guns()
+	if $LeftSight.is_colliding() and $LeftSight.get_collider().name == "PlayerBoat":
+		if debug_ai:
+			print("[ShipAI]", name, "LEFT broadside on player -> fire")
+		set_aggro($LeftSight.get_collider())
+		fire_left_guns()
 
-	if has_node("RightSight"):
-		var right := $RightSight
-		if right.is_colliding() and right.get_collider().name == "PlayerBoat":
-			if debug_ai:
-				print("[ShipAI]", name, "RIGHT broadside on player -> fire")
-			set_aggro(right.get_collider())
-			fire_right_guns()
+	if $RightSight.is_colliding() and $RightSight.get_collider().name == "PlayerBoat":
+		if debug_ai:
+			print("[ShipAI]", name, "RIGHT broadside on player -> fire")
+		set_aggro($RightSight.get_collider())
+		fire_right_guns()
 
 
 func _emit_and_free() -> void:
@@ -294,15 +268,11 @@ func _emit_and_free() -> void:
 func set_speed(speed: float) -> void:
 	chase_speed = speed
 
-
 func set_face_direction(enabled: bool) -> void:
 	face_direction = enabled
 
-
 func update_guns_visibility() -> void:
-	if not has_node("Guns"):
-		return
-	var guns_node := $Guns
+	var guns_node: Node = $Guns
 	var total: int = guns_node.get_child_count()
 	for i in range(total):
 		var child := guns_node.get_child(i) as CanvasItem
@@ -318,13 +288,12 @@ func fire_left_guns() -> void:
 	if debug_ai:
 		print("[ShipAI]", name, "fire_left_guns")
 
-	if has_node("Guns"):
-		var guns_node := $Guns
-		for i in range(1, guns + 1):
-			if i % 2 == 1:
-				var gun: Node = guns_node.get_node("Gun%d" % i)
-				if gun:
-					gun.call("fire")
+	var guns_node: Node = $Guns
+	for i in range(1, guns + 1):
+		if i % 2 == 1:
+			var gun: Node = guns_node.get_node("Gun%d" % i)
+			if gun:
+				gun.call("fire")
 
 	var t: SceneTreeTimer = get_tree().create_timer(left_fire_cooldown)
 	t.timeout.connect(func() -> void:
@@ -339,13 +308,12 @@ func fire_right_guns() -> void:
 	if debug_ai:
 		print("[ShipAI]", name, "fire_right_guns")
 
-	if has_node("Guns"):
-		var guns_node := $Guns
-		for i in range(1, guns + 1):
-			if i % 2 == 0:
-				var gun: Node = guns_node.get_node("Gun%d" % i)
-				if gun:
-					gun.call("fire")
+	var guns_node: Node = $Guns
+	for i in range(1, guns + 1):
+		if i % 2 == 0:
+			var gun: Node = guns_node.get_node("Gun%d" % i)
+			if gun:
+				gun.call("fire")
 
 	var t: SceneTreeTimer = get_tree().create_timer(right_fire_cooldown)
 	t.timeout.connect(func() -> void:
