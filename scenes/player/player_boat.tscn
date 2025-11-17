@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://b6nvp82ty2110" path="res://scenes/player/gun.tscn" id="4_wniug"]
 [ext_resource type="Texture2D" uid="uid://lmh1o14fg80w" path="res://assets/boat/Boat1_raise.png" id="5_3y1jq"]
 [ext_resource type="Script" uid="uid://dx48q0tsf6rf8" path="res://scenes/game_scene/npcs/health.gd" id="5_wniug"]
+[ext_resource type="PackedScene" uid="uid://dbpo24oreyxb8" path="res://scenes/player/tier1_shape.tscn" id="6_3y1jq"]
 [ext_resource type="AudioStream" uid="uid://ju3ogqg6d686" path="res://assets/sfx/HitSoundPlayer.mp3" id="6_hnfsw"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0ixi0"]
@@ -80,7 +81,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_msno6")
 }],
-"loop": true,
+"loop": false,
 "name": &"2_furl",
 "speed": 5.0
 }, {
@@ -97,7 +98,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_27yoe")
 }],
-"loop": true,
+"loop": false,
 "name": &"2_raise",
 "speed": 5.0
 }, {
@@ -130,10 +131,6 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_n1myn"]
-radius = 11.0
-height = 46.0
-
 [node name="PlayerBoat" type="CharacterBody2D"]
 script = ExtResource("1_tfbt8")
 reverse_speed = 61.37
@@ -143,55 +140,37 @@ morale = 100
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 rotation = 3.1415927
 sprite_frames = SubResource("SpriteFrames_tfbt8")
-animation = &"furl"
+animation = &"2_raise"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -1)
-shape = SubResource("CapsuleShape2D_n1myn")
+[node name="CollisionShape2D" parent="." instance=ExtResource("6_3y1jq")]
 
 [node name="Guns" type="Node2D" parent="."]
 
 [node name="Gun1" parent="Guns" instance=ExtResource("4_wniug")]
-cannonball_scene = null
-smoke_scene = null
 
 [node name="Gun2" parent="Guns" instance=ExtResource("4_wniug")]
 scale = Vector2(-1, 1)
-cannonball_scene = null
-smoke_scene = null
 
 [node name="Gun3" parent="Guns" instance=ExtResource("4_wniug")]
 position = Vector2(0, -7)
-cannonball_scene = null
-smoke_scene = null
 
 [node name="Gun4" parent="Guns" instance=ExtResource("4_wniug")]
 position = Vector2(0, -7)
 scale = Vector2(-1, 1)
-cannonball_scene = null
-smoke_scene = null
 
 [node name="Gun5" parent="Guns" instance=ExtResource("4_wniug")]
 position = Vector2(0, 7)
-cannonball_scene = null
-smoke_scene = null
 
 [node name="Gun7" parent="Guns" instance=ExtResource("4_wniug")]
 position = Vector2(0, 14)
-cannonball_scene = null
-smoke_scene = null
 
 [node name="Gun6" parent="Guns" instance=ExtResource("4_wniug")]
 position = Vector2(0, 7)
 scale = Vector2(-1, 1)
-cannonball_scene = null
-smoke_scene = null
 
 [node name="Gun8" parent="Guns" instance=ExtResource("4_wniug")]
 position = Vector2(0, 14)
 scale = Vector2(-1, 1)
-cannonball_scene = null
-smoke_scene = null
 
 [node name="ShipHealth" type="Node2D" parent="."]
 script = ExtResource("5_wniug")

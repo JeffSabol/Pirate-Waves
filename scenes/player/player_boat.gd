@@ -76,6 +76,11 @@ var idle_turn_factor: float = 0.35       # % of turn_speed you get even at 0 spe
 var turn_inertia_gain: float = 12.0      # responsiveness of turn input
 var turn_inertia_decay: float = 10.0     # how fast it decays when you stop pressing
 
+# --- Tier collision shapes (assign in inspector) ----------------------------
+@export var tier1_shape: Shape2D
+@export var tier2_shape: Shape2D
+@export var tier3_shape: Shape2D
+
 func enable_controls() -> void:
 	controls_enabled = true
 
@@ -112,10 +117,42 @@ func _play_sail_idle_frame() -> void:
 	anim.frame = anim.sprite_frames.get_frame_count(anim_name) - 1
 	anim.pause()
 
+# --- Collision shape per tier -----------------------------------------------
+func _apply_tier_collision_shape() -> void:
+	match ship_tier:
+		1:
+			if tier1_shape:
+				$CollisionShape2D.shape = tier1_shape
+		2:
+			if tier2_shape:
+				$CollisionShape2D.shape = tier2_shape
+		3:
+			if tier3_shape:
+				$CollisionShape2D.shape = tier3_shape
+
+# --- Gun offsets per side (match tier 2 sprite layout) ----------------------
+func _apply_gun_offsets() -> void:
+	# Only adjust for tier 2; other tiers keep their scene positions
+	if ship_tier != 2:
+		return
+
+	var guns_node := $Guns
+	for i in range(1, guns_node.get_child_count() + 1):
+		var gun := guns_node.get_node_or_null("Gun%d" % i)
+		if gun:
+			if i % 2 == 1:
+				# odd → left
+				gun.position.x = -7
+			else:
+				# even → right
+				gun.position.x = 7
+
 func _ready():
 	sails_furled = true
 	current_speed = 0.0
 	_play_sail_idle_frame()
+	_apply_tier_collision_shape()
+	_apply_gun_offsets()
 
 func _physics_process(delta: float) -> void:
 	# Camera sway (waves / motion feel)
@@ -302,6 +339,8 @@ func _advance_ship_tier() -> void:
 
 	# update sprite to new tier sails (2_furl/2_raise, 3_furl/3_raise)
 	_play_sail_idle_frame()
+	_apply_tier_collision_shape()
+	_apply_gun_offsets()
 
 
 # --- Upgrades ----------------------------------------------------------------
