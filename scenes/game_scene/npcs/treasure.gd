@@ -36,7 +36,7 @@ func _ready() -> void:
 		$AnimatedSprite2D.play("large_shine")
 
 	# Auto-collect after 3 seconds even if player never touches it
-	var timer := get_tree().create_timer(3.0)
+	var timer := get_tree().create_timer(1.0)
 	timer.timeout.connect(_on_auto_collect_timeout)
 
 
