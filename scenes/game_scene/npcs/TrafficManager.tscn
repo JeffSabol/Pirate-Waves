@@ -1,15 +1,16 @@
-[gd_scene load_steps=6 format=3 uid="uid://dsgh3pgqlfego"]
+[gd_scene load_steps=7 format=3 uid="uid://dsgh3pgqlfego"]
 
 [ext_resource type="Script" uid="uid://cruanil7pwatv" path="res://scenes/game_scene/npcs/traffic_manager.gd" id="1_wg2mg"]
 [ext_resource type="AudioStream" uid="uid://boow5cls0otbt" path="res://assets/sfx/horns/fog_horn.mp3" id="2_8uxni"]
 [ext_resource type="PackedScene" uid="uid://c6whfp3pxsx1o" path="res://scenes/game_scene/npcs/Sloop.tscn" id="2_882di"]
 [ext_resource type="AudioStream" uid="uid://dxjyrv284r48p" path="res://assets/sfx/horns/boss_fog_horn.mp3" id="3_61a25"]
+[ext_resource type="PackedScene" uid="uid://01f253a2lm6p" path="res://scenes/game_scene/npcs/Corsair.tscn" id="3_ji3hi"]
 [ext_resource type="AudioStream" uid="uid://cregtdhis6tf" path="res://assets/sfx/wave_complete.mp3" id="4_8236t"]
 
 [node name="TrafficManager" type="Node"]
 script = ExtResource("1_wg2mg")
 sloop_scene = ExtResource("2_882di")
-corsair_scene = ExtResource("2_882di")
+corsair_scene = ExtResource("3_ji3hi")
 brig_scene = ExtResource("2_882di")
 boss_scene = ExtResource("2_882di")
 
