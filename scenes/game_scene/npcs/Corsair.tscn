@@ -55,7 +55,6 @@ height = 86.0
 script = ExtResource("1_4x6u1")
 turn_speed = 8.0
 guns = 4
-chase_speed = 90.0
 aggro_preferred_range = 240.0
 aggro_range_tolerance = 50.0
 orbit_clockwise = false

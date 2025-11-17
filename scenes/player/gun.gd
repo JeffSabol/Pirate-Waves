@@ -2,7 +2,7 @@ extends Node2D
 
 @export var cannonball_scene: PackedScene
 @export var smoke_scene: PackedScene
-@export var shoot_speed: float = 320.0
+@export var shoot_speed: float = 300.0
 
 var cannon_sounds: Array[String] = [
 	"res://assets/sfx/Cannon/cannon_1.mp3",
