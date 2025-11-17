@@ -1,11 +1,45 @@
-[gd_scene load_steps=15 format=3 uid="uid://d3nh1rywkpqb0"]
+[gd_scene load_steps=25 format=3 uid="uid://d3nh1rywkpqb0"]
 
 [ext_resource type="Script" uid="uid://3lm8sk43yjjr" path="res://scenes/player/player_boat.gd" id="1_tfbt8"]
+[ext_resource type="Texture2D" uid="uid://cm67x6tv7txdj" path="res://assets/boat/Boat2_hurt_furl.png" id="2_wjis0"]
+[ext_resource type="Texture2D" uid="uid://i54ytxd4utb7" path="res://assets/boat/Boat2_hurt_raise.png" id="3_3y1jq"]
 [ext_resource type="Texture2D" uid="uid://urv6bwnjy44o" path="res://assets/boat/Boat1_furl.png" id="4_wjis0"]
 [ext_resource type="PackedScene" uid="uid://b6nvp82ty2110" path="res://scenes/player/gun.tscn" id="4_wniug"]
 [ext_resource type="Texture2D" uid="uid://lmh1o14fg80w" path="res://assets/boat/Boat1_raise.png" id="5_3y1jq"]
 [ext_resource type="Script" uid="uid://dx48q0tsf6rf8" path="res://scenes/game_scene/npcs/health.gd" id="5_wniug"]
 [ext_resource type="AudioStream" uid="uid://ju3ogqg6d686" path="res://assets/sfx/HitSoundPlayer.mp3" id="6_hnfsw"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0ixi0"]
+atlas = ExtResource("2_wjis0")
+region = Rect2(0, 0, 64, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rw42d"]
+atlas = ExtResource("2_wjis0")
+region = Rect2(64, 0, 64, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8g3iy"]
+atlas = ExtResource("2_wjis0")
+region = Rect2(128, 0, 64, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_msno6"]
+atlas = ExtResource("2_wjis0")
+region = Rect2(192, 0, 64, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6vh1g"]
+atlas = ExtResource("3_3y1jq")
+region = Rect2(0, 0, 64, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_13ktk"]
+atlas = ExtResource("3_3y1jq")
+region = Rect2(64, 0, 64, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oskqq"]
+atlas = ExtResource("3_3y1jq")
+region = Rect2(128, 0, 64, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_27yoe"]
+atlas = ExtResource("3_3y1jq")
+region = Rect2(192, 0, 64, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4axgh"]
 atlas = ExtResource("4_wjis0")
@@ -33,6 +67,40 @@ region = Rect2(68, 0, 34, 68)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_tfbt8"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0ixi0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rw42d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8g3iy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_msno6")
+}],
+"loop": true,
+"name": &"2_furl",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6vh1g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_13ktk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oskqq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_27yoe")
+}],
+"loop": true,
+"name": &"2_raise",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_4axgh")
@@ -75,7 +143,7 @@ morale = 100
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 rotation = 3.1415927
 sprite_frames = SubResource("SpriteFrames_tfbt8")
-animation = &"furl"
+animation = &"2_furl"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -1)
