@@ -39,7 +39,7 @@ func _try_damage(target: Node) -> void:
 			var cur: float = float(n.get("hp"))
 			n.set("hp", max(0.0, cur - float(damage)))
 			if float(n.get("hp")) == 0.0:
-				get_tree().change_scene_to_file("res://scenes/death/YouDied.tscn")
+				call_deferred("_go_to_death_screen")
 				return
 			if n.has_method("play_hit_sound"):
 				n.play_hit_sound()
@@ -61,3 +61,6 @@ func _explode_then_free() -> void:
 
 func _on_area_entered(a: Area2D) -> void: _try_damage(a)
 func _on_body_entered(b: Node2D) -> void: _try_damage(b)
+
+func _go_to_death_screen() -> void:
+	get_tree().change_scene_to_file("res://scenes/death/YouDied.tscn")
