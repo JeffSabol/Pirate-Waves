@@ -902,6 +902,7 @@ spawn_interval = 0.25
 [node name="PlayerBoat" parent="." groups=["PlayerBoat", "player"] instance=ExtResource("3_ptotq")]
 position = Vector2(443, -912.00006)
 rotation = -3.1463218
+gold = 2000
 fish = 0
 rum = 0
 ore = 0

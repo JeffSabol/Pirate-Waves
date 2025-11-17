@@ -6,8 +6,12 @@ extends CharacterBody2D
 @export var hull_upgrade_cost: int = 75
 @export var guns_upgrade_cost: int = 100
 
+# --- Ship tiering ---
+@export var ship_tier: int = 1          # 1 sloop, 2 corsair, 3 brig
+@export var max_ship_tier: int = 3      # total number of tiers
+
 # --- Upgrade limits / tracking ---
-@export var max_upgrade_level: int = 3
+@export var max_upgrade_level: int = 3  # levels per tier (so 3 tiers => up to 9 total)
 @export var speed_upgrade_level: int = 0
 @export var turning_upgrade_level: int = 0
 @export var hull_upgrade_level: int = 0
@@ -77,14 +81,41 @@ func enable_controls() -> void:
 
 func disable_controls() -> void:
 	controls_enabled = false
-	
+
+# --- Animation helpers per tier ---------------------------------------------
+func _get_furl_anim() -> String:
+	match ship_tier:
+		1:
+			return "furl"
+		2:
+			return "2_furl"
+		3:
+			return "3_furl"
+		_:
+			return "furl"
+
+func _get_raise_anim() -> String:
+	match ship_tier:
+		1:
+			return "raise"
+		2:
+			return "2_raise"
+		3:
+			return "3_raise"
+		_:
+			return "raise"
+
+func _play_sail_idle_frame() -> void:
+	var anim_name := _get_furl_anim() if sails_furled else _get_raise_anim()
+	var anim := $AnimatedSprite2D
+	anim.play(anim_name)
+	anim.frame = anim.sprite_frames.get_frame_count(anim_name) - 1
+	anim.pause()
+
 func _ready():
 	sails_furled = true
 	current_speed = 0.0
-	var anim := $AnimatedSprite2D
-	anim.play("furl")
-	anim.frame = anim.sprite_frames.get_frame_count("furl") - 1
-	anim.pause()
+	_play_sail_idle_frame()
 
 func _physics_process(delta: float) -> void:
 	# Camera sway (waves / motion feel)
@@ -121,12 +152,14 @@ func _physics_process(delta: float) -> void:
 	# --- sail state & animations (one-shots) ---
 	if Input.is_action_just_pressed("ui_up") or Input.is_action_just_pressed("move_up"):
 		sails_furled = false
-		if $AnimatedSprite2D.animation != "raise":
-			$AnimatedSprite2D.play("raise")
+		var raise_anim := _get_raise_anim()
+		if $AnimatedSprite2D.animation != raise_anim:
+			$AnimatedSprite2D.play(raise_anim)
 	elif Input.is_action_just_pressed("ui_down") or Input.is_action_just_pressed("move_down"):
 		sails_furled = true
-		if $AnimatedSprite2D.animation != "furl":
-			$AnimatedSprite2D.play("furl")
+		var furl_anim := _get_furl_anim()
+		if $AnimatedSprite2D.animation != furl_anim:
+			$AnimatedSprite2D.play(furl_anim)
 
 	# throttle/brake
 	if not sails_furled:
@@ -236,12 +269,46 @@ func _spend_gold(cost: int) -> void:
 	if gold < 0:
 		gold = 0
 
+# per-tier cap (e.g. 3 levels per tier → tier 2 cap = 6)
+func _current_tier_cap() -> int:
+	return max_upgrade_level * ship_tier
+
+# check if all 4 categories are at the cap for this tier
+func _check_tier_progress() -> void:
+	if ship_tier >= max_ship_tier:
+		return
+
+	var cap := _current_tier_cap()
+	if speed_upgrade_level >= cap \
+		and turning_upgrade_level >= cap \
+		and hull_upgrade_level >= cap \
+		and guns_upgrade_level >= cap:
+		_advance_ship_tier()
+
+# advance to the next ship tier: keep stats, jump costs, change sails
+func _advance_ship_tier() -> void:
+	if ship_tier >= max_ship_tier:
+		return
+
+	ship_tier += 1
+	print("Ship tier advanced to: ", ship_tier)
+
+	# "next calculated 3 values away" → jump each cost by max_upgrade_level steps
+	var steps_for_tier_jump := max_upgrade_level
+	speed_upgrade_cost += speed_upgrade_step * steps_for_tier_jump
+	turning_upgrade_cost += turning_upgrade_step * steps_for_tier_jump
+	hull_upgrade_cost += hull_upgrade_step * steps_for_tier_jump
+	guns_upgrade_cost += guns_upgrade_step * steps_for_tier_jump
+
+	# update sprite to new tier sails (2_furl/2_raise, 3_furl/3_raise)
+	_play_sail_idle_frame()
+
 
 # --- Upgrades ----------------------------------------------------------------
 
 func upgrade_speed() -> void:
-	if speed_upgrade_level >= max_upgrade_level:
-		print("Speed already fully upgraded")
+	if speed_upgrade_level >= _current_tier_cap():
+		print("Speed already fully upgraded for this tier")
 		$NotEnoughSFX.play()
 		return
 
@@ -258,13 +325,15 @@ func upgrade_speed() -> void:
 	reverse_speed += 10.0
 
 	speed_upgrade_level += 1
-	# Only increase price if we're not at max yet
-	if speed_upgrade_level < max_upgrade_level:
+	# Only increase price if we're not at this tier's cap yet
+	if speed_upgrade_level < _current_tier_cap():
 		speed_upgrade_cost += speed_upgrade_step
 
+	_check_tier_progress()
+
 func upgrade_turning() -> void:
-	if turning_upgrade_level >= max_upgrade_level:
-		print("Turning already fully upgraded")
+	if turning_upgrade_level >= _current_tier_cap():
+		print("Turning already fully upgraded for this tier")
 		$NotEnoughSFX.play()
 		return
 
@@ -280,12 +349,14 @@ func upgrade_turning() -> void:
 	turn_speed += 0.2
 
 	turning_upgrade_level += 1
-	if turning_upgrade_level < max_upgrade_level:
+	if turning_upgrade_level < _current_tier_cap():
 		turning_upgrade_cost += turning_upgrade_step
 
+	_check_tier_progress()
+
 func upgrade_hull() -> void:
-	if hull_upgrade_level >= max_upgrade_level:
-		print("Hull already fully upgraded")
+	if hull_upgrade_level >= _current_tier_cap():
+		print("Hull already fully upgraded for this tier")
 		$NotEnoughSFX.play()
 		return
 
@@ -302,8 +373,10 @@ func upgrade_hull() -> void:
 	hp += 25
 
 	hull_upgrade_level += 1
-	if hull_upgrade_level < max_upgrade_level:
+	if hull_upgrade_level < _current_tier_cap():
 		hull_upgrade_cost += hull_upgrade_step
+
+	_check_tier_progress()
 
 func upgrade_guns() -> void:
 	var guns_node: Node = $Guns
@@ -315,8 +388,8 @@ func upgrade_guns() -> void:
 		$NotEnoughSFX.play()
 		return
 
-	if guns_upgrade_level >= max_upgrade_level:
-		print("Guns already fully upgraded")
+	if guns_upgrade_level >= _current_tier_cap():
+		print("Guns already fully upgraded for this tier")
 		$NotEnoughSFX.play()
 		return
 
@@ -332,5 +405,7 @@ func upgrade_guns() -> void:
 	update_guns_visibility()
 
 	guns_upgrade_level += 1
-	if guns_upgrade_level < max_upgrade_level:
+	if guns_upgrade_level < _current_tier_cap():
 		guns_upgrade_cost += guns_upgrade_step
+
+	_check_tier_progress()

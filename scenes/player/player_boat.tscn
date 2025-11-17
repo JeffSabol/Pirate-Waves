@@ -143,7 +143,7 @@ morale = 100
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 rotation = 3.1415927
 sprite_frames = SubResource("SpriteFrames_tfbt8")
-animation = &"2_furl"
+animation = &"furl"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -1)
@@ -152,23 +152,46 @@ shape = SubResource("CapsuleShape2D_n1myn")
 [node name="Guns" type="Node2D" parent="."]
 
 [node name="Gun1" parent="Guns" instance=ExtResource("4_wniug")]
+cannonball_scene = null
+smoke_scene = null
 
 [node name="Gun2" parent="Guns" instance=ExtResource("4_wniug")]
 scale = Vector2(-1, 1)
+cannonball_scene = null
+smoke_scene = null
 
 [node name="Gun3" parent="Guns" instance=ExtResource("4_wniug")]
 position = Vector2(0, -7)
+cannonball_scene = null
+smoke_scene = null
 
 [node name="Gun4" parent="Guns" instance=ExtResource("4_wniug")]
 position = Vector2(0, -7)
 scale = Vector2(-1, 1)
+cannonball_scene = null
+smoke_scene = null
 
 [node name="Gun5" parent="Guns" instance=ExtResource("4_wniug")]
 position = Vector2(0, 7)
+cannonball_scene = null
+smoke_scene = null
+
+[node name="Gun7" parent="Guns" instance=ExtResource("4_wniug")]
+position = Vector2(0, 14)
+cannonball_scene = null
+smoke_scene = null
 
 [node name="Gun6" parent="Guns" instance=ExtResource("4_wniug")]
 position = Vector2(0, 7)
 scale = Vector2(-1, 1)
+cannonball_scene = null
+smoke_scene = null
+
+[node name="Gun8" parent="Guns" instance=ExtResource("4_wniug")]
+position = Vector2(0, 14)
+scale = Vector2(-1, 1)
+cannonball_scene = null
+smoke_scene = null
 
 [node name="ShipHealth" type="Node2D" parent="."]
 script = ExtResource("5_wniug")
