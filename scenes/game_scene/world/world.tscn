@@ -20,7 +20,7 @@
 friction = 0.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_h3f8j"]
-radius = 287.11148
+radius = 244.05122
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_oxjrw"]
 texture = ExtResource("1_k8tay")
