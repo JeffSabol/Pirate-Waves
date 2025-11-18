@@ -1,13 +1,14 @@
-[gd_scene load_steps=25 format=3 uid="uid://d3nh1rywkpqb0"]
+[gd_scene load_steps=27 format=3 uid="uid://d3nh1rywkpqb0"]
 
 [ext_resource type="Script" uid="uid://3lm8sk43yjjr" path="res://scenes/player/player_boat.gd" id="1_tfbt8"]
+[ext_resource type="Shape2D" uid="uid://d121p0agvcbqf" path="res://scenes/player/tier1_shape.tres" id="2_4axgh"]
 [ext_resource type="Texture2D" uid="uid://cm67x6tv7txdj" path="res://assets/boat/Boat2_hurt_furl.png" id="2_wjis0"]
 [ext_resource type="Texture2D" uid="uid://i54ytxd4utb7" path="res://assets/boat/Boat2_hurt_raise.png" id="3_3y1jq"]
+[ext_resource type="Shape2D" uid="uid://dd8inxe3fn8gr" path="res://scenes/player/tier2_shape.tres" id="3_huuu2"]
 [ext_resource type="Texture2D" uid="uid://urv6bwnjy44o" path="res://assets/boat/Boat1_furl.png" id="4_wjis0"]
 [ext_resource type="PackedScene" uid="uid://b6nvp82ty2110" path="res://scenes/player/gun.tscn" id="4_wniug"]
 [ext_resource type="Texture2D" uid="uid://lmh1o14fg80w" path="res://assets/boat/Boat1_raise.png" id="5_3y1jq"]
 [ext_resource type="Script" uid="uid://dx48q0tsf6rf8" path="res://scenes/game_scene/npcs/health.gd" id="5_wniug"]
-[ext_resource type="PackedScene" uid="uid://dbpo24oreyxb8" path="res://scenes/player/tier1_shape.tscn" id="6_3y1jq"]
 [ext_resource type="AudioStream" uid="uid://ju3ogqg6d686" path="res://assets/sfx/HitSoundPlayer.mp3" id="6_hnfsw"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0ixi0"]
@@ -131,18 +132,22 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4axgh"]
+radius = 15.0
+height = 68.0
+
 [node name="PlayerBoat" type="CharacterBody2D"]
 script = ExtResource("1_tfbt8")
 reverse_speed = 61.37
 turn_speed = 0.75
 morale = 100
+tier1_shape = ExtResource("2_4axgh")
+tier2_shape = ExtResource("3_huuu2")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 rotation = 3.1415927
 sprite_frames = SubResource("SpriteFrames_tfbt8")
 animation = &"2_raise"
-
-[node name="CollisionShape2D" parent="." instance=ExtResource("6_3y1jq")]
 
 [node name="Guns" type="Node2D" parent="."]
 
@@ -178,3 +183,6 @@ script = ExtResource("5_wniug")
 [node name="HitSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("6_hnfsw")
 volume_db = -10.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_4axgh")
