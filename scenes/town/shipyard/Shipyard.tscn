@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://c6qexg224wfyy"]
+[gd_scene load_steps=27 format=3 uid="uid://c6qexg224wfyy"]
 
 [ext_resource type="Texture2D" uid="uid://4pi37xpixlf8" path="res://assets/ui/town/shipyard/ShipYard.png" id="1_44gni"]
 [ext_resource type="Texture2D" uid="uid://bqal11e3q3jc" path="res://assets/ui/town/shipyard/BaseUpgradeUI.png" id="2_ixawh"]
@@ -14,7 +14,17 @@
 [ext_resource type="Texture2D" uid="uid://drx36gd0sy6to" path="res://assets/ui/town/shipyard/SHIPWRIGHT6.png" id="10_s4r6o"]
 [ext_resource type="Texture2D" uid="uid://8jjgkso7iww1" path="res://assets/ui/town/shipyard/SHIPWRIGHT7.png" id="11_ielbi"]
 [ext_resource type="Texture2D" uid="uid://balupdxjbhy04" path="res://assets/ui/town/shipyard/SHIPWRIGHT8.png" id="12_1ahyg"]
+[ext_resource type="Texture2D" uid="uid://c7bb0s3lq6yo3" path="res://assets/upgrade_indicators/tier1_upgrade_indicator2.png" id="13_7enfh"]
 [ext_resource type="Texture2D" uid="uid://bteq4c38n3ijq" path="res://assets/ui/town/shipyard/SHIPWRIGHT9.png" id="13_nnck5"]
+[ext_resource type="Texture2D" uid="uid://c06bqeiqki80e" path="res://assets/upgrade_indicators/tier1_upgrade_indicator1.png" id="14_1sjak"]
+[ext_resource type="Texture2D" uid="uid://bcbo1jjybbpk0" path="res://assets/upgrade_indicators/tier1_upgrade_indicator3.png" id="14_11rmm"]
+[ext_resource type="Texture2D" uid="uid://r0ft7bmfeoo5" path="res://assets/upgrade_indicators/tier2_upgrade_indicator1.png" id="15_scc4q"]
+[ext_resource type="Texture2D" uid="uid://j0ot3bv4emb0" path="res://assets/upgrade_indicators/tier2_upgrade_indicator2.png" id="16_1sjak"]
+[ext_resource type="Texture2D" uid="uid://mf1duxxc3qjl" path="res://assets/upgrade_indicators/empty_upgrade_indicator.png" id="16_7enfh"]
+[ext_resource type="Texture2D" uid="uid://dmr608efxuic3" path="res://assets/upgrade_indicators/tier2_upgrade_indicator3.png" id="17_q6cwu"]
+[ext_resource type="Texture2D" uid="uid://cv651buj263so" path="res://assets/upgrade_indicators/tier3_upgrade_indicator1.png" id="18_wqr8x"]
+[ext_resource type="Texture2D" uid="uid://crna7x16pshei" path="res://assets/upgrade_indicators/tier3_upgrade_indicator2.png" id="19_6dlyi"]
+[ext_resource type="Texture2D" uid="uid://dy5psbgvnyky2" path="res://assets/upgrade_indicators/tier3_upgrade_indicator3.png" id="20_e1cn0"]
 
 [sub_resource type="AnimatedTexture" id="AnimatedTexture_bf8my"]
 frames = 9
@@ -71,6 +81,16 @@ offset_bottom = 219.0
 scale = Vector2(5, 5)
 texture = ExtResource("2_ixawh")
 script = ExtResource("3_ixawh")
+empty_upgrade_indicator = ExtResource("16_7enfh")
+tier1_upgrade_indicator1 = ExtResource("14_1sjak")
+tier1_upgrade_indicator2 = ExtResource("13_7enfh")
+tier1_upgrade_indicator3 = ExtResource("14_11rmm")
+tier2_upgrade_indicator1 = ExtResource("15_scc4q")
+tier2_upgrade_indicator2 = ExtResource("16_1sjak")
+tier2_upgrade_indicator3 = ExtResource("17_q6cwu")
+tier3_upgrade_indicator1 = ExtResource("18_wqr8x")
+tier3_upgrade_indicator2 = ExtResource("19_6dlyi")
+tier3_upgrade_indicator3 = ExtResource("20_e1cn0")
 
 [node name="GoldLabel" type="Label" parent="CanvasLayer/MenuBackground"]
 layout_mode = 0
@@ -138,6 +158,14 @@ texture_normal = ExtResource("5_p6ufq")
 texture_pressed = ExtResource("6_7enfh")
 texture_hover = ExtResource("6_7enfh")
 
+[node name="SpeedIndicator" type="TextureRect" parent="CanvasLayer/MenuBackground"]
+layout_mode = 0
+offset_left = 88.6
+offset_top = 29.8
+offset_right = 113.6
+offset_bottom = 36.8
+texture = ExtResource("16_7enfh")
+
 [node name="TurningLabel" type="Label" parent="CanvasLayer/MenuBackground"]
 layout_mode = 0
 offset_left = 47.000008
@@ -170,6 +198,14 @@ offset_bottom = 53.200005
 texture_normal = ExtResource("5_p6ufq")
 texture_pressed = ExtResource("6_7enfh")
 texture_hover = ExtResource("6_7enfh")
+
+[node name="TurningIndicator" type="TextureRect" parent="CanvasLayer/MenuBackground"]
+layout_mode = 0
+offset_left = 88.6
+offset_top = 47.400005
+offset_right = 113.6
+offset_bottom = 54.400005
+texture = ExtResource("16_7enfh")
 
 [node name="HullLabel" type="Label" parent="CanvasLayer/MenuBackground"]
 layout_mode = 0
@@ -205,6 +241,14 @@ texture_normal = ExtResource("5_p6ufq")
 texture_pressed = ExtResource("6_7enfh")
 texture_hover = ExtResource("6_7enfh")
 
+[node name="HullIndicator" type="TextureRect" parent="CanvasLayer/MenuBackground"]
+layout_mode = 0
+offset_left = 88.6
+offset_top = 63.800007
+offset_right = 113.6
+offset_bottom = 70.8
+texture = ExtResource("16_7enfh")
+
 [node name="GunsLabel" type="Label" parent="CanvasLayer/MenuBackground"]
 layout_mode = 0
 offset_left = 46.599987
@@ -237,6 +281,14 @@ offset_bottom = 87.0
 texture_normal = ExtResource("5_p6ufq")
 texture_pressed = ExtResource("6_7enfh")
 texture_hover = ExtResource("6_7enfh")
+
+[node name="GunsIndicator" type="TextureRect" parent="CanvasLayer/MenuBackground"]
+layout_mode = 0
+offset_left = 88.6
+offset_top = 81.20001
+offset_right = 113.6
+offset_bottom = 88.20001
+texture = ExtResource("16_7enfh")
 
 [node name="RepairLabel" type="Label" parent="CanvasLayer/MenuBackground"]
 layout_mode = 0
