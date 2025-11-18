@@ -6,7 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://bpwti7egakjag" path="res://assets/boat/Corsair1_hurt.png" id="4_gevho"]
 [ext_resource type="Script" uid="uid://dx48q0tsf6rf8" path="res://scenes/game_scene/npcs/health.gd" id="5_hie8k"]
 [ext_resource type="PackedScene" uid="uid://b6nvp82ty2110" path="res://scenes/player/gun.tscn" id="6_8gnhs"]
-[ext_resource type="PackedScene" uid="uid://ctyxxv4xxf162" path="res://scenes/player/tier2_shape.tscn" id="6_gevho"]
+[ext_resource type="PackedScene" uid="uid://cf1jpv0fmhv3q" path="res://scenes/player/tier3_shape.tscn" id="6_gevho"]
 [ext_resource type="AudioStream" uid="uid://ljnrvt0jhnln" path="res://assets/sfx/debris_break.wav" id="7_xbhl8"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_gevho"]
