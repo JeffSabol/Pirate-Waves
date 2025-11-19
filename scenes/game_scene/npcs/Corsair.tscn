@@ -6,7 +6,6 @@
 [ext_resource type="Texture2D" uid="uid://bpwti7egakjag" path="res://assets/boat/Corsair1_hurt.png" id="4_gevho"]
 [ext_resource type="Script" uid="uid://dx48q0tsf6rf8" path="res://scenes/game_scene/npcs/health.gd" id="5_hie8k"]
 [ext_resource type="PackedScene" uid="uid://b6nvp82ty2110" path="res://scenes/player/gun.tscn" id="6_8gnhs"]
-[ext_resource type="PackedScene" uid="uid://cf1jpv0fmhv3q" path="res://scenes/player/tier3_shape.tscn" id="6_gevho"]
 [ext_resource type="AudioStream" uid="uid://ljnrvt0jhnln" path="res://assets/sfx/debris_break.wav" id="7_xbhl8"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_gevho"]
@@ -48,6 +47,10 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4x6u1"]
+radius = 23.0
+height = 84.0
+
 [node name="CorsairShip" type="CharacterBody2D"]
 collision_mask = 5
 script = ExtResource("1_4x6u1")
@@ -61,12 +64,13 @@ orbit_clockwise = false
 rotation = -3.1415925
 sprite_frames = SubResource("SpriteFrames_mxv8p")
 
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 1)
+shape = SubResource("CapsuleShape2D_4x6u1")
+
 [node name="ShipHealth" type="Node2D" parent="."]
 script = ExtResource("5_hie8k")
 max_hp = 100
-
-[node name="CollisionShape2D" parent="." instance=ExtResource("6_gevho")]
-position = Vector2(0, 1)
 
 [node name="Guns" type="Node2D" parent="."]
 
