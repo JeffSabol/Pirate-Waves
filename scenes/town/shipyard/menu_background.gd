@@ -3,6 +3,8 @@ extends TextureRect
 var dragging := false
 var drag_offset := Vector2.ZERO
 
+const LEVELS_PER_TIER := 3
+
 # --- UPGRADE INDICATOR TEXTURES ---
 
 @export var empty_upgrade_indicator: Texture2D
@@ -45,25 +47,26 @@ func _physics_process(delta):
 
 	$GoldBalance.text = str(player.gold)
 
-	# SPEED
+	# -----------------------------
+	# PRICE LABELS
+	# -----------------------------
+	# Here, player.max_upgrade_level should be the TOTAL cap (e.g. 9 for 3 tiers x 3 levels)
+	# so "MAX" only shows when you are truly done for that stat.
 	if player.speed_upgrade_level >= player.max_upgrade_level:
 		$SpeedPriceLabel.text = "MAX"
 	else:
 		$SpeedPriceLabel.text = str(player.speed_upgrade_cost)
 
-	# TURNING
 	if player.turning_upgrade_level >= player.max_upgrade_level:
 		$TurningPriceLabel.text = "MAX"
 	else:
 		$TurningPriceLabel.text = str(player.turning_upgrade_cost)
 
-	# HULL
 	if player.hull_upgrade_level >= player.max_upgrade_level:
 		$HullPriceLabel.text = "MAX"
 	else:
 		$HullPriceLabel.text = str(player.hull_upgrade_cost)
 
-	# GUNS
 	if player.guns_upgrade_level >= player.max_upgrade_level:
 		$GunsPriceLabel.text = "MAX"
 	else:
@@ -74,11 +77,12 @@ func _physics_process(delta):
 	# -----------------------------
 	var tier: int = player.ship_tier
 
-	# Clamp to 0..3 since you have 0–3 circles filled
-	var speed_level   : int = clamp(player.speed_upgrade_level,   0, 3)
-	var turning_level : int = clamp(player.turning_upgrade_level, 0, 3)
-	var hull_level    : int = clamp(player.hull_upgrade_level,    0, 3)
-	var guns_level    : int = clamp(player.guns_upgrade_level,    0, 3)
+	# Convert the GLOBAL upgrade level (0..9) into "level in current tier" (0..3)
+	# This is what makes tier 2 start as empty, using empty_upgrade_indicator.
+	var speed_level_in_tier   : int = _compute_level_in_tier(player.speed_upgrade_level,   tier)
+	var turning_level_in_tier : int = _compute_level_in_tier(player.turning_upgrade_level, tier)
+	var hull_level_in_tier    : int = _compute_level_in_tier(player.hull_upgrade_level,    tier)
+	var guns_level_in_tier    : int = _compute_level_in_tier(player.guns_upgrade_level,    tier)
 
 	var speed_indicator   := $SpeedIndicator   if has_node("SpeedIndicator")   else null
 	var turning_indicator := $TurningIndicator if has_node("TurningIndicator") else null
@@ -86,13 +90,24 @@ func _physics_process(delta):
 	var guns_indicator    := $GunsIndicator    if has_node("GunsIndicator")    else null
 
 	if speed_indicator:
-		speed_indicator.texture = _get_indicator_texture(tier, speed_level)
+		speed_indicator.texture = _get_indicator_texture(tier, speed_level_in_tier)
 	if turning_indicator:
-		turning_indicator.texture = _get_indicator_texture(tier, turning_level)
+		turning_indicator.texture = _get_indicator_texture(tier, turning_level_in_tier)
 	if hull_indicator:
-		hull_indicator.texture = _get_indicator_texture(tier, hull_level)
+		hull_indicator.texture = _get_indicator_texture(tier, hull_level_in_tier)
 	if guns_indicator:
-		guns_indicator.texture = _get_indicator_texture(tier, guns_level)
+		guns_indicator.texture = _get_indicator_texture(tier, guns_level_in_tier)
+
+
+# Take a GLOBAL level (0..9, etc.) and current tier, and convert to 0..3
+func _compute_level_in_tier(global_level: int, tier: int) -> int:
+	# Example:
+	# tier 1 → levels 0–3
+	# tier 2 → levels 3–6
+	# tier 3 → levels 6–9
+	var min_level_for_tier = (tier - 1) * LEVELS_PER_TIER
+	var relative = global_level - min_level_for_tier
+	return clamp(relative, 0, LEVELS_PER_TIER)
 
 
 func _get_indicator_texture(tier: int, level_in_tier: int) -> Texture2D:
