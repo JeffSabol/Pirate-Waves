@@ -28,6 +28,7 @@
 
 [sub_resource type="AnimatedTexture" id="AnimatedTexture_bf8my"]
 frames = 9
+speed_scale = 1.5
 frame_0/texture = ExtResource("5_2tcl3")
 frame_0/duration = 0.2
 frame_1/texture = ExtResource("6_8sxeu")
