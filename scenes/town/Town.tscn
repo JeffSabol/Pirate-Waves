@@ -462,6 +462,34 @@ scale = Vector2(-2, 2)
 mouse_filter = 2
 texture = SubResource("AnimatedTexture_v6jhq")
 
+[node name="Waves4" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 379.0
+offset_top = -45.0
+offset_right = 419.0
+offset_bottom = -5.0
+
+[node name="Wave1" type="TextureRect" parent="CanvasLayer/Waves4"]
+layout_mode = 0
+offset_left = 268.0
+offset_top = 558.0
+offset_right = 332.0
+offset_bottom = 590.0
+scale = Vector2(-2, 2)
+mouse_filter = 2
+texture = SubResource("AnimatedTexture_8dq74")
+
+[node name="Wave2" type="TextureRect" parent="CanvasLayer/Waves4"]
+layout_mode = 0
+offset_left = 501.0
+offset_top = 558.0
+offset_right = 565.0
+offset_bottom = 590.0
+scale = Vector2(-2, 2)
+mouse_filter = 2
+texture = SubResource("AnimatedTexture_gdn34")
+
 [node name="Waves3" type="Control" parent="CanvasLayer"]
 layout_mode = 3
 anchors_preset = 0
