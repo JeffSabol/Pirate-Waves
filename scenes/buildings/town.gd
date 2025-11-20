@@ -28,7 +28,7 @@ func set_sprite_by_type():
 	$Building.stop()
 
 func _on_enter_zone_body_entered(body):
-	if body.name == "PlayerBoat" and !$"../../WaveManager".wave_active:
+	if body.name == "PlayerBoat" and !$"../../WaveManager".wave_active and get_tree().get_root().find_child("Shipyard", true, false) == null:
 		# Don't allow town scene if they were recently shot
 		$Building.play()
 		$"../../GameUI".hide_world_ui()
