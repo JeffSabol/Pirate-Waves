@@ -42,7 +42,7 @@ func _gui_input(event: InputEvent) -> void:
 		accept_event()
 
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	var player = $"../../../../PlayerBoat"
 
 	$GoldBalance.text = str(player.gold)
@@ -50,24 +50,24 @@ func _physics_process(delta):
 	# -----------------------------
 	# PRICE LABELS
 	# -----------------------------
-	# Here, player.max_upgrade_level should be the TOTAL cap (e.g. 9 for 3 tiers x 3 levels)
-	# so "MAX" only shows when you are truly done for that stat.
-	if player.speed_upgrade_level >= player.max_upgrade_level:
+	var tier_cap: int = player.max_upgrade_level * player.ship_tier
+
+	if player.speed_upgrade_level >= tier_cap:
 		$SpeedPriceLabel.text = "MAX"
 	else:
 		$SpeedPriceLabel.text = str(player.speed_upgrade_cost)
 
-	if player.turning_upgrade_level >= player.max_upgrade_level:
+	if player.turning_upgrade_level >= tier_cap:
 		$TurningPriceLabel.text = "MAX"
 	else:
 		$TurningPriceLabel.text = str(player.turning_upgrade_cost)
 
-	if player.hull_upgrade_level >= player.max_upgrade_level:
+	if player.hull_upgrade_level >= tier_cap:
 		$HullPriceLabel.text = "MAX"
 	else:
 		$HullPriceLabel.text = str(player.hull_upgrade_cost)
 
-	if player.guns_upgrade_level >= player.max_upgrade_level:
+	if player.guns_upgrade_level >= tier_cap:
 		$GunsPriceLabel.text = "MAX"
 	else:
 		$GunsPriceLabel.text = str(player.guns_upgrade_cost)
