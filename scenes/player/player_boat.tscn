@@ -179,18 +179,19 @@ scale = Vector2(-1, 1)
 
 [node name="Gun9" parent="Guns" instance=ExtResource("4_wniug")]
 position = Vector2(0, 21)
-scale = Vector2(-1, 1)
 
 [node name="Gun10" parent="Guns" instance=ExtResource("4_wniug")]
 position = Vector2(0, 21)
+rotation = 3.1415927
+scale = Vector2(1, -1)
 
 [node name="Gun11" parent="Guns" instance=ExtResource("4_wniug")]
 position = Vector2(0, -14)
-rotation = -3.1415925
-scale = Vector2(1, -1)
 
 [node name="Gun12" parent="Guns" instance=ExtResource("4_wniug")]
 position = Vector2(0, -14)
+rotation = -3.1415925
+scale = Vector2(1, -1)
 
 [node name="ShipHealth" type="Node2D" parent="."]
 script = ExtResource("5_wniug")

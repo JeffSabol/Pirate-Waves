@@ -132,8 +132,8 @@ func _apply_tier_collision_shape() -> void:
 
 # --- Gun offsets per side (match tier 2 sprite layout) ----------------------
 func _apply_gun_offsets() -> void:
-	# Only adjust for tier 2; other tiers keep their scene positions
-	if ship_tier != 2:
+	# Only adjust for tier 2+
+	if ship_tier < 2:
 		return
 
 	var guns_node := $Guns
