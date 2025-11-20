@@ -1,10 +1,12 @@
-[gd_scene load_steps=7 format=3 uid="uid://5yu5bl4mslip"]
+[gd_scene load_steps=9 format=3 uid="uid://5yu5bl4mslip"]
 
 [ext_resource type="AudioStream" uid="uid://dan5fpiujt8ri" path="res://assets/music/tavern.mp3" id="1_45ogq"]
 [ext_resource type="Texture2D" uid="uid://dujvify3ehmvn" path="res://assets/ui/town/tavern/TavernBackgroundEmpty.png" id="2_k5kxa"]
 [ext_resource type="Script" uid="uid://c1v6k0n7neerv" path="res://scenes/town/tavern/leave_area.gd" id="3_0apjh"]
 [ext_resource type="AudioStream" uid="uid://0gb007yt3ffo" path="res://assets/sfx/door_creak.mp3" id="4_45ogq"]
 [ext_resource type="AudioStream" uid="uid://c1th104dehu51" path="res://assets/sfx/pour_drink.mp3" id="5_45ogq"]
+[ext_resource type="Script" uid="uid://b8hdi4rs24j5o" path="res://scenes/town/tavern/tavern_lantern.gd" id="7_25lxe"]
+[ext_resource type="Texture2D" uid="uid://col2rd6y87dto" path="res://assets/light/light_texture.png" id="7_d8ip1"]
 
 [sub_resource type="GDScript" id="GDScript_u8drk"]
 script/source = "extends ColorRect
@@ -65,6 +67,21 @@ script = SubResource("GDScript_u8drk")
 [node name="BartenderSound" type="AudioStreamPlayer" parent="CanvasLayer/BackgroundArt/BartenderArea"]
 stream = ExtResource("5_45ogq")
 volume_db = -14.0
+
+[node name="LanternLight" type="PointLight2D" parent="CanvasLayer"]
+position = Vector2(119, 60)
+range_layer_min = -10
+range_layer_max = 10
+texture = ExtResource("7_d8ip1")
+script = ExtResource("7_25lxe")
+
+[node name="DoorLight" type="PointLight2D" parent="CanvasLayer"]
+visible = false
+position = Vector2(1190.5, 490.49997)
+scale = Vector2(1.6523438, 4.0898438)
+range_layer_min = -10
+range_layer_max = 10
+texture = ExtResource("7_d8ip1")
 
 [connection signal="gui_input" from="CanvasLayer/BackgroundArt/LeaveArea" to="CanvasLayer/BackgroundArt/LeaveArea" method="_on_gui_input"]
 [connection signal="mouse_entered" from="CanvasLayer/BackgroundArt/LeaveArea" to="CanvasLayer/BackgroundArt/LeaveArea" method="_on_mouse_entered"]
