@@ -1,24 +1,31 @@
-[gd_scene load_steps=12 format=3 uid="uid://5yu5bl4mslip"]
+[gd_scene load_steps=7 format=3 uid="uid://5yu5bl4mslip"]
 
-[ext_resource type="AudioStream" uid="uid://bai8rvpmgj8e8" path="res://assets/sfx/tavern_ambience.mp3" id="1_k5kxa"]
-[ext_resource type="Texture2D" uid="uid://c30wqf8p84jbg" path="res://assets/backgrounds/TavernBackground.jpg" id="1_vih0g"]
+[ext_resource type="AudioStream" uid="uid://dan5fpiujt8ri" path="res://assets/music/tavern.mp3" id="1_45ogq"]
+[ext_resource type="Texture2D" uid="uid://dujvify3ehmvn" path="res://assets/ui/town/tavern/TavernBackgroundEmpty.png" id="2_k5kxa"]
 [ext_resource type="Script" uid="uid://c1v6k0n7neerv" path="res://scenes/town/tavern/leave_area.gd" id="3_0apjh"]
-[ext_resource type="AudioStream" uid="uid://bq8yax4ypv4dc" path="res://assets/sfx/fireplace_loop.mp3" id="3_d8ip1"]
-[ext_resource type="Script" uid="uid://b18eyedb6vc5u" path="res://scenes/town/tavern/quests_area.gd" id="3_y83y0"]
-[ext_resource type="Script" uid="uid://chqx1hcjksyt7" path="res://scenes/town/tavern/bartender_area.gd" id="4_y83y0"]
+[ext_resource type="AudioStream" uid="uid://0gb007yt3ffo" path="res://assets/sfx/door_creak.mp3" id="4_45ogq"]
 [ext_resource type="AudioStream" uid="uid://c1th104dehu51" path="res://assets/sfx/pour_drink.mp3" id="5_45ogq"]
-[ext_resource type="Script" uid="uid://5x8v3k2aweo5" path="res://scenes/town/tavern/crew_1.gd" id="6_25lxe"]
-[ext_resource type="AudioStream" uid="uid://djs37wuua5rek" path="res://assets/sfx/burp.mp3" id="6_u8drk"]
-[ext_resource type="Script" uid="uid://jlv8jp610j2v" path="res://scenes/town/tavern/crew_2.gd" id="9_g3qd5"]
-[ext_resource type="Script" uid="uid://jf4knouiuof1" path="res://scenes/town/tavern/crew_3.gd" id="10_k5kxa"]
+
+[sub_resource type="GDScript" id="GDScript_u8drk"]
+script/source = "extends ColorRect
+
+var pulse_tween: Tween
+
+func _on_mouse_entered():
+	$BartenderSound.play()
+	print(\"mouse entered bartender area\")
+
+func _on_mouse_exited():
+	print(\"mouse exited bartender area\")
+	$BartenderSound.stop()
+"
 
 [node name="Tavern" type="Control"]
 layout_mode = 3
 anchors_preset = 0
 
 [node name="TavernAmbience" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("1_k5kxa")
-volume_db = -10.0
+stream = ExtResource("1_45ogq")
 autoplay = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
@@ -31,91 +38,38 @@ offset_top = -39.0
 offset_bottom = 73.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("1_vih0g")
+texture = ExtResource("2_k5kxa")
 metadata/_edit_use_anchors_ = true
 
 [node name="LeaveArea" type="ColorRect" parent="CanvasLayer/BackgroundArt"]
 layout_mode = 0
-offset_left = 840.0
-offset_top = 331.0
-offset_right = 915.0
-offset_bottom = 572.0
+offset_left = 1025.0
+offset_top = 54.0
+offset_right = 1279.0
+offset_bottom = 841.0
 tooltip_text = "Exit the tavern"
 color = Color(1, 1, 0, 0)
 script = ExtResource("3_0apjh")
 
-[node name="FireplaceSound" type="AudioStreamPlayer" parent="CanvasLayer/BackgroundArt/LeaveArea"]
-stream = ExtResource("3_d8ip1")
+[node name="Doorcreak" type="AudioStreamPlayer" parent="CanvasLayer/BackgroundArt/LeaveArea"]
+stream = ExtResource("4_45ogq")
 volume_db = -12.0
-
-[node name="QuestsArea" type="ColorRect" parent="CanvasLayer/BackgroundArt"]
-layout_mode = 0
-offset_left = 17.0
-offset_top = 304.0
-offset_right = 144.0
-offset_bottom = 437.0
-tooltip_text = "Look at the quests"
-color = Color(1, 1, 1, 0)
-script = ExtResource("3_y83y0")
 
 [node name="BartenderArea" type="ColorRect" parent="CanvasLayer/BackgroundArt"]
 layout_mode = 0
-offset_left = 197.0
-offset_top = 331.0
-offset_right = 487.0
-offset_bottom = 496.0
+offset_top = 297.0
+offset_right = 950.0
+offset_bottom = 565.0
 tooltip_text = "Buy a drink"
 color = Color(1, 1, 1, 0)
-script = ExtResource("4_y83y0")
+script = SubResource("GDScript_u8drk")
 
 [node name="BartenderSound" type="AudioStreamPlayer" parent="CanvasLayer/BackgroundArt/BartenderArea"]
 stream = ExtResource("5_45ogq")
 volume_db = -14.0
 
-[node name="Crew1" type="ColorRect" parent="CanvasLayer/BackgroundArt"]
-layout_mode = 0
-offset_left = 26.0
-offset_top = 440.0
-offset_right = 193.0
-offset_bottom = 793.0
-tooltip_text = "Recruit crew members"
-color = Color(1, 1, 1, 0)
-script = ExtResource("6_25lxe")
-
-[node name="BurpSound" type="AudioStreamPlayer" parent="CanvasLayer/BackgroundArt/Crew1"]
-stream = ExtResource("6_u8drk")
-volume_db = -14.0
-
-[node name="Crew2" type="ColorRect" parent="CanvasLayer/BackgroundArt"]
-layout_mode = 0
-offset_left = 492.0
-offset_top = 454.0
-offset_right = 681.0
-offset_bottom = 736.0
-tooltip_text = "Recruit crew members"
-color = Color(1, 1, 1, 0)
-script = ExtResource("9_g3qd5")
-
-[node name="Crew3" type="ColorRect" parent="CanvasLayer/BackgroundArt"]
-layout_mode = 0
-offset_left = 921.0
-offset_top = 431.0
-offset_right = 1012.0
-offset_bottom = 655.0
-tooltip_text = "Recruit crew members"
-color = Color(1, 1, 1, 0)
-script = ExtResource("10_k5kxa")
-
 [connection signal="gui_input" from="CanvasLayer/BackgroundArt/LeaveArea" to="CanvasLayer/BackgroundArt/LeaveArea" method="_on_gui_input"]
 [connection signal="mouse_entered" from="CanvasLayer/BackgroundArt/LeaveArea" to="CanvasLayer/BackgroundArt/LeaveArea" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="CanvasLayer/BackgroundArt/LeaveArea" to="CanvasLayer/BackgroundArt/LeaveArea" method="_on_mouse_exited"]
-[connection signal="mouse_entered" from="CanvasLayer/BackgroundArt/QuestsArea" to="CanvasLayer/BackgroundArt/QuestsArea" method="_on_mouse_entered"]
-[connection signal="mouse_exited" from="CanvasLayer/BackgroundArt/QuestsArea" to="CanvasLayer/BackgroundArt/QuestsArea" method="_on_mouse_exited"]
 [connection signal="mouse_entered" from="CanvasLayer/BackgroundArt/BartenderArea" to="CanvasLayer/BackgroundArt/BartenderArea" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="CanvasLayer/BackgroundArt/BartenderArea" to="CanvasLayer/BackgroundArt/BartenderArea" method="_on_mouse_exited"]
-[connection signal="mouse_entered" from="CanvasLayer/BackgroundArt/Crew1" to="CanvasLayer/BackgroundArt/Crew1" method="_on_mouse_entered"]
-[connection signal="mouse_exited" from="CanvasLayer/BackgroundArt/Crew1" to="CanvasLayer/BackgroundArt/Crew1" method="_on_mouse_exited"]
-[connection signal="mouse_entered" from="CanvasLayer/BackgroundArt/Crew2" to="CanvasLayer/BackgroundArt/Crew2" method="_on_mouse_entered"]
-[connection signal="mouse_exited" from="CanvasLayer/BackgroundArt/Crew2" to="CanvasLayer/BackgroundArt/Crew2" method="_on_mouse_exited"]
-[connection signal="mouse_entered" from="CanvasLayer/BackgroundArt/Crew3" to="CanvasLayer/BackgroundArt/Crew3" method="_on_mouse_entered"]
-[connection signal="mouse_exited" from="CanvasLayer/BackgroundArt/Crew3" to="CanvasLayer/BackgroundArt/Crew3" method="_on_mouse_exited"]
