@@ -42,7 +42,7 @@ func _on_enter_zone_body_entered(body):
 		body.in_town_clothes = merchant_clothes
 
 func _on_enter_zone_body_exited(body):
-	if body.name == "PlayerBoat":
+	if body.name == "PlayerBoat" and get_tree().get_root().find_child("Shipyard", true, false) == null:
 		var wm := $"../../WaveManager"
 		if wm:
 			wm.request_start_wave_from_town()
