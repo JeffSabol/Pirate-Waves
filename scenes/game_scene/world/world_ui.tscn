@@ -1,11 +1,14 @@
-[gd_scene load_steps=20 format=3 uid="uid://cu6c72fyiba2s"]
+[gd_scene load_steps=23 format=3 uid="uid://cu6c72fyiba2s"]
 
 [ext_resource type="Texture2D" uid="uid://is5yutlhkb27" path="res://assets/ui/map/MapBackground.png" id="1_cm2e8"]
 [ext_resource type="Texture2D" uid="uid://bbrjt84hpvqry" path="res://assets/ui/map/Map.png" id="1_ij4mi"]
 [ext_resource type="Script" uid="uid://bjg7ug8bx7lau" path="res://scenes/game_scene/world/map_ui.gd" id="1_wknfc"]
 [ext_resource type="Script" uid="uid://b2u4mh42rrys" path="res://scenes/game_scene/world/map_button.gd" id="2_ydqjq"]
 [ext_resource type="Texture2D" uid="uid://cajt75jnxpw55" path="res://assets/ui/worldui/panels/stats_panel.png" id="5_4nqjw"]
+[ext_resource type="Texture2D" uid="uid://dj1utroctraii" path="res://assets/ui/worldui/panels/gold_panel.png" id="5_ir6cy"]
+[ext_resource type="Texture2D" uid="uid://bkjw2utplnsst" path="res://assets/ui/worldui/panels/enemy_counter_panel.png" id="5_tf8dh"]
 [ext_resource type="Texture2D" uid="uid://h56m310r62on" path="res://assets/boat/boat.png" id="6_eddq1"]
+[ext_resource type="Texture2D" uid="uid://bsuse3wvbw12r" path="res://assets/ui/worldui/panels/wave_panel.png" id="6_sj3nl"]
 [ext_resource type="Texture2D" uid="uid://bjjsk5ie5xwm1" path="res://assets/ui/map/map_closed.png" id="8_8qdxx"]
 [ext_resource type="Texture2D" uid="uid://cx80vmti284f1" path="res://assets/ui/worldui/FireButtonReady.png" id="9_4nqjw"]
 [ext_resource type="Script" uid="uid://c2clrolu1yhh5" path="res://scenes/game_scene/world/inventory_ui.gd" id="9_lkfkc"]
@@ -68,11 +71,6 @@ offset_bottom = 1192.7142
 scale = Vector2(0.35, 0.35)
 texture = ExtResource("1_ij4mi")
 
-[node name="BoatStats" type="TextureRect" parent="MapUI"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
 [node name="ShipIcon" type="TextureRect" parent="MapUI"]
 visible = false
 layout_mode = 0
@@ -83,14 +81,82 @@ rotation = -1.5707964
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("6_eddq1")
 
-[node name="Gold" type="Label" parent="MapUI"]
+[node name="Enemies" type="Control" parent="MapUI"]
+visible = false
+anchors_preset = 0
+offset_left = 1088.0
+offset_top = 11.0
+offset_right = 1128.0
+offset_bottom = 51.0
+
+[node name="EnemiesPanel" type="TextureRect" parent="MapUI/Enemies"]
 layout_mode = 0
-offset_left = 44.0
-offset_top = 66.0
-offset_right = 96.0
-offset_bottom = 77.0
-theme_override_font_sizes/font_size = 8
-text = "test"
+offset_right = 44.0
+offset_bottom = 11.0
+scale = Vector2(3, 3)
+texture = ExtResource("5_tf8dh")
+
+[node name="EnemiesLeft" type="Label" parent="MapUI/Enemies"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -14.0
+offset_right = 129.0
+offset_bottom = 12.228241
+grow_horizontal = 0
+grow_vertical = 2
+text = "Enemies: 42"
+
+[node name="Wave" type="Control" parent="MapUI"]
+visible = false
+anchors_preset = 0
+offset_left = 12.0
+offset_top = 11.0
+offset_right = 52.0
+offset_bottom = 51.0
+
+[node name="WavePanel" type="TextureRect" parent="MapUI/Wave"]
+layout_mode = 0
+offset_top = 1.0
+offset_right = 40.0
+offset_bottom = 12.0
+scale = Vector2(3, 3)
+texture = ExtResource("6_sj3nl")
+
+[node name="WaveCount" type="Label" parent="MapUI/Wave"]
+layout_mode = 0
+offset_left = 23.0
+offset_top = 8.0
+offset_right = 109.0
+offset_bottom = 30.0
+text = "Wave 1"
+
+[node name="Gold" type="Control" parent="MapUI"]
+visible = false
+anchors_preset = 0
+offset_left = 12.0
+offset_top = 48.0
+offset_right = 52.0
+offset_bottom = 88.0
+
+[node name="GoldPanel" type="TextureRect" parent="MapUI/Gold"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 11.0
+scale = Vector2(3, 3)
+texture = ExtResource("5_ir6cy")
+
+[node name="Gold" type="Label" parent="MapUI/Gold"]
+layout_mode = 0
+offset_left = 45.0
+offset_top = 7.0
+offset_right = 109.0
+offset_bottom = 29.0
+text = "2"
 
 [node name="Stats" type="Control" parent="MapUI"]
 anchors_preset = 0
@@ -316,34 +382,6 @@ horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_trim_flags = 0
 justification_flags = 0
-
-[node name="WaveHUD" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="WaveCount" type="Label" parent="WaveHUD"]
-layout_mode = 0
-offset_left = 11.0
-offset_top = 8.0
-offset_right = 51.0
-offset_bottom = 30.0
-
-[node name="EnemiesLeft" type="Label" parent="WaveHUD"]
-layout_mode = 1
-anchors_preset = 6
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = 1024.0
-offset_top = -12.0
-offset_right = 1233.0
-offset_bottom = 14.228241
-grow_horizontal = 0
-grow_vertical = 2
-horizontal_alignment = 2
 
 [node name="FadeRect" type="ColorRect" parent="."]
 visible = false

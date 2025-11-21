@@ -169,7 +169,7 @@ func _start_wave(wave: int) -> void:
 	# Let HUD know
 	wave_started.emit(wave, _enemies_remaining_total, _enemies_remaining_per_type.duplicate(true))
 	enemy_counts_changed.emit(_enemies_remaining_total, _enemies_remaining_per_type.duplicate(true))
-	call_deferred("_update_wave_hud")
+	call_deferred("_update_hud")
 
 
 func _spawn_enemy(scene: PackedScene, position: Vector2, kind: String) -> void:
@@ -198,7 +198,7 @@ func _spawn_enemy(scene: PackedScene, position: Vector2, kind: String) -> void:
 
 
 func _on_enemy_despawned(kind: String) -> void:
-	call_deferred("_update_wave_hud")
+	call_deferred("_update_hud")
 	if not wave_active:
 		return
 
@@ -270,11 +270,14 @@ func _pick_spawn_positions(count: int) -> Array[Vector2]:
 
 	return result
 
-func _update_wave_hud() -> void:
-	print("updating the wave hud")
-	if $"../WorldUI/WaveHUD/WaveCount":
-		$"../WorldUI/WaveHUD/WaveCount".text = "Wave: %d" % _current_wave
-		$"../WorldUI/WaveHUD/EnemiesLeft".text = "Enemies Left: %d" % _enemies_remaining_total
+func _update_hud() -> void:
+	print("updating the hud")
+	if $"../WorldUI":
+		$"../WorldUI/MapUI/Wave/".show()
+		$"../WorldUI/MapUI/Wave/WaveCount".text = "Wave: %d" % _current_wave
+		$"../WorldUI/MapUI/Enemies".show()
+		$"../WorldUI/MapUI/Enemies/EnemiesLeft".text = "Enemies: %d" % _enemies_remaining_total
+		$"../WorldUI/MapUI/Gold".show()
 
 func _play_wave_start_sfx(wave: int, has_boss: bool) -> void:
 	# Every 5th wave that actually has a boss: play the boss horn

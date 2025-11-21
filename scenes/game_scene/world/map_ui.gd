@@ -44,7 +44,7 @@ func update_stats():
 	#$SailStats/HP.text = "HP:                   %d" % player.hp
 	$Stats/Guns.text = str(player.guns)
 	$Stats/Knots.text = str(player.knots)
-	#$SailStats/Gold.text = "Gold:              %d" % player.gold
+	$Gold/Gold.text = str(player.gold)
 
 func _on_map_button_pressed():
 	pass # Replace with function body.
