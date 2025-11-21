@@ -13,13 +13,13 @@ func _process(_dt: float) -> void:
 	update_ship_marker()
 	update_stats()
 	if player.can_fire_left:
-		$HBoxContainer/FireLeftButton.disabled = false
+		$Fire/HBoxContainer/FireLeftButton.disabled = false
 	else:
-		$HBoxContainer/FireLeftButton.disabled = true
+		$Fire/HBoxContainer/FireLeftButton.disabled = true
 	if player.can_fire_right:
-		$HBoxContainer/FireRightButton.disabled = false
+		$Fire/HBoxContainer/FireRightButton.disabled = false
 	else:
-		$HBoxContainer/FireRightButton.disabled = true
+		$Fire/HBoxContainer/FireRightButton.disabled = true
 
 func update_ship_marker() -> void:
 	var world_pos: Vector2 = player.global_position
@@ -56,3 +56,44 @@ func _on_fire_left_button_pressed():
 
 func _on_fire_right_button_pressed():
 	player.fire_right_guns()
+
+func _on_left_button_down():
+	Input.action_press("ui_left")
+
+func _on_left_button_up():
+	Input.action_release("ui_left")
+
+func _on_right_button_down(): 
+	Input.action_press("ui_right")
+
+func _on_right_button_up():
+	Input.action_release("ui_right")
+
+func _on_up_button_down():
+	Input.action_press("ui_up")
+
+func _on_up_button_up():
+	Input.action_release("ui_up")
+
+func _on_down_button_down():
+	Input.action_press("ui_down")
+
+func _on_down_button_up():
+	Input.action_release("ui_down")
+
+func _on_switch_control_layout_pressed():
+	print("switch control pressed")
+	if $Fire.visible:
+		$SwitchControlLayout.texture_normal = load("res://assets/ui/worldui/buttons/phone.png")
+		$SwitchControlLayout.texture_pressed = load("res://assets/ui/worldui/buttons/phone_pressed.png")
+		$Fire.hide()
+		$Dpad.hide()
+	else:
+		$SwitchControlLayout.texture_normal = load("res://assets/ui/worldui/buttons/computer.png")
+		$SwitchControlLayout.texture_pressed = load("res://assets/ui/worldui/buttons/computer_pressed.png")
+		$Fire.show()
+		$Dpad.show()
+
+func _on_mobile_pause_button_button_down():
+	print("print!")
+	Input.action_press("ui_cancel")

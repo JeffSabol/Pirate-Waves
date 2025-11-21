@@ -29,6 +29,8 @@ var guns_upgrade_step: int = 50
 @export var reverse_speed := 60.0
 @export var turn_speed := 1.0
 
+signal hp_changed(hp: int, max_hp: int)
+
 @export var max_hp := 100
 @export var hp := 100
 @export var guns := 2
@@ -69,6 +71,7 @@ const FORWARD_BASE := Vector2.UP
 
 var current_speed: float = 0.0
 var turn_inertia: float = 0.0  # tiny smoothing for nicer feel
+var _last_hp := 0
 
 # --- tiny feel constants (not radical) ---
 var idle_drift_speed: float = 5.0        # "move very slowly when not moving"
@@ -148,6 +151,10 @@ func _apply_gun_offsets() -> void:
 				gun.position.x = 7
 
 func _ready():
+	# initial sync
+	_last_hp = hp
+	emit_signal("hp_changed", hp, max_hp)
+	
 	sails_furled = true
 	current_speed = 0.0
 	_play_sail_idle_frame()
@@ -155,6 +162,11 @@ func _ready():
 	_apply_gun_offsets()
 
 func _physics_process(delta: float) -> void:
+	# Detect HP change
+	if hp != _last_hp:
+		_last_hp = hp
+		emit_signal("hp_changed", hp, max_hp)
+
 	# Camera sway (waves / motion feel)
 	var cam: Camera2D = $Camera2D
 	var sway: float = sin(float(Time.get_ticks_msec()) * 0.0015) * (abs(current_speed) / max_speed) * 0.5

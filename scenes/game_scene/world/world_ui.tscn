@@ -1,16 +1,21 @@
-[gd_scene load_steps=23 format=3 uid="uid://cu6c72fyiba2s"]
+[gd_scene load_steps=36 format=3 uid="uid://cu6c72fyiba2s"]
 
 [ext_resource type="Texture2D" uid="uid://is5yutlhkb27" path="res://assets/ui/map/MapBackground.png" id="1_cm2e8"]
 [ext_resource type="Texture2D" uid="uid://bbrjt84hpvqry" path="res://assets/ui/map/Map.png" id="1_ij4mi"]
 [ext_resource type="Script" uid="uid://bjg7ug8bx7lau" path="res://scenes/game_scene/world/map_ui.gd" id="1_wknfc"]
+[ext_resource type="Texture2D" uid="uid://di2g4attlj6ti" path="res://assets/ui/worldui/buttons/phone.png" id="2_4fumt"]
 [ext_resource type="Script" uid="uid://b2u4mh42rrys" path="res://scenes/game_scene/world/map_button.gd" id="2_ydqjq"]
+[ext_resource type="Texture2D" uid="uid://brt8dt6oujvqg" path="res://assets/ui/worldui/buttons/phone_pressed.png" id="3_wsqji"]
 [ext_resource type="Texture2D" uid="uid://cajt75jnxpw55" path="res://assets/ui/worldui/panels/stats_panel.png" id="5_4nqjw"]
 [ext_resource type="Texture2D" uid="uid://dj1utroctraii" path="res://assets/ui/worldui/panels/gold_panel.png" id="5_ir6cy"]
 [ext_resource type="Texture2D" uid="uid://bkjw2utplnsst" path="res://assets/ui/worldui/panels/enemy_counter_panel.png" id="5_tf8dh"]
 [ext_resource type="Texture2D" uid="uid://h56m310r62on" path="res://assets/boat/boat.png" id="6_eddq1"]
 [ext_resource type="Texture2D" uid="uid://bsuse3wvbw12r" path="res://assets/ui/worldui/panels/wave_panel.png" id="6_sj3nl"]
+[ext_resource type="Texture2D" uid="uid://cjm37ke6h0xqq" path="res://assets/ui/worldui/panels/health_bar/health_bar_empty.png" id="7_us7g3"]
 [ext_resource type="Texture2D" uid="uid://bjjsk5ie5xwm1" path="res://assets/ui/map/map_closed.png" id="8_8qdxx"]
+[ext_resource type="Texture2D" uid="uid://cu22qwigbhsgy" path="res://assets/ui/worldui/panels/health_bar/health_bar.png" id="8_awwsk"]
 [ext_resource type="Texture2D" uid="uid://cx80vmti284f1" path="res://assets/ui/worldui/FireButtonReady.png" id="9_4nqjw"]
+[ext_resource type="Script" uid="uid://djagmqnqey7ux" path="res://scenes/game_scene/world/health_bar.gd" id="9_awwsk"]
 [ext_resource type="Script" uid="uid://c2clrolu1yhh5" path="res://scenes/game_scene/world/inventory_ui.gd" id="9_lkfkc"]
 [ext_resource type="Texture2D" uid="uid://ktn0msyny4g7" path="res://assets/ui/inventory/inventorybackground.png" id="9_vomcc"]
 [ext_resource type="Texture2D" uid="uid://dau46jgypfq1d" path="res://assets/ui/map/map_open.png" id="9_y81kt"]
@@ -19,6 +24,14 @@
 [ext_resource type="LabelSettings" uid="uid://c7hb6xny5bbqf" path="res://assets/ui/inventory/inventory_label_settings.tres" id="11_cvm3m"]
 [ext_resource type="Texture2D" uid="uid://ddkwhejoo8w10" path="res://assets/ui/map/BlankModal.png" id="12_l840g"]
 [ext_resource type="Script" uid="uid://rk3c1u8lcxcc" path="res://scenes/game_scene/world/inventory_button.gd" id="13_cvm3m"]
+[ext_resource type="Texture2D" uid="uid://b47s1o36gnrvt" path="res://assets/ui/worldui/buttons/left.png" id="14_8exul"]
+[ext_resource type="Texture2D" uid="uid://cfwfdjlmfgcq2" path="res://assets/ui/worldui/buttons/left_pressed.png" id="15_twa4k"]
+[ext_resource type="Texture2D" uid="uid://yqw5d7bq3x4t" path="res://assets/ui/worldui/buttons/right.png" id="16_4fumt"]
+[ext_resource type="Texture2D" uid="uid://cbdo2s0b7uyay" path="res://assets/ui/worldui/buttons/right_pressed.png" id="17_wsqji"]
+[ext_resource type="Texture2D" uid="uid://cmgspcoc62tsc" path="res://assets/ui/worldui/buttons/up.png" id="18_us7g3"]
+[ext_resource type="Texture2D" uid="uid://6kxaooklpvro" path="res://assets/ui/worldui/buttons/up_pressed.png" id="19_awwsk"]
+[ext_resource type="Texture2D" uid="uid://cvk5i7f1yh5ei" path="res://assets/ui/worldui/buttons/down.png" id="20_h6r42"]
+[ext_resource type="Texture2D" uid="uid://bo7w5jiojo4ht" path="res://assets/ui/worldui/buttons/down_pressed.png" id="21_j5asc"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_lkfkc"]
 font = ExtResource("10_l840g")
@@ -51,6 +64,16 @@ script = ExtResource("1_wknfc")
 world_size = Vector2(75000, 11100)
 world_top_left = Vector2(-20000, -5000)
 
+[node name="SwitchControlLayout" type="TextureButton" parent="MapUI"]
+layout_mode = 0
+offset_left = 944.0
+offset_top = 632.0
+offset_right = 984.0
+offset_bottom = 672.0
+scale = Vector2(4, 4)
+texture_normal = ExtResource("2_4fumt")
+texture_pressed = ExtResource("3_wsqji")
+
 [node name="MapBorder" type="TextureRect" parent="MapUI"]
 visible = false
 layout_mode = 0
@@ -80,6 +103,19 @@ offset_bottom = 96.0
 rotation = -1.5707964
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("6_eddq1")
+
+[node name="HealthBar" type="TextureProgressBar" parent="MapUI"]
+layout_mode = 0
+offset_left = 527.0
+offset_top = 624.0
+offset_right = 585.0
+offset_bottom = 664.0
+scale = Vector2(4, 4)
+value = 100.0
+texture_under = ExtResource("7_us7g3")
+texture_progress = ExtResource("8_awwsk")
+texture_progress_offset = Vector2(3, 5)
+script = ExtResource("9_awwsk")
 
 [node name="Enemies" type="Control" parent="MapUI"]
 visible = false
@@ -216,25 +252,79 @@ texture_normal = ExtResource("8_8qdxx")
 texture_hover = ExtResource("9_y81kt")
 script = ExtResource("2_ydqjq")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MapUI"]
-layout_mode = 0
-offset_left = 115.0
-offset_top = 625.0
-offset_right = 247.0
-offset_bottom = 689.0
+[node name="Fire" type="Control" parent="MapUI"]
+visible = false
+anchors_preset = 0
+offset_left = 928.0
+offset_top = 440.0
+offset_right = 968.0
+offset_bottom = 480.0
+scale = Vector2(2, 2)
 
-[node name="FireLeftButton" type="TextureButton" parent="MapUI/HBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MapUI/Fire"]
+layout_mode = 0
+offset_top = -1.0
+offset_right = 156.0
+offset_bottom = 63.0
+theme_override_constants/separation = 28
+
+[node name="FireLeftButton" type="TextureButton" parent="MapUI/Fire/HBoxContainer"]
 layout_mode = 2
 texture_normal = ExtResource("9_4nqjw")
 texture_pressed = ExtResource("10_ir6cy")
 texture_disabled = ExtResource("10_ir6cy")
 flip_h = true
 
-[node name="FireRightButton" type="TextureButton" parent="MapUI/HBoxContainer"]
+[node name="FireRightButton" type="TextureButton" parent="MapUI/Fire/HBoxContainer"]
 layout_mode = 2
 texture_normal = ExtResource("9_4nqjw")
 texture_pressed = ExtResource("10_ir6cy")
 texture_disabled = ExtResource("10_ir6cy")
+
+[node name="Dpad" type="Control" parent="MapUI"]
+visible = false
+anchors_preset = 0
+offset_left = 6.0
+offset_top = 422.0
+offset_right = 46.0
+offset_bottom = 462.0
+scale = Vector2(4, 4)
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MapUI/Dpad"]
+layout_mode = 0
+offset_left = 9.0
+offset_top = 18.0
+offset_right = 53.0
+offset_bottom = 32.0
+theme_override_constants/separation = 16
+
+[node name="Left" type="TextureButton" parent="MapUI/Dpad/HBoxContainer"]
+layout_mode = 2
+texture_normal = ExtResource("14_8exul")
+texture_pressed = ExtResource("15_twa4k")
+
+[node name="Right" type="TextureButton" parent="MapUI/Dpad/HBoxContainer"]
+layout_mode = 2
+texture_normal = ExtResource("16_4fumt")
+texture_pressed = ExtResource("17_wsqji")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MapUI/Dpad"]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 3.0
+offset_right = 38.0
+offset_bottom = 47.0
+theme_override_constants/separation = 16
+
+[node name="Up" type="TextureButton" parent="MapUI/Dpad/VBoxContainer"]
+layout_mode = 2
+texture_normal = ExtResource("18_us7g3")
+texture_pressed = ExtResource("19_awwsk")
+
+[node name="Down" type="TextureButton" parent="MapUI/Dpad/VBoxContainer"]
+layout_mode = 2
+texture_normal = ExtResource("20_h6r42")
+texture_pressed = ExtResource("21_j5asc")
 
 [node name="InventoryUI" type="Control" parent="."]
 layout_mode = 3
@@ -389,7 +479,16 @@ offset_right = 1280.0
 offset_bottom = 720.0
 color = Color(0, 0, 0, 1)
 
+[connection signal="pressed" from="MapUI/SwitchControlLayout" to="MapUI" method="_on_switch_control_layout_pressed"]
 [connection signal="pressed" from="MapUI/MapButton" to="MapUI/MapButton" method="_on_pressed"]
-[connection signal="pressed" from="MapUI/HBoxContainer/FireLeftButton" to="MapUI" method="_on_fire_left_button_pressed"]
-[connection signal="pressed" from="MapUI/HBoxContainer/FireRightButton" to="MapUI" method="_on_fire_right_button_pressed"]
+[connection signal="pressed" from="MapUI/Fire/HBoxContainer/FireLeftButton" to="MapUI" method="_on_fire_left_button_pressed"]
+[connection signal="pressed" from="MapUI/Fire/HBoxContainer/FireRightButton" to="MapUI" method="_on_fire_right_button_pressed"]
+[connection signal="button_down" from="MapUI/Dpad/HBoxContainer/Left" to="MapUI" method="_on_left_button_down"]
+[connection signal="button_up" from="MapUI/Dpad/HBoxContainer/Left" to="MapUI" method="_on_left_button_up"]
+[connection signal="button_down" from="MapUI/Dpad/HBoxContainer/Right" to="MapUI" method="_on_right_button_down"]
+[connection signal="button_up" from="MapUI/Dpad/HBoxContainer/Right" to="MapUI" method="_on_right_button_up"]
+[connection signal="button_down" from="MapUI/Dpad/VBoxContainer/Up" to="MapUI" method="_on_up_button_down"]
+[connection signal="button_up" from="MapUI/Dpad/VBoxContainer/Up" to="MapUI" method="_on_up_button_up"]
+[connection signal="button_down" from="MapUI/Dpad/VBoxContainer/Down" to="MapUI" method="_on_down_button_down"]
+[connection signal="button_up" from="MapUI/Dpad/VBoxContainer/Down" to="MapUI" method="_on_down_button_up"]
 [connection signal="pressed" from="InventoryUI/InventoryButton" to="InventoryUI/InventoryButton" method="_on_pressed"]
