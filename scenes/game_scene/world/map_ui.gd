@@ -11,7 +11,7 @@ func _process(_dt: float) -> void:
 	if not is_instance_valid(player):
 		return
 	update_ship_marker()
-	update_sail_stats()
+	update_stats()
 	if player.can_fire_left:
 		$HBoxContainer/FireLeftButton.disabled = false
 	else:
@@ -40,11 +40,12 @@ func update_ship_marker() -> void:
 
 	ship_icon.position = map_ui_pos
 
-func update_sail_stats():
-	$SailStats/VBoxContainer/HP.text = "HP:                   %d" % player.hp
-	$SailStats/VBoxContainer/Guns.text = "Guns:            %d" % player.guns
-	$SailStats/VBoxContainer/Knots.text = "Knots:        %d" % player.knots
-	$SailStats/VBoxContainer/Gold.text = "Gold:              %d" % player.gold
+func update_stats():
+	#$SailStats/HP.text = "HP:                   %d" % player.hp
+	$Stats/Guns.text = str(player.guns)
+	$Stats/Knots.text = str(player.knots)
+	#$SailStats/Gold.text = "Gold:              %d" % player.gold
+
 func _on_map_button_pressed():
 	pass # Replace with function body.
 

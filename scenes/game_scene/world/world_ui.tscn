@@ -1,9 +1,10 @@
-[gd_scene load_steps=19 format=3 uid="uid://cu6c72fyiba2s"]
+[gd_scene load_steps=20 format=3 uid="uid://cu6c72fyiba2s"]
 
 [ext_resource type="Texture2D" uid="uid://is5yutlhkb27" path="res://assets/ui/map/MapBackground.png" id="1_cm2e8"]
 [ext_resource type="Texture2D" uid="uid://bbrjt84hpvqry" path="res://assets/ui/map/Map.png" id="1_ij4mi"]
 [ext_resource type="Script" uid="uid://bjg7ug8bx7lau" path="res://scenes/game_scene/world/map_ui.gd" id="1_wknfc"]
 [ext_resource type="Script" uid="uid://b2u4mh42rrys" path="res://scenes/game_scene/world/map_button.gd" id="2_ydqjq"]
+[ext_resource type="Texture2D" uid="uid://cajt75jnxpw55" path="res://assets/ui/worldui/panels/stats_panel.png" id="5_4nqjw"]
 [ext_resource type="Texture2D" uid="uid://h56m310r62on" path="res://assets/boat/boat.png" id="6_eddq1"]
 [ext_resource type="Texture2D" uid="uid://bjjsk5ie5xwm1" path="res://assets/ui/map/map_closed.png" id="8_8qdxx"]
 [ext_resource type="Texture2D" uid="uid://cx80vmti284f1" path="res://assets/ui/worldui/FireButtonReady.png" id="9_4nqjw"]
@@ -82,40 +83,62 @@ rotation = -1.5707964
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("6_eddq1")
 
-[node name="SailStats" type="TextureRect" parent="MapUI"]
+[node name="Gold" type="Label" parent="MapUI"]
 layout_mode = 0
-offset_left = 932.0
-offset_top = 419.0
-offset_right = 1124.0
-offset_bottom = 611.0
-scale = Vector2(2, 2)
+offset_left = 44.0
+offset_top = 66.0
+offset_right = 96.0
+offset_bottom = 77.0
+theme_override_font_sizes/font_size = 8
+text = "test"
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MapUI/SailStats"]
+[node name="Stats" type="Control" parent="MapUI"]
+anchors_preset = 0
+offset_left = 1088.0
+offset_top = 597.0
+offset_right = 1128.0
+offset_bottom = 637.0
+
+[node name="StatsPanel" type="TextureRect" parent="MapUI/Stats"]
 layout_mode = 0
-offset_left = 58.0
-offset_top = 73.5
-offset_right = 110.0
-offset_bottom = 173.5
+offset_right = 34.0
+offset_bottom = 21.0
+scale = Vector2(4, 4)
+texture = ExtResource("5_4nqjw")
 
-[node name="HP" type="Label" parent="MapUI/SailStats/VBoxContainer"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 8
-text = "test"
+[node name="GunsLabel" type="Label" parent="MapUI/Stats"]
+layout_mode = 0
+offset_left = 11.0
+offset_top = 20.0
+offset_right = 63.0
+offset_bottom = 42.0
+text = "Guns:"
 
-[node name="Guns" type="Label" parent="MapUI/SailStats/VBoxContainer"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 8
-text = "test"
+[node name="KnotsLabel" type="Label" parent="MapUI/Stats"]
+layout_mode = 0
+offset_left = 11.0
+offset_top = 49.0
+offset_right = 63.0
+offset_bottom = 71.0
+text = "Knots:"
 
-[node name="Knots" type="Label" parent="MapUI/SailStats/VBoxContainer"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 8
-text = "test"
+[node name="Guns" type="Label" parent="MapUI/Stats"]
+layout_mode = 0
+offset_left = 75.0
+offset_top = 20.0
+offset_right = 127.0
+offset_bottom = 42.0
+text = "1"
+horizontal_alignment = 2
 
-[node name="Gold" type="Label" parent="MapUI/SailStats/VBoxContainer"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 8
-text = "test"
+[node name="Knots" type="Label" parent="MapUI/Stats"]
+layout_mode = 0
+offset_left = 75.0
+offset_top = 49.0
+offset_right = 127.0
+offset_bottom = 71.0
+text = "2"
+horizontal_alignment = 2
 
 [node name="MapButton" type="TextureButton" parent="MapUI"]
 layout_mode = 0
