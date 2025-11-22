@@ -284,6 +284,7 @@ func _update_hud() -> void:
 		$"../WorldUI/MapUI/Enemies/EnemiesLeft".text = "Enemies: %d" % _enemies_remaining_total
 		$"../WorldUI/MapUI/Gold".show()
 		$"../WorldUI/MapUI/HealthBar".show()
+		$"../WorldUI/MapUI/Drinks".show()
 
 
 func _play_wave_start_sfx(wave: int, has_boss: bool) -> void:
