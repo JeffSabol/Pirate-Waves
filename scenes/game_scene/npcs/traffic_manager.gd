@@ -31,6 +31,8 @@ var _enemies_remaining_per_type: Dictionary = {
 
 var _awaiting_return_to_town: bool = false
 
+signal wave_finished
+
 # 5-wave pattern that repeats; counts are base values for wave 1–5.
 const BASE_WAVE_PATTERN: Array[Dictionary] = [
 	{ "sloop": 3, "corsair": 0, "brig": 0, "boss": false }, # Wave 1
@@ -223,6 +225,8 @@ func _on_enemy_despawned(kind: String) -> void:
 		$"../PlayerBoat".velocity = Vector2.ZERO
 		$"../PlayerBoat".global_position = Vector2(443, -912)
 
+		wave_finished.emit()
+
 
 # ------------------------
 # SPAWN POSITION LOGIC
@@ -270,6 +274,7 @@ func _pick_spawn_positions(count: int) -> Array[Vector2]:
 
 	return result
 
+
 func _update_hud() -> void:
 	print("updating the hud")
 	if $"../WorldUI":
@@ -279,6 +284,7 @@ func _update_hud() -> void:
 		$"../WorldUI/MapUI/Enemies/EnemiesLeft".text = "Enemies: %d" % _enemies_remaining_total
 		$"../WorldUI/MapUI/Gold".show()
 		$"../WorldUI/MapUI/HealthBar".show()
+
 
 func _play_wave_start_sfx(wave: int, has_boss: bool) -> void:
 	# Every 5th wave that actually has a boss: play the boss horn
