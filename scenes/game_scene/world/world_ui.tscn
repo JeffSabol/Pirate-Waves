@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://cu6c72fyiba2s"]
+[gd_scene load_steps=40 format=3 uid="uid://cu6c72fyiba2s"]
 
 [ext_resource type="Texture2D" uid="uid://is5yutlhkb27" path="res://assets/ui/map/MapBackground.png" id="1_cm2e8"]
 [ext_resource type="Texture2D" uid="uid://bbrjt84hpvqry" path="res://assets/ui/map/Map.png" id="1_ij4mi"]
@@ -19,10 +19,14 @@
 [ext_resource type="Script" uid="uid://c2clrolu1yhh5" path="res://scenes/game_scene/world/inventory_ui.gd" id="9_lkfkc"]
 [ext_resource type="Texture2D" uid="uid://ktn0msyny4g7" path="res://assets/ui/inventory/inventorybackground.png" id="9_vomcc"]
 [ext_resource type="Texture2D" uid="uid://dau46jgypfq1d" path="res://assets/ui/map/map_open.png" id="9_y81kt"]
+[ext_resource type="Script" uid="uid://c4dgottxqtxl3" path="res://scenes/game_scene/world/drinks_emblem.gd" id="10_1a7hd"]
 [ext_resource type="Texture2D" uid="uid://cedkmknnh064l" path="res://assets/ui/worldui/FireButtonDisabled.png" id="10_ir6cy"]
 [ext_resource type="FontFile" uid="uid://duln27t01nc1q" path="res://assets/fonts/Minecraftia-Regular.ttf" id="10_l840g"]
+[ext_resource type="Texture2D" uid="uid://khak7r7rn7eq" path="res://assets/ui/worldui/drinks/sirens.png" id="10_t2smw"]
+[ext_resource type="Texture2D" uid="uid://b8uam2q6mt2p6" path="res://assets/ui/worldui/drinks/grog.png" id="11_1a7hd"]
 [ext_resource type="LabelSettings" uid="uid://c7hb6xny5bbqf" path="res://assets/ui/inventory/inventory_label_settings.tres" id="11_cvm3m"]
 [ext_resource type="Texture2D" uid="uid://ddkwhejoo8w10" path="res://assets/ui/map/BlankModal.png" id="12_l840g"]
+[ext_resource type="Texture2D" uid="uid://cje3awxmbs7ik" path="res://assets/ui/worldui/drinks/cap.png" id="12_tdvoa"]
 [ext_resource type="Script" uid="uid://rk3c1u8lcxcc" path="res://scenes/game_scene/world/inventory_button.gd" id="13_cvm3m"]
 [ext_resource type="Texture2D" uid="uid://b47s1o36gnrvt" path="res://assets/ui/worldui/buttons/left.png" id="14_8exul"]
 [ext_resource type="Texture2D" uid="uid://cfwfdjlmfgcq2" path="res://assets/ui/worldui/buttons/left_pressed.png" id="15_twa4k"]
@@ -117,6 +121,36 @@ texture_under = ExtResource("7_us7g3")
 texture_progress = ExtResource("8_awwsk")
 texture_progress_offset = Vector2(3, 5)
 script = ExtResource("9_awwsk")
+
+[node name="Drinks" type="Control" parent="MapUI"]
+visible = false
+anchors_preset = 0
+offset_left = 27.0
+offset_top = 85.0
+offset_right = 67.0
+offset_bottom = 125.0
+scale = Vector2(1.5, 1.5)
+script = ExtResource("10_1a7hd")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MapUI/Drinks"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Siren" type="TextureRect" parent="MapUI/Drinks/VBoxContainer"]
+visible = false
+layout_mode = 2
+texture = ExtResource("10_t2smw")
+
+[node name="Grog" type="TextureRect" parent="MapUI/Drinks/VBoxContainer"]
+visible = false
+layout_mode = 2
+texture = ExtResource("11_1a7hd")
+
+[node name="Captain" type="TextureRect" parent="MapUI/Drinks/VBoxContainer"]
+visible = false
+layout_mode = 2
+texture = ExtResource("12_tdvoa")
 
 [node name="Enemies" type="Control" parent="MapUI"]
 visible = false

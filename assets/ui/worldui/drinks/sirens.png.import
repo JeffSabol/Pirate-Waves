@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c0jxahjs0nn5r"
-path="res://.godot/imported/drink.png-20a47f095ee2138e203edde836d45fb5.ctex"
+uid="uid://khak7r7rn7eq"
+path="res://.godot/imported/sirens.png-8ab31031065bd062b44b17419bf037ea.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/ui/worldui/drink.png"
-dest_files=["res://.godot/imported/drink.png-20a47f095ee2138e203edde836d45fb5.ctex"]
+source_file="res://assets/ui/worldui/drinks/sirens.png"
+dest_files=["res://.godot/imported/sirens.png-8ab31031065bd062b44b17419bf037ea.ctex"]
 
 [params]
 
