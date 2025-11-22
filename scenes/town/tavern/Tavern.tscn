@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://5yu5bl4mslip"]
+[gd_scene load_steps=14 format=3 uid="uid://5yu5bl4mslip"]
 
 [ext_resource type="AudioStream" uid="uid://dan5fpiujt8ri" path="res://assets/music/tavern.mp3" id="1_45ogq"]
 [ext_resource type="Texture2D" uid="uid://dujvify3ehmvn" path="res://assets/ui/town/tavern/TavernBackgroundEmpty.png" id="2_k5kxa"]
@@ -11,6 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://cw6wa3rpqwhir" path="res://assets/ui/town/tavern/drinks/sirens_whisper.png" id="9_e3wa0"]
 [ext_resource type="Texture2D" uid="uid://2p147t3xr280" path="res://assets/ui/town/tavern/drinks/grog_of_gunpowder.png" id="10_jf41w"]
 [ext_resource type="Texture2D" uid="uid://dwi7ort1xmdk" path="res://assets/ui/town/tavern/drinks/captains_resolve.png" id="11_tnbtp"]
+[ext_resource type="AudioStream" uid="uid://bxhf1x3igp6ms" path="res://assets/sfx/bottle_clink1.mp3" id="12_e3wa0"]
 
 [sub_resource type="GDScript" id="GDScript_u8drk"]
 script/source = "extends ColorRect
@@ -19,16 +20,13 @@ var pulse_tween: Tween
 
 func _on_mouse_entered():
 	$BartenderSound.play()
-	print(\"mouse entered bartender area\")
 
 func _on_mouse_exited():
-	print(\"mouse exited bartender area\")
 	$BartenderSound.stop()
 
 
 func _on_gui_input(event):
 		if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-			print(\"load drink menu!\")
 			$\"../../DrinkMenu\".show()
 "
 
@@ -120,6 +118,9 @@ texture = ExtResource("10_jf41w")
 [node name="CaptainsResolve" type="TextureRect" parent="CanvasLayer/DrinkMenu/HBoxContainer"]
 layout_mode = 2
 texture = ExtResource("11_tnbtp")
+
+[node name="BottleClink" type="AudioStreamPlayer" parent="CanvasLayer/DrinkMenu"]
+stream = ExtResource("12_e3wa0")
 
 [connection signal="gui_input" from="CanvasLayer/BackgroundArt/LeaveArea" to="CanvasLayer/BackgroundArt/LeaveArea" method="_on_gui_input"]
 [connection signal="mouse_entered" from="CanvasLayer/BackgroundArt/LeaveArea" to="CanvasLayer/BackgroundArt/LeaveArea" method="_on_mouse_entered"]

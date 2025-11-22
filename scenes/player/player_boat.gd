@@ -36,6 +36,9 @@ signal hp_changed(hp: int, max_hp: int)
 @export var guns := 2
 # Player Inventory
 @export var gold := 1
+@export var grog_drink = 0
+@export var siren_drink = 0
+@export var captain_drink = 0
 @export var fish = 1
 @export var rum = 1
 @export var ore = 1
