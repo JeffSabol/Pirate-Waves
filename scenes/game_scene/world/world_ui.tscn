@@ -105,6 +105,7 @@ scale = Vector2(0.5, 0.5)
 texture = ExtResource("6_eddq1")
 
 [node name="HealthBar" type="TextureProgressBar" parent="MapUI"]
+visible = false
 layout_mode = 0
 offset_left = 527.0
 offset_top = 624.0

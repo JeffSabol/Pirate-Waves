@@ -1,8 +1,8 @@
 extends PointLight2D
 
 @export var min_energy := 0.4
-@export var max_energy := 0.95
-@export var flicker_speed := 1.0
+@export var max_energy := 1.0
+@export var flicker_speed := 2.0
 
 func _ready():
 	flicker()

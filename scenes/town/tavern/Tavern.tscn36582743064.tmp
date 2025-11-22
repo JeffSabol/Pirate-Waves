@@ -79,7 +79,7 @@ stream = ExtResource("5_45ogq")
 volume_db = -14.0
 
 [node name="LanternLight" type="PointLight2D" parent="CanvasLayer/BackgroundArt/BartenderArea"]
-position = Vector2(119, -15)
+position = Vector2(119, -237)
 range_layer_min = -10
 range_layer_max = 10
 texture = ExtResource("7_d8ip1")
@@ -103,6 +103,11 @@ offset_right = 103.0
 offset_bottom = 177.0
 scale = Vector2(0.25, 0.25)
 script = ExtResource("8_k5kxa")
+float_amplitude = null
+float_period = null
+wiggle_amplitude = null
+wiggle_period = null
+wiggle_loops = null
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/DrinkMenu"]
 layout_mode = 0

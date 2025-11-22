@@ -278,6 +278,7 @@ func _update_hud() -> void:
 		$"../WorldUI/MapUI/Enemies".show()
 		$"../WorldUI/MapUI/Enemies/EnemiesLeft".text = "Enemies: %d" % _enemies_remaining_total
 		$"../WorldUI/MapUI/Gold".show()
+		$"../WorldUI/MapUI/HealthBar".show()
 
 func _play_wave_start_sfx(wave: int, has_boss: bool) -> void:
 	# Every 5th wave that actually has a boss: play the boss horn
