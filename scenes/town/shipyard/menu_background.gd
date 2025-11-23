@@ -45,6 +45,15 @@ func _gui_input(event: InputEvent) -> void:
 func _physics_process(_delta):
 	var player = $"../../../../PlayerBoat"
 
+	var missing_hp: int = max(player.max_hp - player.hp, 0)
+
+	if missing_hp <= 0:
+		$RepairClickZone.tooltip_text = "Ship fully repaired"
+	else:
+		# 1 gold per 1 HP, but you can only repair what you're missing and what you can afford
+		var hp_affordable: int = min(player.gold, missing_hp)
+		$RepairClickZone.tooltip_text = "%d Gold for %d HP" % [hp_affordable, hp_affordable]
+
 	$GoldBalance.text = str(player.gold)
 
 	# -----------------------------

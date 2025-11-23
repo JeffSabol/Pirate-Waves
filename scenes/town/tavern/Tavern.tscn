@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://5yu5bl4mslip"]
+[gd_scene load_steps=16 format=3 uid="uid://5yu5bl4mslip"]
 
 [ext_resource type="AudioStream" uid="uid://dan5fpiujt8ri" path="res://assets/music/tavern.mp3" id="1_45ogq"]
 [ext_resource type="Texture2D" uid="uid://dujvify3ehmvn" path="res://assets/ui/town/tavern/TavernBackgroundEmpty.png" id="2_k5kxa"]
@@ -12,6 +12,8 @@
 [ext_resource type="Texture2D" uid="uid://2p147t3xr280" path="res://assets/ui/town/tavern/drinks/grog_of_gunpowder.png" id="10_jf41w"]
 [ext_resource type="Texture2D" uid="uid://dwi7ort1xmdk" path="res://assets/ui/town/tavern/drinks/captains_resolve.png" id="11_tnbtp"]
 [ext_resource type="AudioStream" uid="uid://bxhf1x3igp6ms" path="res://assets/sfx/bottle_clink1.mp3" id="12_e3wa0"]
+[ext_resource type="Texture2D" uid="uid://dj1utroctraii" path="res://assets/ui/worldui/panels/gold_panel.png" id="13_jf41w"]
+[ext_resource type="Script" uid="uid://dgil8u71ohcsf" path="res://scenes/town/tavern/gold.gd" id="13_tnbtp"]
 
 [sub_resource type="GDScript" id="GDScript_u8drk"]
 script/source = "extends ColorRect
@@ -41,6 +43,8 @@ autoplay = true
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="BackgroundArt" type="TextureRect" parent="CanvasLayer"]
+light_mask = 2
+visibility_layer = 2
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -77,19 +81,50 @@ stream = ExtResource("5_45ogq")
 volume_db = -14.0
 
 [node name="LanternLight" type="PointLight2D" parent="CanvasLayer/BackgroundArt/BartenderArea"]
+light_mask = 2
+visibility_layer = 2
 position = Vector2(119, -15)
 range_layer_min = -10
 range_layer_max = 10
+range_item_cull_mask = 2
 texture = ExtResource("7_d8ip1")
 script = ExtResource("7_25lxe")
 
 [node name="DoorLight" type="PointLight2D" parent="CanvasLayer/BackgroundArt/BartenderArea"]
 visible = false
+light_mask = 2
+visibility_layer = 2
 position = Vector2(1190.5, 193.49997)
 scale = Vector2(1.6523438, 4.0898438)
 range_layer_min = -10
 range_layer_max = 10
+range_item_cull_mask = 2
 texture = ExtResource("7_d8ip1")
+
+[node name="Gold" type="Control" parent="CanvasLayer"]
+light_mask = 0
+layout_mode = 3
+anchors_preset = 0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 48.0
+offset_bottom = 48.0
+script = ExtResource("13_tnbtp")
+
+[node name="GoldPanel" type="TextureRect" parent="CanvasLayer/Gold"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 11.0
+scale = Vector2(3, 3)
+texture = ExtResource("13_jf41w")
+
+[node name="Gold" type="Label" parent="CanvasLayer/Gold"]
+layout_mode = 0
+offset_left = 45.0
+offset_top = 7.0
+offset_right = 109.0
+offset_bottom = 29.0
+text = "2"
 
 [node name="DrinkMenu" type="Control" parent="CanvasLayer"]
 visible = false
