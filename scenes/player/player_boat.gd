@@ -34,6 +34,7 @@ signal hp_changed(hp: int, max_hp: int)
 @export var max_hp := 100
 @export var hp := 100
 @export var guns := 2
+
 # Player Inventory
 @export var gold := 1
 @export var grog_drink = 0
@@ -43,18 +44,16 @@ signal hp_changed(hp: int, max_hp: int)
 @export var rum = 1
 @export var ore = 1
 @export var clothes = 1
+
 # KNOTS
-# 1 knot = 10 speed
-# Level 1 (small sloop / default): 6 knots
-# Level 2 (sloop): 9 knots
-# Level 3 (brig): 12 knots
-# Level 4 (frigate): 14 knots
 @export var knots := 0
 @export var morale := 0
 @export var left_fire_cooldown := 3
 @export var right_fire_cooldown := 3
+
 # Let us toggle control in the editor or from another script
 @export var controls_enabled := true
+
 # Current Town Values
 @export var in_town_name = ""
 @export var in_town_gold = 1
@@ -62,7 +61,6 @@ signal hp_changed(hp: int, max_hp: int)
 @export var in_town_rum = 1
 @export var in_town_ore = 1
 @export var in_town_clothes = 1
-
 
 @export var can_fire_left := true
 @export var can_fire_right := true
@@ -87,11 +85,150 @@ var turn_inertia_decay: float = 10.0     # how fast it decays when you stop pres
 @export var tier2_shape: Shape2D
 @export var tier3_shape: Shape2D
 
+
+# ============================================================================
+# BUFFS / DRINK HOTKEYS  (FINAL FIX)
+# ui_item_1 -> Siren's Whisper: auto double-shot for 15s
+# ui_item_2 -> Captain's Resolve: speed/turning for 15s
+# ui_item_3 -> Grog: double damage for 15s
+# ============================================================================
+
+@export var buff_duration_sec: float = 15.0
+
+# Siren: delay before automatic second volley
+@export var siren_quick_refire_sec: float = 0.15
+
+# Captain: movement multipliers
+@export var captain_speed_mult: float = 1.35
+@export var captain_turn_mult: float = 1.40
+@export var captain_accel_mult: float = 1.25
+
+# Grog: cannonball damage multiplier
+@export var grog_damage_mult: float = 2.0
+var cannon_damage_multiplier: float = 1.0  # CannonBall reads this
+
+var siren_buff_active := false
+var captain_buff_active := false
+var grog_buff_active := false
+
+# Versions let timers expire safely even if refreshed
+var _siren_ver := 0
+var _captain_ver := 0
+var _grog_ver := 0
+
+# For restoring stats after captain ends
+var _capt_saved_max_speed: float
+var _capt_saved_reverse_speed: float
+var _capt_saved_acceleration: float
+var _capt_saved_turn_speed: float
+
+
+func _try_use_siren() -> void:
+	if siren_drink <= 0:
+		print("No siren drinks")
+		$NotEnoughSFX.play()
+		return
+	siren_drink -= 1
+	_activate_siren_buff()
+
+func _activate_siren_buff() -> void:
+	_siren_ver += 1
+	var my_ver := _siren_ver
+	siren_buff_active = true
+	print("Siren buff ON (auto double-shot)")
+
+	var t := get_tree().create_timer(buff_duration_sec)
+	t.timeout.connect(func() -> void:
+		if my_ver != _siren_ver:
+			return
+		siren_buff_active = false
+		print("Siren buff OFF")
+	)
+
+
+func _try_use_captain() -> void:
+	if captain_drink <= 0:
+		print("No captain drinks")
+		$NotEnoughSFX.play()
+		return
+	captain_drink -= 1
+	_activate_captain_buff()
+
+func _activate_captain_buff() -> void:
+	_captain_ver += 1
+	var my_ver := _captain_ver
+
+	# snapshot once
+	if not captain_buff_active:
+		_capt_saved_max_speed = max_speed
+		_capt_saved_reverse_speed = reverse_speed
+		_capt_saved_acceleration = acceleration
+		_capt_saved_turn_speed = turn_speed
+
+		# apply movement multipliers
+		max_speed *= captain_speed_mult
+		reverse_speed *= captain_speed_mult
+		acceleration *= captain_accel_mult
+		turn_speed *= captain_turn_mult
+
+	captain_buff_active = true
+	print("Captain buff ON (speed/turning)")
+
+	var t := get_tree().create_timer(buff_duration_sec)
+	t.timeout.connect(func() -> void:
+		if my_ver != _captain_ver:
+			return
+		captain_buff_active = false
+
+		# restore
+		max_speed = _capt_saved_max_speed
+		reverse_speed = _capt_saved_reverse_speed
+		acceleration = _capt_saved_acceleration
+		turn_speed = _capt_saved_turn_speed
+
+		print("Captain buff OFF")
+	)
+
+
+func _try_use_grog() -> void:
+	if grog_drink <= 0:
+		print("No grog drinks")
+		$NotEnoughSFX.play()
+		return
+	grog_drink -= 1
+	_activate_grog_buff()
+
+func _activate_grog_buff() -> void:
+	_grog_ver += 1
+	var my_ver := _grog_ver
+
+	grog_buff_active = true
+	cannon_damage_multiplier = grog_damage_mult
+	print("Grog buff ON (double damage)")
+
+	var t := get_tree().create_timer(buff_duration_sec)
+	t.timeout.connect(func() -> void:
+		if my_ver != _grog_ver:
+			return
+		grog_buff_active = false
+		cannon_damage_multiplier = 1.0
+		print("Grog buff OFF")
+	)
+
+# helper for CannonBall
+func get_cannon_damage_multiplier() -> float:
+	return cannon_damage_multiplier
+
+
+# ============================================================================
+# Controls toggles
+# ============================================================================
 func enable_controls() -> void:
 	controls_enabled = true
 
 func disable_controls() -> void:
 	controls_enabled = false
+
 
 # --- Animation helpers per tier ---------------------------------------------
 func _get_furl_anim() -> String:
@@ -123,6 +260,7 @@ func _play_sail_idle_frame() -> void:
 	anim.frame = anim.sprite_frames.get_frame_count(anim_name) - 1
 	anim.pause()
 
+
 # --- Collision shape per tier -----------------------------------------------
 func _apply_tier_collision_shape() -> void:
 	match ship_tier:
@@ -136,9 +274,9 @@ func _apply_tier_collision_shape() -> void:
 			if tier3_shape:
 				$CollisionShape2D.shape = tier3_shape
 
+
 # --- Gun offsets per side (match tier 2 sprite layout) ----------------------
 func _apply_gun_offsets() -> void:
-	# Only adjust for tier 2+
 	if ship_tier < 2:
 		return
 
@@ -147,22 +285,39 @@ func _apply_gun_offsets() -> void:
 		var gun := guns_node.get_node_or_null("Gun%d" % i)
 		if gun:
 			if i % 2 == 1:
-				# odd → left
 				gun.position.x = -7
 			else:
-				# even → right
 				gun.position.x = 7
 
+
+# --- Volley helpers for Siren auto double-shot ------------------------------
+func _fire_left_volley() -> void:
+	var guns_node: Node = $Guns
+	for i in range(1, guns + 1):
+		if i % 2 == 1:
+			var gun: Node = guns_node.get_node("Gun%d" % i)
+			if gun:
+				gun.call("fire")
+
+func _fire_right_volley() -> void:
+	var guns_node: Node = $Guns
+	for i in range(1, guns + 1):
+		if i % 2 == 0:
+			var gun: Node = guns_node.get_node("Gun%d" % i)
+			if gun:
+				gun.call("fire")
+
+
 func _ready():
-	# initial sync
 	_last_hp = hp
 	emit_signal("hp_changed", hp, max_hp)
-	
+
 	sails_furled = true
 	current_speed = 0.0
 	_play_sail_idle_frame()
 	_apply_tier_collision_shape()
 	_apply_gun_offsets()
+
 
 func _physics_process(delta: float) -> void:
 	# Detect HP change
@@ -174,13 +329,23 @@ func _physics_process(delta: float) -> void:
 	var cam: Camera2D = $Camera2D
 	var sway: float = sin(float(Time.get_ticks_msec()) * 0.0015) * (abs(current_speed) / max_speed) * 0.5
 	cam.offset = Vector2(sway, -sway * 0.4)
-	
+
 	# If controls are disabled, just slow to a stop and don't accept input
 	if not controls_enabled:
 		current_speed = lerp(current_speed, 0.0, 0.1)
 		velocity = (FORWARD_BASE * current_speed).rotated(rotation)
 		move_and_slide()
 		return
+
+	# ------------------------------------------------------------------------
+	# DRINK HOTKEYS
+	# ------------------------------------------------------------------------
+	if Input.is_action_just_pressed("ui_item_1"):
+		_try_use_siren()
+	if Input.is_action_just_pressed("ui_item_2"):
+		_try_use_grog()
+	if Input.is_action_just_pressed("ui_item_3"):
+		_try_use_captain()
 
 	# Player input
 	var turn_input: float = 0.0
@@ -195,12 +360,11 @@ func _physics_process(delta: float) -> void:
 
 	# a hint of turn inertia for juice (very light)
 	turn_inertia = lerp(turn_inertia, turn_input, clamp(turn_inertia_gain * delta, 0.0, 1.0))
-	# decay when no input
 	if is_zero_approx(turn_input):
 		turn_inertia = lerp(turn_inertia, 0.0, clamp(turn_inertia_decay * delta, 0.0, 1.0))
 
 	rotation += effective_turn * turn_inertia * delta
-	
+
 	# --- sail state & animations (one-shots) ---
 	if Input.is_action_just_pressed("ui_up") or Input.is_action_just_pressed("move_up"):
 		sails_furled = false
@@ -215,19 +379,15 @@ func _physics_process(delta: float) -> void:
 
 	# throttle/brake
 	if not sails_furled:
-		# normal sailing
 		if Input.is_action_pressed("ui_up") or Input.is_action_pressed("move_up"):
 			current_speed += acceleration * delta
 		elif Input.is_action_pressed("ui_down") or Input.is_action_pressed("move_down"):
 			current_speed -= deceleration * delta
 		else:
-			# glide down toward a tiny idle drift forward for “always slightly moving”
 			var target_idle := idle_drift_speed
 			current_speed = move_toward(current_speed, target_idle, 20.0 * delta)
 	else:
-		# sails furled → bleed off all motion, no drift
 		current_speed = move_toward(current_speed, 0.0, 20.0 * delta)
-
 
 	# fire controls
 	if Input.is_action_just_pressed("fire_left"):
@@ -243,8 +403,10 @@ func _physics_process(delta: float) -> void:
 	update_guns_visibility()
 	update_knots_display()
 
+
 func update_knots_display() -> void:
 	knots = int(round(abs(current_speed) / 10.0))
+
 
 func update_guns_visibility() -> void:
 	var guns_node: Node = $Guns
@@ -255,45 +417,57 @@ func update_guns_visibility() -> void:
 		if child:
 			child.visible = (i < guns)
 
+
 func fire_left_guns() -> void:
 	if not can_fire_left:
 		return
 	can_fire_left = false
 
-	var guns_node: Node = $Guns
-	for i in range(1, guns + 1):
-		if i % 2 == 1:
-			var gun: Node = guns_node.get_node("Gun%d" % i)
-			if gun:
-				gun.call("fire")
+	# first volley
+	_fire_left_volley()
 
-	# start cooldown timer
+	# start normal cooldown timer
 	var t: SceneTreeTimer = get_tree().create_timer(left_fire_cooldown)
 	t.timeout.connect(func() -> void:
 		can_fire_left = true)
+
+	# Siren's Whisper: AUTOMATIC second volley, ignoring cooldown
+	if siren_buff_active:
+		var q := get_tree().create_timer(siren_quick_refire_sec)
+		q.timeout.connect(func() -> void:
+			_fire_left_volley()
+		)
+
 	($Camera2D as ShakeCamera).add_trauma(0.3, 0.3)
+
 
 func fire_right_guns() -> void:
 	if not can_fire_right:
 		return
 	can_fire_right = false
 
-	var guns_node: Node = $Guns
-	for i in range(1, guns + 1):
-		if i % 2 == 0:
-			var gun: Node = guns_node.get_node("Gun%d" % i)
-			if gun:
-				gun.call("fire")
+	# first volley
+	_fire_right_volley()
 
-	# start cooldown timer
+	# start normal cooldown timer
 	var t: SceneTreeTimer = get_tree().create_timer(right_fire_cooldown)
 	t.timeout.connect(func() -> void:
 		can_fire_right = true)
+
+	# Siren's Whisper: AUTOMATIC second volley, ignoring cooldown
+	if siren_buff_active:
+		var q := get_tree().create_timer(siren_quick_refire_sec)
+		q.timeout.connect(func() -> void:
+			_fire_right_volley()
+		)
+
 	($Camera2D as ShakeCamera).add_trauma(0.3, 0.3)
+
 
 func play_hit_sound():
 	$HitSound.play()
 	($Camera2D as ShakeCamera).add_trauma(0.5, 0.3)
+
 
 func add_loot(treasure_type: String, amount: int):
 	match treasure_type:
@@ -309,10 +483,9 @@ func add_loot(treasure_type: String, amount: int):
 			clothes += amount
 		_:
 			push_warning("Unknown loot type: %s" % treasure_type)
-	
+
 
 # --- Upgrade helpers ---------------------------------------------------------
-
 func _can_afford(cost: int) -> bool:
 	return gold >= cost
 
@@ -359,7 +532,6 @@ func _advance_ship_tier() -> void:
 
 
 # --- Upgrades ----------------------------------------------------------------
-
 func upgrade_speed() -> void:
 	if speed_upgrade_level >= _current_tier_cap():
 		print("Speed already fully upgraded for this tier")
@@ -385,6 +557,7 @@ func upgrade_speed() -> void:
 
 	_check_tier_progress()
 
+
 func upgrade_turning() -> void:
 	if turning_upgrade_level >= _current_tier_cap():
 		print("Turning already fully upgraded for this tier")
@@ -407,6 +580,7 @@ func upgrade_turning() -> void:
 		turning_upgrade_cost += turning_upgrade_step
 
 	_check_tier_progress()
+
 
 func upgrade_hull() -> void:
 	if hull_upgrade_level >= _current_tier_cap():
@@ -431,6 +605,7 @@ func upgrade_hull() -> void:
 		hull_upgrade_cost += hull_upgrade_step
 
 	_check_tier_progress()
+
 
 func upgrade_guns() -> void:
 	var guns_node: Node = $Guns
