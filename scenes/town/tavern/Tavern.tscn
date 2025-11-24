@@ -101,6 +101,24 @@ offset_right = 109.0
 offset_bottom = 29.0
 text = "2"
 
+[node name="CaptainGlow" type="TextureRect" parent="CanvasLayer"]
+visible = false
+offset_right = 1280.0
+offset_bottom = 720.0
+texture = ExtResource("15_mwvkx")
+
+[node name="SirenGlow" type="TextureRect" parent="CanvasLayer"]
+visible = false
+offset_right = 1280.0
+offset_bottom = 720.0
+texture = ExtResource("16_0jg3b")
+
+[node name="GrogGlow" type="TextureRect" parent="CanvasLayer"]
+visible = false
+offset_right = 1280.0
+offset_bottom = 720.0
+texture = ExtResource("17_rgxow")
+
 [node name="DrinkMenu" type="Control" parent="CanvasLayer"]
 layout_mode = 3
 anchors_preset = 0
@@ -133,24 +151,6 @@ texture = ExtResource("10_jf41w")
 
 [node name="BottleClink" type="AudioStreamPlayer" parent="CanvasLayer/DrinkMenu"]
 stream = ExtResource("12_e3wa0")
-
-[node name="CaptainGlow" type="TextureRect" parent="CanvasLayer"]
-visible = false
-offset_right = 1280.0
-offset_bottom = 720.0
-texture = ExtResource("15_mwvkx")
-
-[node name="SirenGlow" type="TextureRect" parent="CanvasLayer"]
-visible = false
-offset_right = 1280.0
-offset_bottom = 720.0
-texture = ExtResource("16_0jg3b")
-
-[node name="GrogGlow" type="TextureRect" parent="CanvasLayer"]
-visible = false
-offset_right = 1280.0
-offset_bottom = 720.0
-texture = ExtResource("17_rgxow")
 
 [node name="Captain" type="ColorRect" parent="CanvasLayer"]
 offset_left = 311.0
