@@ -52,7 +52,7 @@ func _physics_process(_delta):
 	else:
 		# 1 gold per 1 HP, but you can only repair what you're missing and what you can afford
 		var hp_affordable: int = min(player.gold, missing_hp)
-		$RepairClickZone.tooltip_text = "%d Gold for %d HP" % [hp_affordable, hp_affordable]
+		$RepairClickZone.tooltip_text = "Repair Ship for %d" % hp_affordable
 
 	$GoldBalance.text = str(player.gold)
 
