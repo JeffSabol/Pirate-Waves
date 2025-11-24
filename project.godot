@@ -13,7 +13,7 @@ config_version=5
 config/name="Pirate Waves"
 run/main_scene="res://scenes/opening/opening.tscn"
 config/features=PackedStringArray("4.5")
-boot_splash/image="uid://cvqi3wwkc31bp"
+boot_splash/image="uid://bm0o3eeg0cpec"
 config/icon="uid://cvqi3wwkc31bp"
 
 [autoload]
