@@ -157,6 +157,7 @@ offset_left = 311.0
 offset_top = 403.0
 offset_right = 359.0
 offset_bottom = 482.0
+tooltip_text = "Buy Captain's Resolve"
 color = Color(1, 1, 1, 0)
 script = ExtResource("17_gl8e7")
 
@@ -165,6 +166,7 @@ offset_left = 375.0
 offset_top = 403.0
 offset_right = 424.0
 offset_bottom = 482.0
+tooltip_text = "Buy Siren's Whisper"
 color = Color(1, 1, 1, 0)
 script = ExtResource("18_uimwe")
 
@@ -173,6 +175,7 @@ offset_left = 445.0
 offset_top = 418.0
 offset_right = 506.0
 offset_bottom = 482.0
+tooltip_text = "Buy Grog Of Gunpowdar"
 color = Color(1, 1, 1, 0)
 script = ExtResource("19_3e64l")
 

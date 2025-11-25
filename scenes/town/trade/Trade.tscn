@@ -1,8 +1,10 @@
-[gd_scene load_steps=11 format=3 uid="uid://exlfjrsql2fw"]
+[gd_scene load_steps=13 format=3 uid="uid://exlfjrsql2fw"]
 
 [ext_resource type="Script" uid="uid://bjs48hyrufm2s" path="res://scenes/town/trade/trade.gd" id="1_1e65h"]
 [ext_resource type="Texture2D" uid="uid://cacxfr5jxkrly" path="res://assets/ui/town/trade/TradeMenuFull.png" id="2_opl56"]
+[ext_resource type="Texture2D" uid="uid://bsjf18db31aew" path="res://assets/ui/town/trade/TradeMenuLeave.png" id="3_0thvx"]
 [ext_resource type="Texture2D" uid="uid://b5evkqt0kgj58" path="res://assets/ui/town/trade/compass_glow.png" id="3_82uxr"]
+[ext_resource type="Script" uid="uid://cm0g66elbi86n" path="res://scenes/town/trade/leave_1.gd" id="4_h647s"]
 [ext_resource type="Texture2D" uid="uid://cvki5gfc3ap1q" path="res://assets/ui/town/trade/spyglass_glow.png" id="4_yudrl"]
 [ext_resource type="Texture2D" uid="uid://cp5k772y36oxy" path="res://assets/ui/town/trade/hammer_glow.png" id="5_sh6sl"]
 [ext_resource type="Script" uid="uid://bsuo5a5yuwoik" path="res://scenes/town/trade/hammer_click_zone.gd" id="6_httn2"]
@@ -26,6 +28,21 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("2_opl56")
 metadata/_edit_use_anchors_ = true
+
+[node name="Leave1ClickZone" type="ColorRect" parent="CanvasLayer"]
+offset_right = 1251.0
+offset_bottom = 245.0
+tooltip_text = "Leave"
+color = Color(1, 1, 1, 0)
+script = ExtResource("4_h647s")
+
+[node name="Leave1Glow" type="TextureRect" parent="CanvasLayer/Leave1ClickZone"]
+visible = false
+layout_mode = 0
+offset_right = 1280.0
+offset_bottom = 720.0
+mouse_filter = 2
+texture = ExtResource("3_0thvx")
 
 [node name="Gold" type="Control" parent="CanvasLayer"]
 light_mask = 0
@@ -57,6 +74,7 @@ offset_left = 237.0
 offset_top = 149.0
 offset_right = 550.0
 offset_bottom = 280.0
+tooltip_text = "Buy Hammer"
 color = Color(1, 1, 1, 0)
 script = ExtResource("6_httn2")
 
@@ -75,6 +93,7 @@ offset_left = 421.0
 offset_top = 391.0
 offset_right = 653.0
 offset_bottom = 516.0
+tooltip_text = "Buy Compass"
 color = Color(1, 1, 1, 0)
 script = ExtResource("7_1e65h")
 
@@ -93,6 +112,7 @@ offset_left = 691.0
 offset_top = 211.0
 offset_right = 943.0
 offset_bottom = 392.0
+tooltip_text = "Buy Spyglass"
 color = Color(1, 1, 1, 0)
 script = ExtResource("8_4c0wx")
 
@@ -106,6 +126,9 @@ offset_bottom = 509.0
 mouse_filter = 2
 texture = ExtResource("4_yudrl")
 
+[connection signal="gui_input" from="CanvasLayer/Leave1ClickZone" to="CanvasLayer/Leave1ClickZone" method="_on_gui_input"]
+[connection signal="mouse_entered" from="CanvasLayer/Leave1ClickZone" to="CanvasLayer/Leave1ClickZone" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="CanvasLayer/Leave1ClickZone" to="CanvasLayer/Leave1ClickZone" method="_on_mouse_exited"]
 [connection signal="gui_input" from="CanvasLayer/HammerClickZone" to="CanvasLayer/HammerClickZone" method="_on_gui_input"]
 [connection signal="mouse_entered" from="CanvasLayer/HammerClickZone" to="CanvasLayer/HammerClickZone" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="CanvasLayer/HammerClickZone" to="CanvasLayer/HammerClickZone" method="_on_mouse_exited"]
