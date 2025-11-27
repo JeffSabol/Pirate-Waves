@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://exlfjrsql2fw"]
+[gd_scene load_steps=18 format=3 uid="uid://exlfjrsql2fw"]
 
 [ext_resource type="Script" uid="uid://bjs48hyrufm2s" path="res://scenes/town/trade/trade.gd" id="1_1e65h"]
 [ext_resource type="Texture2D" uid="uid://cacxfr5jxkrly" path="res://assets/ui/town/trade/TradeMenuFull.png" id="2_opl56"]
@@ -12,6 +12,11 @@
 [ext_resource type="Script" uid="uid://bygsot5yih4da" path="res://scenes/town/trade/spyglass_click_zone.gd" id="8_4c0wx"]
 [ext_resource type="Script" uid="uid://dgil8u71ohcsf" path="res://scenes/town/tavern/gold.gd" id="9_4c0wx"]
 [ext_resource type="Texture2D" uid="uid://dj1utroctraii" path="res://assets/ui/worldui/panels/gold_panel.png" id="10_jkeck"]
+[ext_resource type="Script" uid="uid://dirsw5yfe4ok1" path="res://scenes/town/trade/item_menu.gd" id="13_ijon4"]
+[ext_resource type="Texture2D" uid="uid://t0uiteea2pmc" path="res://assets/ui/town/trade/hammer.png" id="14_jbrx6"]
+[ext_resource type="Texture2D" uid="uid://p2jawd2r18v1" path="res://assets/ui/town/trade/spyglass.png" id="15_rjdl6"]
+[ext_resource type="Texture2D" uid="uid://cf075db1dm38j" path="res://assets/ui/town/trade/compass.png" id="16_7e3vq"]
+[ext_resource type="AudioStream" uid="uid://bxhf1x3igp6ms" path="res://assets/sfx/bottle_clink1.mp3" id="17_rrndr"]
 
 [node name="Trade" type="Control"]
 layout_mode = 3
@@ -69,6 +74,27 @@ offset_right = 109.0
 offset_bottom = 29.0
 text = "2"
 
+[node name="HammerGlow" type="TextureRect" parent="CanvasLayer"]
+visible = false
+offset_right = 1280.0
+offset_bottom = 720.0
+mouse_filter = 2
+texture = ExtResource("5_sh6sl")
+
+[node name="CompassGlow" type="TextureRect" parent="CanvasLayer"]
+visible = false
+offset_right = 1280.0
+offset_bottom = 720.0
+mouse_filter = 2
+texture = ExtResource("3_82uxr")
+
+[node name="SpyglassGlow" type="TextureRect" parent="CanvasLayer"]
+visible = false
+offset_right = 1280.0
+offset_bottom = 720.0
+mouse_filter = 2
+texture = ExtResource("4_yudrl")
+
 [node name="HammerClickZone" type="ColorRect" parent="CanvasLayer"]
 offset_left = 237.0
 offset_top = 149.0
@@ -77,16 +103,6 @@ offset_bottom = 280.0
 tooltip_text = "Buy Hammer"
 color = Color(1, 1, 1, 0)
 script = ExtResource("6_httn2")
-
-[node name="HammerGlow" type="TextureRect" parent="CanvasLayer/HammerClickZone"]
-visible = false
-layout_mode = 0
-offset_left = -237.0
-offset_top = -149.0
-offset_right = 1043.0
-offset_bottom = 571.0
-mouse_filter = 2
-texture = ExtResource("5_sh6sl")
 
 [node name="CompassClickZone" type="ColorRect" parent="CanvasLayer"]
 offset_left = 421.0
@@ -97,16 +113,6 @@ tooltip_text = "Buy Compass"
 color = Color(1, 1, 1, 0)
 script = ExtResource("7_1e65h")
 
-[node name="CompassGlow" type="TextureRect" parent="CanvasLayer/CompassClickZone"]
-visible = false
-layout_mode = 0
-offset_left = -421.0
-offset_top = -391.0
-offset_right = 859.0
-offset_bottom = 329.0
-mouse_filter = 2
-texture = ExtResource("3_82uxr")
-
 [node name="SpyglassClickZone" type="ColorRect" parent="CanvasLayer"]
 offset_left = 691.0
 offset_top = 211.0
@@ -116,25 +122,53 @@ tooltip_text = "Buy Spyglass"
 color = Color(1, 1, 1, 0)
 script = ExtResource("8_4c0wx")
 
-[node name="SpyglassGlow" type="TextureRect" parent="CanvasLayer/SpyglassClickZone"]
-visible = false
+[node name="ItemMenu" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 570.0
+offset_top = 397.0
+offset_right = 610.0
+offset_bottom = 437.0
+scale = Vector2(0.25, 0.25)
+script = ExtResource("13_ijon4")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/ItemMenu"]
 layout_mode = 0
-offset_left = -691.0
-offset_top = -211.0
-offset_right = 589.0
-offset_bottom = 509.0
+offset_left = -2256.0
+offset_top = 8.0
+offset_right = 3127.0
+offset_bottom = 1288.0
 mouse_filter = 2
-texture = ExtResource("4_yudrl")
+theme_override_constants/separation = 1000
+
+[node name="Hammer" type="TextureRect" parent="CanvasLayer/ItemMenu/HBoxContainer"]
+visible = false
+layout_mode = 2
+texture = ExtResource("14_jbrx6")
+
+[node name="Compass" type="TextureRect" parent="CanvasLayer/ItemMenu/HBoxContainer"]
+visible = false
+layout_mode = 2
+texture = ExtResource("16_7e3vq")
+
+[node name="Spyglass" type="TextureRect" parent="CanvasLayer/ItemMenu/HBoxContainer"]
+visible = false
+layout_mode = 2
+texture = ExtResource("15_rjdl6")
+
+[node name="BottleClink" type="AudioStreamPlayer" parent="CanvasLayer/ItemMenu"]
+stream = ExtResource("17_rrndr")
 
 [connection signal="gui_input" from="CanvasLayer/Leave1ClickZone" to="CanvasLayer/Leave1ClickZone" method="_on_gui_input"]
 [connection signal="mouse_entered" from="CanvasLayer/Leave1ClickZone" to="CanvasLayer/Leave1ClickZone" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="CanvasLayer/Leave1ClickZone" to="CanvasLayer/Leave1ClickZone" method="_on_mouse_exited"]
-[connection signal="gui_input" from="CanvasLayer/HammerClickZone" to="CanvasLayer/HammerClickZone" method="_on_gui_input"]
+[connection signal="gui_input" from="CanvasLayer/HammerClickZone" to="CanvasLayer/ItemMenu" method="_on_hammer_gui_input"]
 [connection signal="mouse_entered" from="CanvasLayer/HammerClickZone" to="CanvasLayer/HammerClickZone" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="CanvasLayer/HammerClickZone" to="CanvasLayer/HammerClickZone" method="_on_mouse_exited"]
-[connection signal="gui_input" from="CanvasLayer/CompassClickZone" to="CanvasLayer/CompassClickZone" method="_on_gui_input"]
+[connection signal="gui_input" from="CanvasLayer/CompassClickZone" to="CanvasLayer/ItemMenu" method="_on_compass_gui_input"]
 [connection signal="mouse_entered" from="CanvasLayer/CompassClickZone" to="CanvasLayer/CompassClickZone" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="CanvasLayer/CompassClickZone" to="CanvasLayer/CompassClickZone" method="_on_mouse_exited"]
+[connection signal="gui_input" from="CanvasLayer/SpyglassClickZone" to="CanvasLayer/ItemMenu" method="_on_spyglass_gui_input"]
 [connection signal="gui_input" from="CanvasLayer/SpyglassClickZone" to="CanvasLayer/SpyglassClickZone" method="_on_gui_input"]
 [connection signal="mouse_entered" from="CanvasLayer/SpyglassClickZone" to="CanvasLayer/SpyglassClickZone" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="CanvasLayer/SpyglassClickZone" to="CanvasLayer/SpyglassClickZone" method="_on_mouse_exited"]

@@ -221,11 +221,27 @@ func _on_enemy_despawned(kind: String) -> void:
 		print("[WaveManager] Wave", _current_wave, "CLEARED! Return to town.")
 		wave_cleared.emit(_current_wave)
 		$WaveWin.play()
-		# TODO create a transition to spawn!
 		$"../PlayerBoat".velocity = Vector2.ZERO
+
+		var viewport_tex: Texture2D = get_viewport().get_texture()
+		var img: Image = viewport_tex.get_image()
+		var screenshot_tex := ImageTexture.create_from_image(img)
+
+		var transition_scene := preload("res://scenes/transitions/WaveTransition.tscn")
+		var transition := transition_scene.instantiate()
+
+		get_tree().root.add_child(transition)
+
+		transition.set_screenshot(screenshot_tex)
+
+		$"../PlayerBoat".controls_enabled = false
 		$"../PlayerBoat".global_position = Vector2(443, -912)
+		$"../PlayerBoat".velocity = Vector2.ZERO
+		$"../PlayerBoat".sails_furled = true
 
 		wave_finished.emit()
+
+
 
 
 # ------------------------

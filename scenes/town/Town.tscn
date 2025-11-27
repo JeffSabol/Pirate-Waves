@@ -1,6 +1,5 @@
-[gd_scene load_steps=42 format=3 uid="uid://det64ltelxgj8"]
+[gd_scene load_steps=35 format=3 uid="uid://det64ltelxgj8"]
 
-[ext_resource type="Script" uid="uid://drfnyqhrabudn" path="res://scenes/town/townUI.gd" id="1_ki453"]
 [ext_resource type="Texture2D" uid="uid://wdneset53t7e" path="res://assets/ui/town/TownFull.png" id="2_ki453"]
 [ext_resource type="Texture2D" uid="uid://6oa1s5tru2xe" path="res://assets/ui/town/TavernGlow.png" id="3_qvgpt"]
 [ext_resource type="Script" path="res://scenes/town/tavern_click_zone.gd" id="3_uiijs"]
@@ -10,11 +9,9 @@
 [ext_resource type="Script" path="res://scenes/town/shipyard_click_zone.gd" id="7_lersf"]
 [ext_resource type="Script" path="res://scenes/town/leave_click_zone.gd" id="7_tr5gk"]
 [ext_resource type="Texture2D" uid="uid://de3fy8f751bug" path="res://assets/ui/town/LeaveGlow.png" id="10_v3pdc"]
-[ext_resource type="Texture2D" uid="uid://bulm7n0sisc2" path="res://assets/ui/town/wave/wave1.png" id="11_5vy64"]
 [ext_resource type="Texture2D" uid="uid://d3dv4ydj5uhup" path="res://assets/ui/town/wave/wave2.png" id="12_gdn34"]
 [ext_resource type="Texture2D" uid="uid://dfur0vpymbf8p" path="res://assets/ui/town/wave/wave11.png" id="13_8dq74"]
 [ext_resource type="Texture2D" uid="uid://pggpmyd483ic" path="res://assets/ui/town/wave/wave12.png" id="14_v6jhq"]
-[ext_resource type="Texture2D" uid="uid://dbjhukl44c0te" path="res://assets/ui/town/wave/wave13.png" id="15_wui2e"]
 [ext_resource type="Texture2D" uid="uid://bn6onpwarb2tn" path="res://assets/ui/town/wave/wave3.png" id="16_qet4j"]
 [ext_resource type="Texture2D" uid="uid://dlkly72uy8ymb" path="res://assets/ui/town/wave/wave4.png" id="17_587hs"]
 [ext_resource type="Texture2D" uid="uid://bluu20wmiakje" path="res://assets/ui/town/wave/wave5.png" id="18_prosl"]
@@ -43,244 +40,116 @@ frame_3/texture = ExtResource("27_ipcul")
 frame_3/duration = 1.0
 
 [sub_resource type="AnimatedTexture" id="AnimatedTexture_8dq74"]
-frames = 13
+frames = 12
 speed_scale = 2.0
-frame_0/texture = ExtResource("11_5vy64")
+frame_0/texture = ExtResource("12_gdn34")
 frame_0/duration = 0.5
-frame_1/texture = ExtResource("12_gdn34")
+frame_1/texture = ExtResource("16_qet4j")
 frame_1/duration = 0.5
-frame_2/texture = ExtResource("16_qet4j")
+frame_2/texture = ExtResource("17_587hs")
 frame_2/duration = 0.5
-frame_3/texture = ExtResource("17_587hs")
+frame_3/texture = ExtResource("18_prosl")
 frame_3/duration = 0.5
-frame_4/texture = ExtResource("18_prosl")
+frame_4/texture = ExtResource("19_8otme")
 frame_4/duration = 0.5
-frame_5/texture = ExtResource("19_8otme")
+frame_5/texture = ExtResource("20_086wm")
 frame_5/duration = 0.5
-frame_6/texture = ExtResource("20_086wm")
+frame_6/texture = ExtResource("21_lteju")
 frame_6/duration = 0.5
-frame_7/texture = ExtResource("21_lteju")
+frame_7/texture = ExtResource("22_hyja2")
 frame_7/duration = 0.5
-frame_8/texture = ExtResource("22_hyja2")
+frame_8/texture = ExtResource("23_ipcul")
 frame_8/duration = 0.5
-frame_9/texture = ExtResource("23_ipcul")
+frame_9/texture = ExtResource("13_8dq74")
 frame_9/duration = 0.5
-frame_10/texture = ExtResource("13_8dq74")
+frame_10/texture = ExtResource("14_v6jhq")
 frame_10/duration = 0.5
 frame_11/texture = ExtResource("14_v6jhq")
 frame_11/duration = 0.5
-frame_12/texture = ExtResource("15_wui2e")
-frame_12/duration = 0.5
 
 [sub_resource type="AnimatedTexture" id="AnimatedTexture_gdn34"]
-frames = 13
+frames = 12
 speed_scale = 2.0
-frame_0/texture = ExtResource("11_5vy64")
+frame_0/texture = ExtResource("12_gdn34")
 frame_0/duration = 0.5
-frame_1/texture = ExtResource("12_gdn34")
+frame_1/texture = ExtResource("16_qet4j")
 frame_1/duration = 0.5
-frame_2/texture = ExtResource("16_qet4j")
+frame_2/texture = ExtResource("17_587hs")
 frame_2/duration = 0.5
-frame_3/texture = ExtResource("17_587hs")
+frame_3/texture = ExtResource("18_prosl")
 frame_3/duration = 0.5
-frame_4/texture = ExtResource("18_prosl")
+frame_4/texture = ExtResource("19_8otme")
 frame_4/duration = 0.5
-frame_5/texture = ExtResource("19_8otme")
+frame_5/texture = ExtResource("20_086wm")
 frame_5/duration = 0.5
-frame_6/texture = ExtResource("20_086wm")
+frame_6/texture = ExtResource("21_lteju")
 frame_6/duration = 0.5
-frame_7/texture = ExtResource("21_lteju")
+frame_7/texture = ExtResource("22_hyja2")
 frame_7/duration = 0.5
-frame_8/texture = ExtResource("22_hyja2")
+frame_8/texture = ExtResource("23_ipcul")
 frame_8/duration = 0.5
-frame_9/texture = ExtResource("23_ipcul")
+frame_9/texture = ExtResource("13_8dq74")
 frame_9/duration = 0.5
-frame_10/texture = ExtResource("13_8dq74")
+frame_10/texture = ExtResource("14_v6jhq")
 frame_10/duration = 0.5
 frame_11/texture = ExtResource("14_v6jhq")
 frame_11/duration = 0.5
-frame_12/texture = ExtResource("15_wui2e")
-frame_12/duration = 0.5
 
 [sub_resource type="AnimatedTexture" id="AnimatedTexture_8otme"]
-frames = 13
+frames = 12
 speed_scale = 2.0
-frame_0/texture = ExtResource("11_5vy64")
+frame_0/texture = ExtResource("12_gdn34")
 frame_0/duration = 0.5
-frame_1/texture = ExtResource("12_gdn34")
+frame_1/texture = ExtResource("16_qet4j")
 frame_1/duration = 0.5
-frame_2/texture = ExtResource("16_qet4j")
+frame_2/texture = ExtResource("17_587hs")
 frame_2/duration = 0.5
-frame_3/texture = ExtResource("17_587hs")
+frame_3/texture = ExtResource("18_prosl")
 frame_3/duration = 0.5
-frame_4/texture = ExtResource("18_prosl")
+frame_4/texture = ExtResource("19_8otme")
 frame_4/duration = 0.5
-frame_5/texture = ExtResource("19_8otme")
+frame_5/texture = ExtResource("20_086wm")
 frame_5/duration = 0.5
-frame_6/texture = ExtResource("20_086wm")
+frame_6/texture = ExtResource("21_lteju")
 frame_6/duration = 0.5
-frame_7/texture = ExtResource("21_lteju")
+frame_7/texture = ExtResource("22_hyja2")
 frame_7/duration = 0.5
-frame_8/texture = ExtResource("22_hyja2")
+frame_8/texture = ExtResource("23_ipcul")
 frame_8/duration = 0.5
-frame_9/texture = ExtResource("23_ipcul")
+frame_9/texture = ExtResource("13_8dq74")
 frame_9/duration = 0.5
-frame_10/texture = ExtResource("13_8dq74")
+frame_10/texture = ExtResource("14_v6jhq")
 frame_10/duration = 0.5
 frame_11/texture = ExtResource("14_v6jhq")
 frame_11/duration = 0.5
-frame_12/texture = ExtResource("15_wui2e")
-frame_12/duration = 0.5
 
 [sub_resource type="AnimatedTexture" id="AnimatedTexture_wui2e"]
-frames = 13
+frames = 12
 speed_scale = 2.0
-frame_0/texture = ExtResource("11_5vy64")
+frame_0/texture = ExtResource("12_gdn34")
 frame_0/duration = 0.5
-frame_1/texture = ExtResource("12_gdn34")
+frame_1/texture = ExtResource("16_qet4j")
 frame_1/duration = 0.5
-frame_2/texture = ExtResource("16_qet4j")
+frame_2/texture = ExtResource("17_587hs")
 frame_2/duration = 0.5
-frame_3/texture = ExtResource("17_587hs")
+frame_3/texture = ExtResource("18_prosl")
 frame_3/duration = 0.5
-frame_4/texture = ExtResource("18_prosl")
+frame_4/texture = ExtResource("19_8otme")
 frame_4/duration = 0.5
-frame_5/texture = ExtResource("19_8otme")
+frame_5/texture = ExtResource("20_086wm")
 frame_5/duration = 0.5
-frame_6/texture = ExtResource("20_086wm")
+frame_6/texture = ExtResource("21_lteju")
 frame_6/duration = 0.5
-frame_7/texture = ExtResource("21_lteju")
+frame_7/texture = ExtResource("22_hyja2")
 frame_7/duration = 0.5
-frame_8/texture = ExtResource("22_hyja2")
+frame_8/texture = ExtResource("23_ipcul")
 frame_8/duration = 0.5
-frame_9/texture = ExtResource("23_ipcul")
+frame_9/texture = ExtResource("13_8dq74")
 frame_9/duration = 0.5
-frame_10/texture = ExtResource("13_8dq74")
+frame_10/texture = ExtResource("14_v6jhq")
 frame_10/duration = 0.5
 frame_11/texture = ExtResource("14_v6jhq")
 frame_11/duration = 0.5
-frame_12/texture = ExtResource("15_wui2e")
-frame_12/duration = 0.5
-
-[sub_resource type="AnimatedTexture" id="AnimatedTexture_v6jhq"]
-frames = 13
-speed_scale = 2.0
-frame_0/texture = ExtResource("11_5vy64")
-frame_0/duration = 0.5
-frame_1/texture = ExtResource("12_gdn34")
-frame_1/duration = 0.5
-frame_2/texture = ExtResource("16_qet4j")
-frame_2/duration = 0.5
-frame_3/texture = ExtResource("17_587hs")
-frame_3/duration = 0.5
-frame_4/texture = ExtResource("18_prosl")
-frame_4/duration = 0.5
-frame_5/texture = ExtResource("19_8otme")
-frame_5/duration = 0.5
-frame_6/texture = ExtResource("20_086wm")
-frame_6/duration = 0.5
-frame_7/texture = ExtResource("21_lteju")
-frame_7/duration = 0.5
-frame_8/texture = ExtResource("22_hyja2")
-frame_8/duration = 0.5
-frame_9/texture = ExtResource("23_ipcul")
-frame_9/duration = 0.5
-frame_10/texture = ExtResource("13_8dq74")
-frame_10/duration = 0.5
-frame_11/texture = ExtResource("14_v6jhq")
-frame_11/duration = 0.5
-frame_12/texture = ExtResource("15_wui2e")
-frame_12/duration = 0.5
-
-[sub_resource type="AnimatedTexture" id="AnimatedTexture_qet4j"]
-frames = 13
-speed_scale = 2.0
-frame_0/texture = ExtResource("11_5vy64")
-frame_0/duration = 0.5
-frame_1/texture = ExtResource("12_gdn34")
-frame_1/duration = 0.5
-frame_2/texture = ExtResource("16_qet4j")
-frame_2/duration = 0.5
-frame_3/texture = ExtResource("17_587hs")
-frame_3/duration = 0.5
-frame_4/texture = ExtResource("18_prosl")
-frame_4/duration = 0.5
-frame_5/texture = ExtResource("19_8otme")
-frame_5/duration = 0.5
-frame_6/texture = ExtResource("20_086wm")
-frame_6/duration = 0.5
-frame_7/texture = ExtResource("21_lteju")
-frame_7/duration = 0.5
-frame_8/texture = ExtResource("22_hyja2")
-frame_8/duration = 0.5
-frame_9/texture = ExtResource("23_ipcul")
-frame_9/duration = 0.5
-frame_10/texture = ExtResource("13_8dq74")
-frame_10/duration = 0.5
-frame_11/texture = ExtResource("14_v6jhq")
-frame_11/duration = 0.5
-frame_12/texture = ExtResource("15_wui2e")
-frame_12/duration = 0.5
-
-[sub_resource type="AnimatedTexture" id="AnimatedTexture_587hs"]
-frames = 13
-speed_scale = 2.0
-frame_0/texture = ExtResource("11_5vy64")
-frame_0/duration = 0.5
-frame_1/texture = ExtResource("12_gdn34")
-frame_1/duration = 0.5
-frame_2/texture = ExtResource("16_qet4j")
-frame_2/duration = 0.5
-frame_3/texture = ExtResource("17_587hs")
-frame_3/duration = 0.5
-frame_4/texture = ExtResource("18_prosl")
-frame_4/duration = 0.5
-frame_5/texture = ExtResource("19_8otme")
-frame_5/duration = 0.5
-frame_6/texture = ExtResource("20_086wm")
-frame_6/duration = 0.5
-frame_7/texture = ExtResource("21_lteju")
-frame_7/duration = 0.5
-frame_8/texture = ExtResource("22_hyja2")
-frame_8/duration = 0.5
-frame_9/texture = ExtResource("23_ipcul")
-frame_9/duration = 0.5
-frame_10/texture = ExtResource("13_8dq74")
-frame_10/duration = 0.5
-frame_11/texture = ExtResource("14_v6jhq")
-frame_11/duration = 0.5
-frame_12/texture = ExtResource("15_wui2e")
-frame_12/duration = 0.5
-
-[sub_resource type="AnimatedTexture" id="AnimatedTexture_prosl"]
-frames = 13
-speed_scale = 2.0
-frame_0/texture = ExtResource("11_5vy64")
-frame_0/duration = 0.5
-frame_1/texture = ExtResource("12_gdn34")
-frame_1/duration = 0.5
-frame_2/texture = ExtResource("16_qet4j")
-frame_2/duration = 0.5
-frame_3/texture = ExtResource("17_587hs")
-frame_3/duration = 0.5
-frame_4/texture = ExtResource("18_prosl")
-frame_4/duration = 0.5
-frame_5/texture = ExtResource("19_8otme")
-frame_5/duration = 0.5
-frame_6/texture = ExtResource("20_086wm")
-frame_6/duration = 0.5
-frame_7/texture = ExtResource("21_lteju")
-frame_7/duration = 0.5
-frame_8/texture = ExtResource("22_hyja2")
-frame_8/duration = 0.5
-frame_9/texture = ExtResource("23_ipcul")
-frame_9/duration = 0.5
-frame_10/texture = ExtResource("13_8dq74")
-frame_10/duration = 0.5
-frame_11/texture = ExtResource("14_v6jhq")
-frame_11/duration = 0.5
-frame_12/texture = ExtResource("15_wui2e")
-frame_12/duration = 0.5
 
 [sub_resource type="AnimatedTexture" id="AnimatedTexture_15fyj"]
 frames = 4
@@ -299,7 +168,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_ki453")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -323,7 +191,8 @@ texture = SubResource("AnimatedTexture_4cewy")
 [node name="Waves" type="Control" parent="CanvasLayer"]
 layout_mode = 3
 anchors_preset = 0
-offset_right = 40.0
+offset_left = 32.0
+offset_right = 72.0
 offset_bottom = 40.0
 
 [node name="Wave1" type="TextureRect" parent="CanvasLayer/Waves"]
@@ -357,25 +226,15 @@ texture = SubResource("AnimatedTexture_8otme")
 
 [node name="Wave4" type="TextureRect" parent="CanvasLayer/Waves"]
 layout_mode = 0
-offset_left = 407.0
-offset_top = 680.0
-offset_right = 471.0
-offset_bottom = 712.0
-scale = Vector2(2, 2)
-mouse_filter = 2
-texture = SubResource("AnimatedTexture_wui2e")
-
-[node name="Wave5" type="TextureRect" parent="CanvasLayer/Waves"]
-layout_mode = 0
 offset_left = 600.0
 offset_top = 680.0
 offset_right = 664.0
 offset_bottom = 712.0
 scale = Vector2(2, 2)
 mouse_filter = 2
-texture = SubResource("AnimatedTexture_v6jhq")
+texture = SubResource("AnimatedTexture_8dq74")
 
-[node name="Wave6" type="TextureRect" parent="CanvasLayer/Waves"]
+[node name="Wave5" type="TextureRect" parent="CanvasLayer/Waves"]
 layout_mode = 0
 offset_left = 800.0
 offset_top = 680.0
@@ -383,9 +242,9 @@ offset_right = 864.0
 offset_bottom = 712.0
 scale = Vector2(2, 2)
 mouse_filter = 2
-texture = SubResource("AnimatedTexture_qet4j")
+texture = SubResource("AnimatedTexture_gdn34")
 
-[node name="Wave7" type="TextureRect" parent="CanvasLayer/Waves"]
+[node name="Wave6" type="TextureRect" parent="CanvasLayer/Waves"]
 layout_mode = 0
 offset_left = 1000.0
 offset_top = 680.0
@@ -393,24 +252,14 @@ offset_right = 1064.0
 offset_bottom = 712.0
 scale = Vector2(2, 2)
 mouse_filter = 2
-texture = SubResource("AnimatedTexture_587hs")
-
-[node name="Wave8" type="TextureRect" parent="CanvasLayer/Waves"]
-layout_mode = 0
-offset_left = 1200.0
-offset_top = 680.0
-offset_right = 1264.0
-offset_bottom = 712.0
-scale = Vector2(2, 2)
-mouse_filter = 2
-texture = SubResource("AnimatedTexture_prosl")
+texture = SubResource("AnimatedTexture_8otme")
 
 [node name="Waves2" type="Control" parent="CanvasLayer"]
 layout_mode = 3
 anchors_preset = 0
-offset_left = 379.0
+offset_left = 284.0
 offset_top = -45.0
-offset_right = 419.0
+offset_right = 324.0
 offset_bottom = -5.0
 
 [node name="Wave1" type="TextureRect" parent="CanvasLayer/Waves2"]
@@ -418,7 +267,7 @@ layout_mode = 0
 offset_top = 680.0
 offset_right = 64.0
 offset_bottom = 712.0
-scale = Vector2(-2, 2)
+scale = Vector2(2, 2)
 mouse_filter = 2
 texture = SubResource("AnimatedTexture_8dq74")
 
@@ -428,7 +277,7 @@ offset_left = 200.0
 offset_top = 680.0
 offset_right = 264.0
 offset_bottom = 712.0
-scale = Vector2(-2, 2)
+scale = Vector2(2, 2)
 mouse_filter = 2
 texture = SubResource("AnimatedTexture_gdn34")
 
@@ -438,7 +287,7 @@ offset_left = 400.0
 offset_top = 680.0
 offset_right = 464.0
 offset_bottom = 712.0
-scale = Vector2(-2, 2)
+scale = Vector2(2, 2)
 mouse_filter = 2
 texture = SubResource("AnimatedTexture_8otme")
 
@@ -448,7 +297,7 @@ offset_left = 407.0
 offset_top = 680.0
 offset_right = 471.0
 offset_bottom = 712.0
-scale = Vector2(-2, 2)
+scale = Vector2(2, 2)
 mouse_filter = 2
 texture = SubResource("AnimatedTexture_wui2e")
 
@@ -458,45 +307,17 @@ offset_left = 600.0
 offset_top = 680.0
 offset_right = 664.0
 offset_bottom = 712.0
-scale = Vector2(-2, 2)
+scale = Vector2(2, 2)
 mouse_filter = 2
-texture = SubResource("AnimatedTexture_v6jhq")
-
-[node name="Waves4" type="Control" parent="CanvasLayer"]
-layout_mode = 3
-anchors_preset = 0
-offset_left = 379.0
-offset_top = -45.0
-offset_right = 419.0
-offset_bottom = -5.0
-
-[node name="Wave1" type="TextureRect" parent="CanvasLayer/Waves4"]
-layout_mode = 0
-offset_left = 268.0
-offset_top = 558.0
-offset_right = 332.0
-offset_bottom = 590.0
-scale = Vector2(-2, 2)
-mouse_filter = 2
-texture = SubResource("AnimatedTexture_8dq74")
-
-[node name="Wave2" type="TextureRect" parent="CanvasLayer/Waves4"]
-layout_mode = 0
-offset_left = 501.0
-offset_top = 558.0
-offset_right = 565.0
-offset_bottom = 590.0
-scale = Vector2(-2, 2)
-mouse_filter = 2
-texture = SubResource("AnimatedTexture_gdn34")
+texture = SubResource("AnimatedTexture_wui2e")
 
 [node name="Waves3" type="Control" parent="CanvasLayer"]
 layout_mode = 3
 anchors_preset = 0
-offset_left = 285.0
-offset_top = -120.0
-offset_right = 325.0
-offset_bottom = -80.0
+offset_left = 337.0
+offset_top = -96.0
+offset_right = 377.0
+offset_bottom = -56.0
 
 [node name="Wave1" type="TextureRect" parent="CanvasLayer/Waves3"]
 layout_mode = 0
@@ -537,16 +358,6 @@ scale = Vector2(2, 2)
 mouse_filter = 2
 texture = SubResource("AnimatedTexture_wui2e")
 
-[node name="Wave5" type="TextureRect" parent="CanvasLayer/Waves3"]
-layout_mode = 0
-offset_left = 600.0
-offset_top = 680.0
-offset_right = 664.0
-offset_bottom = 712.0
-scale = Vector2(2, 2)
-mouse_filter = 2
-texture = SubResource("AnimatedTexture_v6jhq")
-
 [node name="TavernClickZone" type="ColorRect" parent="CanvasLayer"]
 offset_right = 218.0
 offset_bottom = 409.0
@@ -582,6 +393,7 @@ mouse_filter = 2
 texture = ExtResource("4_25glc")
 
 [node name="QuestClickZone" type="ColorRect" parent="CanvasLayer"]
+visible = false
 offset_left = 667.0
 offset_top = 207.0
 offset_right = 880.0

@@ -66,7 +66,7 @@ signal hp_changed(hp: int, max_hp: int)
 @export var can_fire_right := true
 @export var combat_lock_seconds: float = 10.0
 
-var sails_furled: bool = true
+@export var sails_furled: bool = true
 
 const FORWARD_BASE := Vector2.UP
 
