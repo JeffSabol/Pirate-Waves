@@ -202,3 +202,5 @@ volume_db = -10.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_4axgh")
+
+[node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="."]

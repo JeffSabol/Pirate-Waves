@@ -1,13 +1,14 @@
-[gd_scene load_steps=35 format=3 uid="uid://det64ltelxgj8"]
+[gd_scene load_steps=36 format=3 uid="uid://det64ltelxgj8"]
 
+[ext_resource type="Script" uid="uid://ddmkmfgjx5crr" path="res://scenes/town/town.gd" id="1_587hs"]
 [ext_resource type="Texture2D" uid="uid://wdneset53t7e" path="res://assets/ui/town/TownFull.png" id="2_ki453"]
 [ext_resource type="Texture2D" uid="uid://6oa1s5tru2xe" path="res://assets/ui/town/TavernGlow.png" id="3_qvgpt"]
 [ext_resource type="Script" path="res://scenes/town/tavern_click_zone.gd" id="3_uiijs"]
 [ext_resource type="Texture2D" uid="uid://coc7iptaf0sum" path="res://assets/ui/town/MarketGlow.png" id="4_25glc"]
-[ext_resource type="Script" path="res://scenes/town/trade_click_zone.gd" id="5_n5615"]
+[ext_resource type="Script" uid="uid://d24m3t07ee201" path="res://scenes/town/trade_click_zone.gd" id="5_n5615"]
 [ext_resource type="Texture2D" uid="uid://c6hl6kulg70yv" path="res://assets/ui/town/ShipyardHover.png" id="7_8mv33"]
 [ext_resource type="Script" path="res://scenes/town/shipyard_click_zone.gd" id="7_lersf"]
-[ext_resource type="Script" path="res://scenes/town/leave_click_zone.gd" id="7_tr5gk"]
+[ext_resource type="Script" uid="uid://o4mp706v1hhr" path="res://scenes/town/leave_click_zone.gd" id="7_tr5gk"]
 [ext_resource type="Texture2D" uid="uid://de3fy8f751bug" path="res://assets/ui/town/LeaveGlow.png" id="10_v3pdc"]
 [ext_resource type="Texture2D" uid="uid://d3dv4ydj5uhup" path="res://assets/ui/town/wave/wave2.png" id="12_gdn34"]
 [ext_resource type="Texture2D" uid="uid://dfur0vpymbf8p" path="res://assets/ui/town/wave/wave11.png" id="13_8dq74"]
@@ -168,6 +169,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_587hs")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
