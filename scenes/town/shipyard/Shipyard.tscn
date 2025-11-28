@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://c6qexg224wfyy"]
+[gd_scene load_steps=28 format=3 uid="uid://c6qexg224wfyy"]
 
 [ext_resource type="Texture2D" uid="uid://4pi37xpixlf8" path="res://assets/ui/town/shipyard/ShipYard.png" id="1_44gni"]
 [ext_resource type="Texture2D" uid="uid://bqal11e3q3jc" path="res://assets/ui/town/shipyard/BaseUpgradeUI.png" id="2_ixawh"]
@@ -25,6 +25,7 @@
 [ext_resource type="Texture2D" uid="uid://cv651buj263so" path="res://assets/upgrade_indicators/tier3_upgrade_indicator1.png" id="18_wqr8x"]
 [ext_resource type="Texture2D" uid="uid://crna7x16pshei" path="res://assets/upgrade_indicators/tier3_upgrade_indicator2.png" id="19_6dlyi"]
 [ext_resource type="Texture2D" uid="uid://dy5psbgvnyky2" path="res://assets/upgrade_indicators/tier3_upgrade_indicator3.png" id="20_e1cn0"]
+[ext_resource type="Texture2D" uid="uid://i8mt6lgadhcx" path="res://assets/ui/town/shipyard/Ship_Repair.png" id="26_q6cwu"]
 
 [sub_resource type="AnimatedTexture" id="AnimatedTexture_bf8my"]
 frames = 9
@@ -328,6 +329,64 @@ offset_top = 110.200005
 offset_right = 73.200005
 offset_bottom = 119.200005
 color = Color(1, 1, 1, 0)
+
+[node name="RepairCostPanel" type="TextureRect" parent="CanvasLayer"]
+offset_left = 1033.0
+offset_top = -74.0
+offset_right = 1097.0
+offset_bottom = -10.0
+scale = Vector2(5, 5)
+texture = ExtResource("26_q6cwu")
+
+[node name="Label" type="Label" parent="CanvasLayer/RepairCostPanel"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 22.0
+
+[node name="GoldRepairCountLabel" type="Label" parent="CanvasLayer/RepairCostPanel/Label"]
+layout_mode = 0
+offset_left = 29.600012
+offset_top = 31.600002
+offset_right = 71.60001
+offset_bottom = 53.600002
+scale = Vector2(0.2, 0.2)
+theme_override_colors/font_color = Color(1, 0.8081555, 0, 1)
+theme_override_constants/outline_size = 0
+theme_override_font_sizes/font_size = 16
+text = "100"
+
+[node name="ShipsHpLabel" type="Label" parent="CanvasLayer/RepairCostPanel/Label"]
+layout_mode = 0
+offset_left = 8.75
+offset_top = 23.75
+offset_right = 70.75001
+offset_bottom = 45.749996
+scale = Vector2(0.3, 0.3)
+theme_override_constants/outline_size = 0
+theme_override_font_sizes/font_size = 8
+text = "Ship's HP"
+
+[node name="HpCountLabel" type="Label" parent="CanvasLayer/RepairCostPanel/Label"]
+layout_mode = 0
+offset_left = 30.199999
+offset_top = 24.0
+offset_right = 92.200005
+offset_bottom = 45.999996
+scale = Vector2(0.3, 0.3)
+theme_override_constants/outline_size = 0
+theme_override_font_sizes/font_size = 8
+text = "350/100"
+
+[node name="FixCostLabel" type="Label" parent="CanvasLayer/RepairCostPanel/Label"]
+layout_mode = 0
+offset_left = 9.0
+offset_top = 32.5
+offset_right = 71.00001
+offset_bottom = 54.499996
+scale = Vector2(0.3, 0.3)
+theme_override_constants/outline_size = 0
+theme_override_font_sizes/font_size = 8
+text = "Fix  Cost"
 
 [connection signal="pressed" from="CanvasLayer/MenuBackground/SpeedUpgradeBtn" to="CanvasLayer/MenuBackground" method="_on_speed_upgrade_btn_pressed"]
 [connection signal="pressed" from="CanvasLayer/MenuBackground/TurningUpgradeBtn" to="CanvasLayer/MenuBackground" method="_on_turning_upgrade_btn_pressed"]

@@ -21,6 +21,10 @@ const LEVELS_PER_TIER := 3
 @export var tier3_upgrade_indicator2: Texture2D
 @export var tier3_upgrade_indicator3: Texture2D
 
+# 🔹 These will error loudly if the path is wrong (which is what we want while wiring it up)
+@onready var hp_label: Label = $"../RepairCostPanel/Label/HpCountLabel"
+@onready var gold_repair_label: Label = $"../RepairCostPanel/Label/GoldRepairCountLabel"
+
 
 func _ready():
 	$GoldBalance.text = str($"../../../../PlayerBoat".gold)
@@ -50,11 +54,25 @@ func _physics_process(_delta):
 	if missing_hp <= 0:
 		$RepairClickZone.tooltip_text = "Ship fully repaired"
 	else:
-		# 1 gold per 1 HP, but you can only repair what you're missing and what you can afford
+		# 1 gold per 1 HP, but tooltip shows how much you can actually repair right now
 		var hp_affordable: int = min(player.gold, missing_hp)
 		$RepairClickZone.tooltip_text = "Repair Ship for %d" % hp_affordable
 
 	$GoldBalance.text = str(player.gold)
+
+	# -----------------------------
+	# REPAIR COST PANEL LABELS
+	# -----------------------------
+	# HP: always show current / max
+	hp_label.text = "%d/%d" % [player.hp, player.max_hp]
+
+	# Gold repair:
+	# - N/A at full HP
+	# - otherwise full cost to fully repair (missing_hp)
+	if missing_hp <= 0:
+		gold_repair_label.text = "NA"
+	else:
+		gold_repair_label.text = str(missing_hp)
 
 	# -----------------------------
 	# PRICE LABELS
@@ -108,12 +126,7 @@ func _physics_process(_delta):
 		guns_indicator.texture = _get_indicator_texture(tier, guns_level_in_tier)
 
 
-# Take a GLOBAL level (0..9, etc.) and current tier, and convert to 0..3
 func _compute_level_in_tier(global_level: int, tier: int) -> int:
-	# Example:
-	# tier 1 → levels 0–3
-	# tier 2 → levels 3–6
-	# tier 3 → levels 6–9
 	var min_level_for_tier = (tier - 1) * LEVELS_PER_TIER
 	var relative = global_level - min_level_for_tier
 	return clamp(relative, 0, LEVELS_PER_TIER)
