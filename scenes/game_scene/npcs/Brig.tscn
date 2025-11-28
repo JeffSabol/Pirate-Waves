@@ -70,7 +70,7 @@ shape = SubResource("CapsuleShape2D_4x6u1")
 
 [node name="ShipHealth" type="Node2D" parent="."]
 script = ExtResource("5_5w3rg")
-max_hp = 100
+max_hp = 225
 
 [node name="Guns" type="Node2D" parent="."]
 
