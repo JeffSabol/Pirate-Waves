@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://det64ltelxgj8"]
+[gd_scene load_steps=39 format=3 uid="uid://det64ltelxgj8"]
 
 [ext_resource type="Script" uid="uid://ddmkmfgjx5crr" path="res://scenes/town/town.gd" id="1_587hs"]
 [ext_resource type="Texture2D" uid="uid://wdneset53t7e" path="res://assets/ui/town/TownFull.png" id="2_ki453"]
@@ -31,6 +31,7 @@
 [ext_resource type="Texture2D" uid="uid://0gt33ynkg4xa" path="res://assets/ui/town/characters/spectators3.png" id="30_t15ev"]
 [ext_resource type="Texture2D" uid="uid://d3qlcq30erofe" path="res://assets/ui/town/characters/spectators4.png" id="31_5jhdi"]
 [ext_resource type="AudioStream" uid="uid://bqonfsg3hyvef" path="res://assets/sfx/unlock2.mp3" id="31_086wm"]
+[ext_resource type="Script" uid="uid://dx4uosn1nr4n7" path="res://scenes/game_scene/world/fade_rect.gd" id="32_086wm"]
 
 [sub_resource type="AnimatedTexture" id="AnimatedTexture_8dq74"]
 frames = 12
@@ -460,6 +461,12 @@ script = ExtResource("30_8otme")
 
 [node name="CheatCode" type="AudioStreamPlayer" parent="CanvasLayer/CheatCode"]
 stream = ExtResource("31_086wm")
+
+[node name="FadeRect" type="ColorRect" parent="CanvasLayer"]
+offset_right = 1280.0
+offset_bottom = 720.0
+color = Color(0, 0, 0, 1)
+script = ExtResource("32_086wm")
 
 [connection signal="gui_input" from="CanvasLayer/TavernClickZone" to="CanvasLayer/TavernClickZone" method="_on_gui_input"]
 [connection signal="mouse_entered" from="CanvasLayer/TavernClickZone" to="CanvasLayer/TavernClickZone" method="_on_mouse_entered"]
