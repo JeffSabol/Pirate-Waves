@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://det64ltelxgj8"]
+[gd_scene load_steps=38 format=3 uid="uid://det64ltelxgj8"]
 
 [ext_resource type="Script" uid="uid://ddmkmfgjx5crr" path="res://scenes/town/town.gd" id="1_587hs"]
 [ext_resource type="Texture2D" uid="uid://wdneset53t7e" path="res://assets/ui/town/TownFull.png" id="2_ki453"]
@@ -27,8 +27,10 @@
 [ext_resource type="Texture2D" uid="uid://5m2vqkgbat3l" path="res://assets/ui/town/characters/sleepy4.png" id="27_ipcul"]
 [ext_resource type="Texture2D" uid="uid://srgdu4k1hrg3" path="res://assets/ui/town/characters/spectators1.png" id="28_6k88b"]
 [ext_resource type="Texture2D" uid="uid://dti2m150meqr4" path="res://assets/ui/town/characters/spectators2.png" id="29_tswh5"]
+[ext_resource type="Script" uid="uid://1larypg8xegd" path="res://scenes/town/cheat_code.gd" id="30_8otme"]
 [ext_resource type="Texture2D" uid="uid://0gt33ynkg4xa" path="res://assets/ui/town/characters/spectators3.png" id="30_t15ev"]
 [ext_resource type="Texture2D" uid="uid://d3qlcq30erofe" path="res://assets/ui/town/characters/spectators4.png" id="31_5jhdi"]
+[ext_resource type="AudioStream" uid="uid://bqonfsg3hyvef" path="res://assets/sfx/unlock2.mp3" id="31_086wm"]
 
 [sub_resource type="AnimatedTexture" id="AnimatedTexture_8dq74"]
 frames = 12
@@ -447,6 +449,17 @@ offset_bottom = 258.0
 mouse_filter = 2
 texture = ExtResource("10_v3pdc")
 
+[node name="CheatCode" type="ColorRect" parent="CanvasLayer"]
+offset_left = 630.0
+offset_top = 176.0
+offset_right = 670.0
+offset_bottom = 260.0
+color = Color(1, 1, 1, 0)
+script = ExtResource("30_8otme")
+
+[node name="CheatCode" type="AudioStreamPlayer" parent="CanvasLayer/CheatCode"]
+stream = ExtResource("31_086wm")
+
 [connection signal="gui_input" from="CanvasLayer/TavernClickZone" to="CanvasLayer/TavernClickZone" method="_on_gui_input"]
 [connection signal="mouse_entered" from="CanvasLayer/TavernClickZone" to="CanvasLayer/TavernClickZone" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="CanvasLayer/TavernClickZone" to="CanvasLayer/TavernClickZone" method="_on_mouse_exited"]
@@ -459,3 +472,4 @@ texture = ExtResource("10_v3pdc")
 [connection signal="gui_input" from="CanvasLayer/LeaveClickZone" to="CanvasLayer/LeaveClickZone" method="_on_gui_input"]
 [connection signal="mouse_entered" from="CanvasLayer/LeaveClickZone" to="CanvasLayer/LeaveClickZone" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="CanvasLayer/LeaveClickZone" to="CanvasLayer/LeaveClickZone" method="_on_mouse_exited"]
+[connection signal="gui_input" from="CanvasLayer/CheatCode" to="CanvasLayer/CheatCode" method="_on_gui_input"]

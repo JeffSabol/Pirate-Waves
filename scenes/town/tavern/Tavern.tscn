@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://5yu5bl4mslip"]
+[gd_scene load_steps=22 format=3 uid="uid://5yu5bl4mslip"]
 
 [ext_resource type="AudioStream" uid="uid://dan5fpiujt8ri" path="res://assets/music/tavern.mp3" id="1_45ogq"]
 [ext_resource type="Texture2D" uid="uid://dujvify3ehmvn" path="res://assets/ui/town/tavern/TavernBackgroundEmpty.png" id="2_k5kxa"]
@@ -19,6 +19,8 @@
 [ext_resource type="Texture2D" uid="uid://laqnhlky4lef" path="res://assets/ui/town/tavern/GrogGlow.png" id="17_rgxow"]
 [ext_resource type="Script" uid="uid://i1hssoq3f5sh" path="res://scenes/town/tavern/siren.gd" id="18_uimwe"]
 [ext_resource type="Script" uid="uid://cu7q34hu3c1av" path="res://scenes/town/tavern/grog.gd" id="19_3e64l"]
+[ext_resource type="Script" uid="uid://b2a3lg0rmkr3j" path="res://scenes/town/tavern/cheat_code.gd" id="20_gl8e7"]
+[ext_resource type="AudioStream" uid="uid://bckkejunhhblp" path="res://assets/sfx/unlock1.mp3" id="21_uimwe"]
 
 [node name="Tavern" type="Control"]
 layout_mode = 3
@@ -179,6 +181,17 @@ tooltip_text = "Buy Grog Of Gunpowdar"
 color = Color(1, 1, 1, 0)
 script = ExtResource("19_3e64l")
 
+[node name="CheatCode" type="ColorRect" parent="CanvasLayer"]
+offset_left = 640.0
+offset_top = 207.0
+offset_right = 745.0
+offset_bottom = 246.0
+color = Color(1, 1, 1, 0)
+script = ExtResource("20_gl8e7")
+
+[node name="CheatCode" type="AudioStreamPlayer" parent="CanvasLayer/CheatCode"]
+stream = ExtResource("21_uimwe")
+
 [connection signal="gui_input" from="CanvasLayer/BackgroundArt/LeaveArea" to="CanvasLayer/BackgroundArt/LeaveArea" method="_on_gui_input"]
 [connection signal="mouse_entered" from="CanvasLayer/BackgroundArt/LeaveArea" to="CanvasLayer/BackgroundArt/LeaveArea" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="CanvasLayer/BackgroundArt/LeaveArea" to="CanvasLayer/BackgroundArt/LeaveArea" method="_on_mouse_exited"]
@@ -191,3 +204,4 @@ script = ExtResource("19_3e64l")
 [connection signal="gui_input" from="CanvasLayer/Grog" to="CanvasLayer/DrinkMenu" method="_on_grog_gui_input"]
 [connection signal="mouse_entered" from="CanvasLayer/Grog" to="CanvasLayer/Grog" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="CanvasLayer/Grog" to="CanvasLayer/Grog" method="_on_mouse_exited"]
+[connection signal="gui_input" from="CanvasLayer/CheatCode" to="CanvasLayer/CheatCode" method="_on_gui_input"]
