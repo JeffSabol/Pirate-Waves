@@ -21,7 +21,6 @@ var last_top_row_index: int = 0  # remembers last selection in the top row when 
 
 
 func _ready() -> void:
-	ProjectMusicController.play_stream_player($BackgroundMusicPlayer)
 	glows = [tavern_glow, trade_glow, shipyard_glow, leave_glow]
 	update_selection()
 

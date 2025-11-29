@@ -80,7 +80,8 @@ func _fade_out_and_free() -> void:
 	var tween = fade_out(fade_out_duration)
 	if tween != null:
 		await(tween.finished)
-	stream_player.queue_free()
+	if stream_player:
+		stream_player.queue_free()
 
 func _play_and_fade_in() -> void:
 	play()
