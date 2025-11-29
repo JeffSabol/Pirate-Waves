@@ -19,3 +19,4 @@ func _on_gui_input(event):
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 		print("load tavern!")
 		$"../../../../GameUI".show_tavern_ui()
+		ProjectMusicController.play_stream(load("res://assets/music/tavern.mp3"))

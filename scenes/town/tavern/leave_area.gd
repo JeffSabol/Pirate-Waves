@@ -15,3 +15,4 @@ func _on_mouse_exited():
 func _on_gui_input(event):
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 		$"../../..".queue_free()
+		ProjectMusicController.play_stream(load("res://assets/sfx/LOOP_BackgroundIsland1SFX.wav"))

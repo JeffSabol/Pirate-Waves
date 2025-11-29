@@ -1,6 +1,5 @@
-[gd_scene load_steps=22 format=3 uid="uid://5yu5bl4mslip"]
+[gd_scene load_steps=21 format=3 uid="uid://5yu5bl4mslip"]
 
-[ext_resource type="AudioStream" uid="uid://dan5fpiujt8ri" path="res://assets/music/tavern.mp3" id="1_45ogq"]
 [ext_resource type="Texture2D" uid="uid://dujvify3ehmvn" path="res://assets/ui/town/tavern/TavernBackgroundEmpty.png" id="2_k5kxa"]
 [ext_resource type="Script" uid="uid://c1v6k0n7neerv" path="res://scenes/town/tavern/leave_area.gd" id="3_0apjh"]
 [ext_resource type="AudioStream" uid="uid://0gb007yt3ffo" path="res://assets/sfx/door_creak.mp3" id="4_45ogq"]
@@ -25,10 +24,6 @@
 [node name="Tavern" type="Control"]
 layout_mode = 3
 anchors_preset = 0
-
-[node name="TavernAmbience" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("1_45ogq")
-autoplay = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
