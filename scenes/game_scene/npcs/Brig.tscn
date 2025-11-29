@@ -52,7 +52,7 @@ radius = 23.0
 height = 112.0
 
 [node name="BrigShip" type="CharacterBody2D"]
-collision_mask = 5
+collision_mask = 13
 script = ExtResource("1_1i5n5")
 turn_speed = 10.0
 guns = 10

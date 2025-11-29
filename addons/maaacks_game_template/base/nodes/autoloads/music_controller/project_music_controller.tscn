@@ -6,4 +6,4 @@
 process_mode = 3
 script = ExtResource("1_wbudo")
 fade_out_duration = 3.0
-fade_in_duration = 3.0
+fade_in_duration = 1.0
