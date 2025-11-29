@@ -630,11 +630,18 @@ func upgrade_guns() -> void:
 	_spend_gold(guns_upgrade_cost)
 	$SawSFX.play()
 
-	guns += 2
+	guns += 1
 	update_guns_visibility()
 
 	guns_upgrade_level += 1
+	
+	print("guns_upgrade_level: " + str(guns_upgrade_level))
+	print("_current_tier_cap(): " + str(_current_tier_cap()))
+	
 	if guns_upgrade_level < _current_tier_cap():
 		guns_upgrade_cost += guns_upgrade_step
+	if guns_upgrade_level == 9:
+		guns += 1
+		guns_upgrade_level += 1
 
 	_check_tier_progress()

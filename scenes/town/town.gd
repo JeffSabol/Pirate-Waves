@@ -96,3 +96,5 @@ func handle_accept_input() -> void:
 		3:
 			# Leave selected
 			$"../../GameUI".show_world_ui()
+			$"../../PlayerBoat".controls_enabled = true
+			$".".queue_free()
