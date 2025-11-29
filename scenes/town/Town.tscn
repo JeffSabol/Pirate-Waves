@@ -30,16 +30,6 @@
 [ext_resource type="Texture2D" uid="uid://0gt33ynkg4xa" path="res://assets/ui/town/characters/spectators3.png" id="30_t15ev"]
 [ext_resource type="Texture2D" uid="uid://d3qlcq30erofe" path="res://assets/ui/town/characters/spectators4.png" id="31_5jhdi"]
 
-[sub_resource type="AnimatedTexture" id="AnimatedTexture_4cewy"]
-frames = 4
-frame_0/texture = ExtResource("24_086wm")
-frame_1/texture = ExtResource("25_lteju")
-frame_1/duration = 1.0
-frame_2/texture = ExtResource("26_hyja2")
-frame_2/duration = 1.0
-frame_3/texture = ExtResource("27_ipcul")
-frame_3/duration = 1.0
-
 [sub_resource type="AnimatedTexture" id="AnimatedTexture_8dq74"]
 frames = 12
 speed_scale = 2.0
@@ -162,6 +152,16 @@ frame_2/duration = 1.0
 frame_3/texture = ExtResource("31_5jhdi")
 frame_3/duration = 1.0
 
+[sub_resource type="AnimatedTexture" id="AnimatedTexture_4cewy"]
+frames = 4
+frame_0/texture = ExtResource("24_086wm")
+frame_1/texture = ExtResource("25_lteju")
+frame_1/duration = 1.0
+frame_2/texture = ExtResource("26_hyja2")
+frame_2/duration = 1.0
+frame_3/texture = ExtResource("27_ipcul")
+frame_3/duration = 1.0
+
 [node name="Town" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -181,14 +181,6 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("2_ki453")
 metadata/_edit_use_anchors_ = true
-
-[node name="Sleepy" type="TextureRect" parent="CanvasLayer"]
-offset_left = 6.0
-offset_top = 300.0
-offset_right = 1286.0
-offset_bottom = 1020.0
-scale = Vector2(3, 3)
-texture = SubResource("AnimatedTexture_4cewy")
 
 [node name="Waves" type="Control" parent="CanvasLayer"]
 layout_mode = 3
@@ -429,6 +421,14 @@ offset_right = 2296.0
 offset_bottom = 893.0
 scale = Vector2(3, 3)
 texture = SubResource("AnimatedTexture_15fyj")
+
+[node name="Sleepy" type="TextureRect" parent="CanvasLayer"]
+offset_left = -21.0
+offset_top = 305.0
+offset_right = 1259.0
+offset_bottom = 1025.0
+scale = Vector2(3.48, 3.48)
+texture = SubResource("AnimatedTexture_4cewy")
 
 [node name="LeaveClickZone" type="ColorRect" parent="CanvasLayer"]
 offset_top = 462.0
