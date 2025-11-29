@@ -215,4 +215,4 @@ func _on_repair_click_zone_gui_input(event):
 		player.gold -= amount_affordable
 
 		print("Repaired ", amount_affordable, " HP for ", amount_affordable, " gold.")
-		$"../../../../PlayerBoat/SawSFX".play()
+		$RepairClickZone/AudioStreamPlayer.play()

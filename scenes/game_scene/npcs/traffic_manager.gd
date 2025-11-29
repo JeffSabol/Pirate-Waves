@@ -92,6 +92,8 @@ func request_start_wave_from_town() -> void:
 # WAVE LOGIC
 # ------------------------
 func _start_wave(wave: int) -> void:
+	ProjectMusicController.play_stream(load("res://assets/sfx/LOOP_WavesPiratesLife.wav"))
+	
 	if BASE_WAVE_PATTERN.is_empty():
 		print("[WaveManager] BASE_WAVE_PATTERN is empty; cannot start wave.")
 		return

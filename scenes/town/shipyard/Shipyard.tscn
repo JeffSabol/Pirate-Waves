@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://c6qexg224wfyy"]
+[gd_scene load_steps=29 format=3 uid="uid://c6qexg224wfyy"]
 
 [ext_resource type="Texture2D" uid="uid://4pi37xpixlf8" path="res://assets/ui/town/shipyard/ShipYard.png" id="1_44gni"]
 [ext_resource type="Texture2D" uid="uid://bqal11e3q3jc" path="res://assets/ui/town/shipyard/BaseUpgradeUI.png" id="2_ixawh"]
@@ -26,6 +26,7 @@
 [ext_resource type="Texture2D" uid="uid://crna7x16pshei" path="res://assets/upgrade_indicators/tier3_upgrade_indicator2.png" id="19_6dlyi"]
 [ext_resource type="Texture2D" uid="uid://dy5psbgvnyky2" path="res://assets/upgrade_indicators/tier3_upgrade_indicator3.png" id="20_e1cn0"]
 [ext_resource type="Texture2D" uid="uid://i8mt6lgadhcx" path="res://assets/ui/town/shipyard/Ship_Repair.png" id="26_q6cwu"]
+[ext_resource type="AudioStream" uid="uid://bc28bsa3hgbhf" path="res://assets/sfx/PiratesLifeHammerMultiple3SFX.wav" id="26_wqr8x"]
 
 [sub_resource type="AnimatedTexture" id="AnimatedTexture_bf8my"]
 frames = 9
@@ -321,6 +322,9 @@ offset_top = 110.399994
 offset_right = 104.2
 offset_bottom = 119.399994
 color = Color(1, 1, 1, 0)
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="CanvasLayer/MenuBackground/RepairClickZone"]
+stream = ExtResource("26_wqr8x")
 
 [node name="ExitClickZone" type="ColorRect" parent="CanvasLayer/MenuBackground"]
 layout_mode = 0

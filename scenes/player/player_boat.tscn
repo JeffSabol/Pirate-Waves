@@ -462,7 +462,8 @@ tier2_shape = ExtResource("3_huuu2")
 [node name="Waves" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -8)
 sprite_frames = SubResource("SpriteFrames_x882j")
-animation = &"moving1"
+animation = &"idle2"
+autoplay = "moving1"
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 rotation = 3.1415927
