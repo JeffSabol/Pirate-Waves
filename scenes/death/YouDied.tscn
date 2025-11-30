@@ -1,21 +1,45 @@
-[gd_scene load_steps=6 format=3 uid="uid://bvxk3y20nij0a"]
+[gd_scene load_steps=14 format=3 uid="uid://bvxk3y20nij0a"]
 
 [ext_resource type="Script" uid="uid://ddqgl7yuj8cx6" path="res://scenes/death/you_died.gd" id="1_3yway"]
-[ext_resource type="Texture2D" uid="uid://bk7vbtbes03vb" path="res://assets/backgrounds/YouDied.png" id="1_rlbk7"]
 [ext_resource type="AudioStream" uid="uid://csqo0btnuclgr" path="res://assets/sfx/haunted_ghost_ship.mp3" id="2_o032v"]
+[ext_resource type="Texture2D" uid="uid://xuqmyhvkrlb0" path="res://assets/ui/death/death_scene1.png" id="2_qgke2"]
 [ext_resource type="AudioStream" uid="uid://g8w5ttkhls4a" path="res://assets/sfx/rain.mp3" id="3_3yway"]
+[ext_resource type="Texture2D" uid="uid://bl1nr31b7f6my" path="res://assets/ui/death/death_scene2.png" id="3_aomdp"]
+[ext_resource type="Texture2D" uid="uid://d2v6e025ntpd4" path="res://assets/ui/death/death_scene3.png" id="4_5kpd1"]
 [ext_resource type="AudioStream" uid="uid://bkpcrjpymqpsn" path="res://assets/sfx/sea_wave.mp3" id="4_ii6q4"]
+[ext_resource type="Texture2D" uid="uid://d33mf4pu7sx1f" path="res://assets/ui/death/death_scene4.png" id="5_4k3is"]
+[ext_resource type="Texture2D" uid="uid://bdodf4bchbcjm" path="res://assets/ui/death/death_scene5.png" id="6_icsh7"]
+[ext_resource type="Texture2D" uid="uid://dmakuq3s2ue8" path="res://assets/ui/death/death_scene6.png" id="7_osy7r"]
+[ext_resource type="Texture2D" uid="uid://csxmdo428morw" path="res://assets/ui/death/death_scene7.png" id="8_x0ky1"]
+[ext_resource type="Script" uid="uid://dx4uosn1nr4n7" path="res://scenes/game_scene/world/fade_rect.gd" id="12_aomdp"]
+
+[sub_resource type="AnimatedTexture" id="AnimatedTexture_o032v"]
+frames = 7
+frame_0/texture = ExtResource("2_qgke2")
+frame_0/duration = 0.2
+frame_1/texture = ExtResource("3_aomdp")
+frame_1/duration = 0.2
+frame_2/texture = ExtResource("4_5kpd1")
+frame_2/duration = 0.2
+frame_3/texture = ExtResource("5_4k3is")
+frame_3/duration = 0.2
+frame_4/texture = ExtResource("6_icsh7")
+frame_4/duration = 0.2
+frame_5/texture = ExtResource("7_osy7r")
+frame_5/duration = 0.2
+frame_6/texture = ExtResource("8_x0ky1")
+frame_6/duration = 0.2
 
 [node name="YouDied" type="Control"]
 layout_mode = 3
 anchors_preset = 0
 script = ExtResource("1_3yway")
 
-[node name="TextureRect" type="TextureRect" parent="."]
+[node name="DefeatedShip" type="TextureRect" parent="."]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-texture = ExtResource("1_rlbk7")
+offset_right = 1280.0
+offset_bottom = 720.0
+texture = SubResource("AnimatedTexture_o032v")
 
 [node name="Ship" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("2_o032v")
@@ -30,4 +54,20 @@ stream = ExtResource("4_ii6q4")
 volume_db = -5.0
 autoplay = true
 
-[connection signal="gui_input" from="TextureRect" to="." method="_unhandled_input"]
+[node name="GameOverLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 290.0
+offset_top = 66.0
+offset_right = 452.0
+offset_bottom = 88.0
+scale = Vector2(5, 5)
+text = "GAME OVER"
+
+[node name="FadeRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 1280.0
+offset_bottom = 720.0
+color = Color(0, 0, 0, 1)
+script = ExtResource("12_aomdp")
+
+[connection signal="gui_input" from="DefeatedShip" to="." method="_unhandled_input"]
