@@ -1,30 +1,28 @@
-[gd_scene load_steps=13 format=3 uid="uid://brn683y014x1h"]
+[gd_scene load_steps=11 format=3 uid="uid://brn683y014x1h"]
 
-[ext_resource type="Script" uid="uid://b87mh0juoenhq" path="res://scenes/game_scene/npcs/boss_ai.gd" id="1_e4omx"]
-[ext_resource type="Texture2D" uid="uid://civqmykm6ed18" path="res://assets/boat/pirate1.png" id="2_3bovk"]
-[ext_resource type="Texture2D" uid="uid://dygk1ru6yp6op" path="res://assets/boat/pirate1_defeated.png" id="3_i845y"]
-[ext_resource type="Texture2D" uid="uid://bbku3bqu5atpq" path="res://assets/boat/pirate1_hurt.png" id="4_n3slf"]
+[ext_resource type="Script" uid="uid://tjy3np0h2fe1" path="res://scenes/game_scene/npcs/ship_ai.gd" id="1_e4omx"]
+[ext_resource type="Texture2D" uid="uid://bxgo72ovkkv34" path="res://assets/boat/ghost_ship.png" id="3_6h6xg"]
 [ext_resource type="Script" uid="uid://dx48q0tsf6rf8" path="res://scenes/game_scene/npcs/health.gd" id="5_grtbd"]
 [ext_resource type="PackedScene" uid="uid://b6nvp82ty2110" path="res://scenes/player/gun.tscn" id="6_jthv1"]
 [ext_resource type="AudioStream" uid="uid://ljnrvt0jhnln" path="res://assets/sfx/debris_break.wav" id="7_sup36"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_sbd3i"]
-atlas = ExtResource("2_3bovk")
-region = Rect2(0, 0, 40, 72)
+[sub_resource type="AtlasTexture" id="AtlasTexture_2jnsk"]
+atlas = ExtResource("3_6h6xg")
+region = Rect2(0, 0, 40, 64)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_mdtiy"]
-atlas = ExtResource("3_i845y")
-region = Rect2(0, 0, 40, 72)
+[sub_resource type="AtlasTexture" id="AtlasTexture_e4omx"]
+atlas = ExtResource("3_6h6xg")
+region = Rect2(0, 0, 40, 64)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_cw41g"]
-atlas = ExtResource("4_n3slf")
-region = Rect2(0, 0, 40, 72)
+[sub_resource type="AtlasTexture" id="AtlasTexture_3bovk"]
+atlas = ExtResource("3_6h6xg")
+region = Rect2(0, 0, 40, 64)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_mxv8p"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_sbd3i")
+"texture": SubResource("AtlasTexture_2jnsk")
 }],
 "loop": true,
 "name": &"default",
@@ -32,7 +30,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_mdtiy")
+"texture": SubResource("AtlasTexture_e4omx")
 }],
 "loop": true,
 "name": &"defeated",
@@ -40,7 +38,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_cw41g")
+"texture": SubResource("AtlasTexture_3bovk")
 }],
 "loop": true,
 "name": &"hurt",
@@ -54,30 +52,30 @@ height = 68.0
 [node name="GhostShip" type="CharacterBody2D"]
 collision_mask = 5
 script = ExtResource("1_e4omx")
-guns = 12
-chase_speed = 95.0
-aggro_preferred_range = 275.0
-ghost_ship_scene = null
+aggro_preferred_range = 100.0
 
 [node name="Guns" type="Node2D" parent="."]
 
 [node name="Gun1" parent="Guns" instance=ExtResource("6_jthv1")]
 position = Vector2(0, 5)
+shooter_group = "enemy"
 
 [node name="Gun2" parent="Guns" instance=ExtResource("6_jthv1")]
 position = Vector2(0, 5)
 scale = Vector2(-1, 1)
+shooter_group = "enemy"
 
 [node name="Gun3" parent="Guns" instance=ExtResource("6_jthv1")]
 position = Vector2(0, -5)
+shooter_group = "enemy"
 
 [node name="Gun4" parent="Guns" instance=ExtResource("6_jthv1")]
 position = Vector2(0, -5)
 scale = Vector2(-1, 1)
+shooter_group = "enemy"
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_mxv8p")
-animation = &"defeated"
 
 [node name="ShipHealth" type="Node2D" parent="."]
 script = ExtResource("5_grtbd")

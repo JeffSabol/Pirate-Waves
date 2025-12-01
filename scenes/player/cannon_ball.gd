@@ -65,25 +65,48 @@ func _compute_effective_damage() -> int:
 # Collision / apply damage
 # --------------------------------------------------------------------
 func _try_damage(target: Node) -> void:
-	if _hit: return  # already hit something
+	if _hit:
+		return  # already hit something
 
 	var n: Node = target
 	while n:
+		# -------- ENEMY SHIPS / BOSS (treat as "enemies") --------
 		var h := n.get_node_or_null("ShipHealth")
 		if h and h.has_method("apply_damage") and h.get_parent().has_method("on_hit"):
+			# FRIENDLY FIRE CHECK:
+			# Only player-fired cannonballs are allowed to damage ships.
+			if shooter_group != "player":
+				return
+
 			_hit_once()
 
-			# Player-fired balls should do boosted damage to enemies.
 			var eff_damage := _compute_effective_damage()
 
+			# Notify the AI it was hit by the player
 			h.get_parent().on_hit(h.get_parent().get_parent().get_node("PlayerBoat"))
 			_explode_then_free()
 			h.apply_damage(eff_damage, self)
 			return
 
+		var h2 := n.get_node_or_null("BossHealth")
+		if h2 and h2.has_method("apply_damage") and h2.get_parent().has_method("on_hit"):
+			# FRIENDLY FIRE CHECK:
+			if shooter_group != "player":
+				return
+
+			_hit_once()
+
+			var eff_damage := _compute_effective_damage()
+
+			h2.get_parent().on_hit(h2.get_parent().get_parent().get_node("PlayerBoat"))
+			_explode_then_free()
+			h2.apply_damage(eff_damage, self)
+			return
+
+		# -------- PLAYER DAMAGE --------
 		if n.name == "PlayerBoat":
 			_hit_once()
-			# Enemy balls should NOT get boosted; player balls usually won't hit player anyway.
+			# Enemy balls should hit the player regardless of shooter_group.
 			var cur: float = float(n.get("hp"))
 			n.set("hp", max(0.0, cur - float(damage)))
 			if float(n.get("hp")) == 0.0:
@@ -95,6 +118,7 @@ func _try_damage(target: Node) -> void:
 			return
 
 		n = n.get_parent()
+
 
 func _hit_once() -> void:
 	_hit = true

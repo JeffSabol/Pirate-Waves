@@ -1,7 +1,12 @@
 extends CharacterBody2D
-class_name BossAI  # <--- IMPORTANT: new class name
+class_name BossAI
 
 signal despawned
+
+# NOTE:
+# This AI does NOT follow Path2D/Curve2D.
+# set_path() is ONLY used to place the ship at spawn time based on a route.
+# After spawning, movement is purely chase + orbit around the player.
 
 # ---- Tuning ----
 @export var max_distance_from_player: float = 50000.0
@@ -16,7 +21,7 @@ signal despawned
 @export var right_fire_cooldown: float = 3.0
 var can_fire_left: bool = true
 var can_fire_right: bool = true
-@export var guns: int = 2
+@export var guns: int = 12   # BOSS: 12 guns by default
 
 # ---- Aggro / Chase ----
 @export var chase_speed: float = 70.0
@@ -24,9 +29,8 @@ var can_fire_right: bool = true
 @export var aggro_range_tolerance: float = 80.0
 @export var orbit_clockwise: bool = true
 
-# auto-aggro-on-spawn tuning
-@export var always_aggro_on_spawn: bool = true
-@export var spawn_aggro_distance: float = 800.0
+# Boss: always aggro the player as soon as possible, no distance checks.
+@export var always_aggro_player: bool = true
 
 # Death / FX
 @export var death_fade_time: float = 1.0  # seconds
@@ -34,40 +38,56 @@ var can_fire_right: bool = true
 # Debug
 @export var debug_ai: bool = false
 
-# ---- GHOST MINION SPECIAL (BOSS ONLY) ----
-@export var enable_ghost_special: bool = true        # turn ON only on the boss
-@export var ghost_ship_scene: PackedScene            # assign GhostMinion.tscn
-@export var ghost_phase_threshold: float = 0.75      # activate phase when HP <= 75%
-@export var ghost_spawn_interval: float = 6.0        # spawn wave every N seconds
-@export var ghost_spawn_count: int = 3               # how many ghosts per wave
-@export var ghost_spawn_radius: float = 260.0        # distance from boss
-@export var ghost_spawn_spread_randomness: float = 0.35 # angular randomness (0–1)
-
-var _ghost_phase_active: bool = false
-var _ghost_spawn_timer: float = 0.0
-
-@onready var _ship_health: ShipHealth = get_node_or_null("ShipHealth") as ShipHealth
-
 var _aggro_target: Node2D = null
 var _was_aggro: bool = false
 var _is_dying: bool = false
 var _has_been_hurt: bool = false
 
+# Ghosts
+@export var ghost_ship_scene: PackedScene
+@export var ghost_health_threshold: float = 0.75
+@export var ghost_ships_to_spawn: int = 2
+
+var _ghosts_spawned: bool = false
 
 # ---- Helpers ----
 func _get_player() -> Node2D:
 	var tree := get_tree()
 	if tree == null:
 		return null
-	return tree.get_first_node_in_group("PlayerBoat") as Node2D
+
+	# Prefer group "player"
+	var p := tree.get_first_node_in_group("player")
+	if p:
+		return p as Node2D
+
+	# Fallback: group "PlayerBoat"
+	p = tree.get_first_node_in_group("PlayerBoat")
+	if p:
+		return p as Node2D
+
+	# Fallback: by name
+	var scene := tree.current_scene
+	if scene:
+		var by_name := scene.get_node_or_null("PlayerBoat")
+		if by_name:
+			return by_name as Node2D
+		var found := scene.find_child("PlayerBoat", true, false)
+		if found:
+			return found as Node2D
+
+	return null
+
 
 func is_aggro() -> bool:
 	return is_instance_valid(_aggro_target)
+
 
 func set_aggro(target: Node2D) -> void:
 	_aggro_target = target
 	if debug_ai and target:
 		print("[BossAI]", name, "set_aggro on", target.name, " (permanent)")
+
 
 func _play_hurt_state() -> void:
 	if _has_been_hurt:
@@ -82,6 +102,7 @@ func _play_hurt_state() -> void:
 			if debug_ai:
 				print("[BossAI]", name, "entered HURT state")
 
+
 func on_hit(attacker: Node) -> void:
 	var p := attacker as Node2D
 	if p:
@@ -90,18 +111,24 @@ func on_hit(attacker: Node) -> void:
 		set_aggro(p)
 	_play_hurt_state()
 
+
 func _ready() -> void:
 	if debug_ai:
 		print("[BossAI]", name, "READY at", global_position)
-		print("[BossAI]", name, "ghost special:", enable_ghost_special, "ghost_ship_scene:", ghost_ship_scene)
-		if _ship_health:
-			print("[BossAI]", name, "ShipHealth found. max_hp =", _ship_health.max_hp)
-		else:
-			print("[BossAI]", name, "NO ShipHealth child found (ghost phase will not work)")
+
 	update_guns_visibility()
+
+	# BOSS BEHAVIOR: as soon as we exist, try to aggro the player.
+	if always_aggro_player:
+		var player := _get_player()
+		if player:
+			if debug_ai:
+				print("[BossAI]", name, "auto-aggro on READY to", player.name)
+			set_aggro(player)
 
 
 # ---- Public API ----
+# Only used to choose a spawn point along the route
 func set_path(curve: Curve2D, loop: bool, speed: float, start_t: float) -> void:
 	if curve:
 		var length: float = max(float(curve.get_baked_length()), 0.001)
@@ -114,16 +141,13 @@ func set_path(curve: Curve2D, loop: bool, speed: float, start_t: float) -> void:
 				"length =", length,
 				"pos =", global_position)
 
-	if always_aggro_on_spawn:
+	# BOSS: regardless of spawn distance, always aggro the player
+	if always_aggro_player:
 		var player := _get_player()
 		if player:
-			var dist_to_player: float = global_position.distance_to(player.global_position)
 			if debug_ai:
-				print("[BossAI]", name, "spawned dist to player:", dist_to_player)
-			if dist_to_player > spawn_aggro_distance:
-				if debug_ai:
-					print("[BossAI]", name, "auto-aggro on spawn (permanent)")
-				set_aggro(player)
+				print("[BossAI]", name, "auto-aggro on SPAWN to", player.name)
+			set_aggro(player)
 
 
 # Call this when HP <= 0 instead of queue_free()
@@ -165,6 +189,7 @@ func begin_death() -> void:
 
 	_start_death_fade()
 
+
 func _start_death_fade() -> void:
 	if debug_ai:
 		print("[BossAI]", name, "_start_death_fade entered")
@@ -195,10 +220,17 @@ func _physics_process(delta: float) -> void:
 		move_and_slide()
 		return
 
-	# ---- GHOST PHASE LOGIC ----
-	_update_ghost_phase(delta)
-
 	var now_aggro: bool = is_aggro()
+
+	# If we somehow lost the target, re-acquire the player and KEEP CHASING.
+	if not now_aggro and always_aggro_player:
+		var player := _get_player()
+		if player:
+			if debug_ai:
+				print("[BossAI]", name, "reacquired player, staying aggro")
+			set_aggro(player)
+			now_aggro = true
+
 	if debug_ai and now_aggro != _was_aggro:
 		print("[BossAI]", name, "mode changed to", ("AGGRO" if now_aggro else "IDLE"))
 	_was_aggro = now_aggro
@@ -212,42 +244,10 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 
 
-func _update_ghost_phase(delta: float) -> void:
-	if not enable_ghost_special:
-		return
-	if ghost_ship_scene == null:
-		if debug_ai:
-			print("[BossAI]", name, "ghost special enabled but ghost_ship_scene is NULL")
-		return
-	if _ship_health == null:
-		if debug_ai:
-			print("[BossAI]", name, "ghost special enabled but no ShipHealth to read HP from")
-		return
-	if _is_dying:
-		return
-
-	var hp_ratio := float(_ship_health.hp) / float(_ship_health.max_hp)
-
-	# Activate phase once HP goes below threshold
-	if not _ghost_phase_active and hp_ratio <= ghost_phase_threshold:
-		_ghost_phase_active = true
-		_ghost_spawn_timer = 0.0
-		if debug_ai:
-			print("[BossAI]", name, "GHOST PHASE ACTIVATED at hp ratio:", hp_ratio)
-
-	# If phase active, tick timer and spawn ghosts periodically
-	if _ghost_phase_active:
-		_ghost_spawn_timer += delta
-		if _ghost_spawn_timer >= ghost_spawn_interval:
-			_ghost_spawn_timer = 0.0
-			if debug_ai:
-				print("[BossAI]", name, "GHOST PHASE spawning wave (hp ratio:", hp_ratio, ")")
-			_spawn_ghost_wave()
-
-
 # ---- AGGRO BEHAVIOR (CHASE + ORBIT) ----
 func _compute_aggro_velocity(delta: float) -> Vector2:
 	if not is_instance_valid(_aggro_target):
+		# Boss should *always* try to re-lock on player.
 		var p := _get_player()
 		if p:
 			if debug_ai:
@@ -289,6 +289,7 @@ func _compute_aggro_velocity(delta: float) -> Vector2:
 
 	return move_dir * chase_speed
 
+
 # ---- FIRING ----
 func _fire_if_allowed() -> void:
 	if not is_aggro() or _is_dying:
@@ -303,6 +304,16 @@ func _fire_if_allowed() -> void:
 			set_aggro(left_collider)
 			fire_left_guns()
 
+	# LEFT
+	var left_collider2 = $LeftSight2.get_collider()
+	if $LeftSight2.is_colliding() and left_collider2 and is_instance_valid(left_collider2):
+		if left_collider2.name == "PlayerBoat":
+			if debug_ai:
+				print("[BossAI]", name, "LEFT broadside on player -> fire")
+			set_aggro(left_collider2)
+			fire_left_guns()
+
+
 	# RIGHT
 	var right_collider = $RightSight.get_collider()
 	if $RightSight.is_colliding() and right_collider and is_instance_valid(right_collider):
@@ -312,19 +323,30 @@ func _fire_if_allowed() -> void:
 			set_aggro(right_collider)
 			fire_right_guns()
 
+	# RIGHT
+	var right_collider2 = $RightSight2.get_collider()
+	if $RightSight2.is_colliding() and right_collider2 and is_instance_valid(right_collider2):
+		if right_collider2.name == "PlayerBoat":
+			if debug_ai:
+				print("[BossAI]", name, "RIGHT broadside on player -> fire")
+			set_aggro(right_collider2)
+			fire_right_guns()
+
 
 func _emit_and_free() -> void:
 	if debug_ai:
 		print("[BossAI]", name, "despawning at", global_position)
 	despawned.emit()
-	queue_free() 
+	queue_free()
 
 
 func set_speed(speed: float) -> void:
 	chase_speed = speed
 
+
 func set_face_direction(enabled: bool) -> void:
 	face_direction = enabled
+
 
 func update_guns_visibility() -> void:
 	var guns_node: Node = $Guns
@@ -345,7 +367,7 @@ func fire_left_guns() -> void:
 
 	var guns_node: Node = $Guns
 	for i in range(1, guns + 1):
-		if i % 2 == 1:
+		if i % 2 == 0:
 			var gun: Node = guns_node.get_node("Gun%d" % i)
 			if gun:
 				gun.call("fire")
@@ -356,7 +378,7 @@ func fire_left_guns() -> void:
 
 
 func fire_right_guns() -> void:
-	if not can_fire_right or _is_dying or not $VisibleOnScreenNotifier2D.is_on_screen():
+	if not can_fire_right or _is_dying:
 		return
 	can_fire_right = false
 
@@ -365,7 +387,7 @@ func fire_right_guns() -> void:
 
 	var guns_node: Node = $Guns
 	for i in range(1, guns + 1):
-		if i % 2 == 0:
+		if i % 2 == 1:
 			var gun: Node = guns_node.get_node("Gun%d" % i)
 			if gun:
 				gun.call("fire")
@@ -374,42 +396,40 @@ func fire_right_guns() -> void:
 	t.timeout.connect(func() -> void:
 		can_fire_right = true)
 
+func _check_spawn_ghosts() -> void:
+	if _ghosts_spawned:
+		return
 
-# ---- GHOST SPAWN WAVE ----
-func _spawn_ghost_wave() -> void:
 	if ghost_ship_scene == null:
-		if debug_ai:
-			print("[BossAI]", name, "ghost_ship_scene is null, cannot spawn ghosts")
 		return
 
-	var parent := get_parent()
-	if parent == null:
-		if debug_ai:
-			print("[BossAI]", name, "no parent, cannot spawn ghosts")
+	var health_ratio: float = $BossHealth.hp / $BossHealth.max_hp
+
+	if health_ratio <= ghost_health_threshold:
+		_ghosts_spawned = true
+		_spawn_ghost_ships()
+
+func _spawn_ghost_ships() -> void:
+	if ghost_ship_scene == null:
 		return
 
-	var player := _get_player()
+	var tree := get_tree()
+	if tree == null:
+		return
 
-	if debug_ai:
-		print("[BossAI]", name, "spawning ghost wave with", ghost_spawn_count, "ships")
+	# Find the player the same way ShipAI does
+	var player := tree.get_first_node_in_group("PlayerBoat") as Node2D
 
-	for i in range(ghost_spawn_count):
-		var ghost_inst := ghost_ship_scene.instantiate()
-		parent.add_child(ghost_inst)
+	for i in range(ghost_ships_to_spawn):
+		var ghost := ghost_ship_scene.instantiate()
+		ghost.global_position = global_position + Vector2(
+			randf_range(-120, 120),
+			randf_range(-120, 120)
+		)
 
-		# Place ghosts in a loose circle around the boss
-		var count_f: float = float(max(1, ghost_spawn_count))
-		var index_f: float = float(i)
-		var base_angle: float = (TAU / count_f) * index_f
-		var jitter: float = (randf() - 0.5) * TAU * ghost_spawn_spread_randomness
-		var angle: float = base_angle + jitter
-		var offset: Vector2 = Vector2.RIGHT.rotated(angle) * ghost_spawn_radius
+		# If this ghost uses ShipAI, give it a target so it starts in AGGRO
+		if player and ghost is ShipAI:
+			ghost.set_aggro(player)
 
-		ghost_inst.global_position = global_position + offset
-
-		if debug_ai:
-			print("[BossAI]", name, "GHOST SHIP SPAWNED idx", i, "at", ghost_inst.global_position)
-
-		var ghost_ship := ghost_inst as ShipAI   # ghosts use normal ShipAI
-		if ghost_ship and player:
-			ghost_ship.set_aggro(player)
+		# Safe to defer add_child because of physics
+		tree.current_scene.call_deferred("add_child", ghost)

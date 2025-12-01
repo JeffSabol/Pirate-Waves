@@ -8,6 +8,10 @@ func _on_mouse_exited():
 
 func _on_gui_input(event):
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-		$"../../../../PlayerBoat".controls_enabled = true
-		$"../../../../GameUI".show_world_ui()
-		$"../../".queue_free()
+		var fade := $"../FadeRect"
+		fade.fade_out(1.0, func():
+			# This runs AFTER the fade completes
+			$"../../../../PlayerBoat".controls_enabled = true
+			$"../../../../GameUI".show_world_ui()
+			$"../../".queue_free()
+		)

@@ -73,23 +73,29 @@ shape = SubResource("CapsuleShape2D_jopw0")
 [node name="Guns" type="Node2D" parent="."]
 
 [node name="Gun1" parent="Guns" instance=ExtResource("6_p0ydb")]
+shooter_group = "enemy"
 
 [node name="Gun2" parent="Guns" instance=ExtResource("6_p0ydb")]
 scale = Vector2(-1, 1)
+shooter_group = "enemy"
 
 [node name="Gun3" parent="Guns" instance=ExtResource("6_p0ydb")]
 position = Vector2(0, -7)
+shooter_group = "enemy"
 
 [node name="Gun4" parent="Guns" instance=ExtResource("6_p0ydb")]
 position = Vector2(0, -7)
 scale = Vector2(-1, 1)
+shooter_group = "enemy"
 
 [node name="Gun5" parent="Guns" instance=ExtResource("6_p0ydb")]
 position = Vector2(0, 7)
+shooter_group = "enemy"
 
 [node name="Gun6" parent="Guns" instance=ExtResource("6_p0ydb")]
 position = Vector2(0, 7)
 scale = Vector2(-1, 1)
+shooter_group = "enemy"
 
 [node name="HitSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("7_3d6n1")

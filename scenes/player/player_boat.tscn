@@ -455,6 +455,7 @@ height = 68.0
 script = ExtResource("1_tfbt8")
 reverse_speed = 61.37
 turn_speed = 0.75
+gold = 1000
 morale = 100
 tier1_shape = ExtResource("2_4axgh")
 tier2_shape = ExtResource("3_huuu2")
@@ -473,48 +474,60 @@ animation = &"3_raise"
 [node name="Guns" type="Node2D" parent="."]
 
 [node name="Gun1" parent="Guns" instance=ExtResource("4_wniug")]
+shooter_group = "player"
 
 [node name="Gun2" parent="Guns" instance=ExtResource("4_wniug")]
 scale = Vector2(-1, 1)
+shooter_group = "player"
 
 [node name="Gun3" parent="Guns" instance=ExtResource("4_wniug")]
 position = Vector2(0, -7)
+shooter_group = "player"
 
 [node name="Gun4" parent="Guns" instance=ExtResource("4_wniug")]
 position = Vector2(0, -7)
 scale = Vector2(-1, 1)
+shooter_group = "player"
 
 [node name="Gun5" parent="Guns" instance=ExtResource("4_wniug")]
 position = Vector2(0, 7)
+shooter_group = "player"
 
 [node name="Gun6" parent="Guns" instance=ExtResource("4_wniug")]
 position = Vector2(0, 7)
 scale = Vector2(-1, 1)
+shooter_group = "player"
 
 [node name="Gun7" parent="Guns" instance=ExtResource("4_wniug")]
 position = Vector2(0, 14)
+shooter_group = "player"
 
 [node name="Gun8" parent="Guns" instance=ExtResource("4_wniug")]
 position = Vector2(0, 14)
 scale = Vector2(-1, 1)
+shooter_group = "player"
 
 [node name="Gun9" parent="Guns" instance=ExtResource("4_wniug")]
 position = Vector2(0, 21)
+shooter_group = "player"
 
 [node name="Gun10" parent="Guns" instance=ExtResource("4_wniug")]
 position = Vector2(0, 21)
 rotation = 3.1415927
 scale = Vector2(1, -1)
+shooter_group = "player"
 
 [node name="Gun11" parent="Guns" instance=ExtResource("4_wniug")]
 position = Vector2(0, -14)
+shooter_group = "player"
 
 [node name="Gun12" parent="Guns" instance=ExtResource("4_wniug")]
 position = Vector2(0, -14)
 rotation = -3.1415925
 scale = Vector2(1, -1)
+shooter_group = "player"
 
-[node name="ShipHealth" type="Node2D" parent="."]
+[node name="BossHealth" type="Node2D" parent="."]
 script = ExtResource("5_wniug")
 
 [node name="HitSound" type="AudioStreamPlayer2D" parent="."]

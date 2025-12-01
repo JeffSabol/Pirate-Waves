@@ -4,6 +4,9 @@ extends Node2D
 @export var smoke_scene: PackedScene
 @export var shoot_speed: float = 300.0
 
+# "player" for player guns, "enemy" (or blank) for NPC guns
+@export var shooter_group: String = ""
+
 # Max random delay between guns fire
 @export var volley_spread: float = 0.2
 
@@ -32,10 +35,9 @@ func fire() -> void:
 	boom.stream = load(path) as AudioStream
 	boom.play()
 
-	# Muzzle flash light
 	_flash_muzzle_light()
 
-	# Smoke at muzzle (auto-free when animation ends)
+	# Smoke
 	if smoke_scene:
 		var smoke := smoke_scene.instantiate() as Node2D
 		if smoke:
@@ -43,7 +45,6 @@ func fire() -> void:
 			smoke.global_rotation = muzzle.global_rotation
 			get_tree().current_scene.add_child(smoke)
 
-			# Create a timer that removes the smoke after X seconds
 			var t := Timer.new()
 			t.wait_time = 0.3
 			t.one_shot = true
@@ -60,6 +61,11 @@ func fire() -> void:
 		ball.global_position = muzzle.global_position
 		ball.global_rotation = muzzle.global_rotation
 		ball.speed = shoot_speed
+
+		# Tell the ball who fired it
+		if ball is CannonBall:
+			ball.shooter_group = shooter_group
+
 		get_tree().current_scene.add_child(ball)
 
 
@@ -67,7 +73,6 @@ func _flash_muzzle_light() -> void:
 	if muzzle_light == null:
 		return
 
-	# Start bright
 	muzzle_light.energy = 2.5
 
 	var tween := get_tree().create_tween()

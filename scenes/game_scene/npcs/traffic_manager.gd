@@ -34,40 +34,70 @@ var _awaiting_return_to_town: bool = false
 signal wave_finished
 
 const BASE_WAVE_PATTERN: Array[Dictionary] = [
-	# ---- Early Game: Onboarding (1–5) ----
+	# -------------------------
+	# Early Game: Very Gentle (1–10)
+	# -------------------------
+	# 1–3: Sloops only
+	{ "sloop": 0, "corsair": 0, "brig": 0, "boss": true }, # Wave 1
+	# comment out testing wave ^
 	{ "sloop": 3, "corsair": 0, "brig": 0, "boss": false }, # Wave 1
-	{ "sloop": 4, "corsair": 1, "brig": 0, "boss": false }, # Wave 2
-	{ "sloop": 5, "corsair": 2, "brig": 0, "boss": false }, # Wave 3
-	{ "sloop": 6, "corsair": 2, "brig": 1, "boss": false }, # Wave 4
-	{ "sloop": 6, "corsair": 3, "brig": 2, "boss": true  }, # Wave 5 (Boss 1)
+	{ "sloop": 4, "corsair": 0, "brig": 0, "boss": false }, # Wave 2
+	{ "sloop": 5, "corsair": 0, "brig": 0, "boss": false }, # Wave 3
 
-	# ---- Tier 2: More Corsairs, First Real Spike (6–10) ----
-	{ "sloop": 7, "corsair": 3, "brig": 2, "boss": false }, # Wave 6
-	{ "sloop": 8, "corsair": 4, "brig": 2, "boss": false }, # Wave 7
-	{ "sloop": 8, "corsair": 4, "brig": 3, "boss": false }, # Wave 8
-	{ "sloop": 9, "corsair": 5, "brig": 3, "boss": false }, # Wave 9
-	{ "sloop": 9, "corsair": 5, "brig": 4, "boss": true  }, # Wave 10 (Boss 2)
+	# 4–6: Add corsairs, still no brigs
+	{ "sloop": 5, "corsair": 1, "brig": 0, "boss": false }, # Wave 4
+	{ "sloop": 6, "corsair": 1, "brig": 0, "boss": false }, # Wave 5
+	{ "sloop": 6, "corsair": 2, "brig": 0, "boss": false }, # Wave 6
 
-	# ---- Tier 3: Shift Toward Heavier Ships (11–15) ----
-	{ "sloop": 8, "corsair": 6, "brig": 4, "boss": false }, # Wave 11
-	{ "sloop": 8, "corsair": 6, "brig": 5, "boss": false }, # Wave 12
-	{ "sloop": 9, "corsair": 7, "brig": 5, "boss": false }, # Wave 13
-	{ "sloop": 9, "corsair": 7, "brig": 6, "boss": false }, # Wave 14
-	{ "sloop": 10, "corsair": 8, "brig": 6, "boss": true }, # Wave 15 (Boss 3)
+	# 7–9: Introduce brigs, but gently
+	{ "sloop": 6, "corsair": 2, "brig": 1, "boss": false }, # Wave 7
+	{ "sloop": 7, "corsair": 2, "brig": 1, "boss": false }, # Wave 8
+	{ "sloop": 7, "corsair": 3, "brig": 2, "boss": false }, # Wave 9
 
-	# ---- Tier 4: Brig City (16–20) ----
-	{ "sloop": 8, "corsair": 8, "brig": 6, "boss": false }, # Wave 16 (slight breather after boss)
-	{ "sloop": 8, "corsair": 9, "brig": 7, "boss": false }, # Wave 17
-	{ "sloop": 9, "corsair": 9, "brig": 7, "boss": false }, # Wave 18
-	{ "sloop": 9, "corsair": 10, "brig": 8, "boss": false }, # Wave 19
-	{ "sloop": 10, "corsair": 10, "brig": 8, "boss": true }, # Wave 20 (Boss 4)
+	# 10: First boss – not too crazy
+	{ "sloop": 5, "corsair": 3, "brig": 2, "boss": true  }, # Wave 10 (Boss 1)
 
-	# ---- Tier 5: Endgame Gauntlet (21–25) ----
-	{ "sloop": 10, "corsair": 10, "brig": 9, "boss": false }, # Wave 21
-	{ "sloop": 10, "corsair": 11, "brig": 9, "boss": false }, # Wave 22
-	{ "sloop": 11, "corsair": 11, "brig": 9, "boss": false }, # Wave 23
-	{ "sloop": 11, "corsair": 12, "brig": 10, "boss": false }, # Wave 24
-	{ "sloop": 12, "corsair": 12, "brig": 10, "boss": true }, # Wave 25 (Boss 5 - Finale)
+	# -------------------------
+	# Mid Game I: More Pressure (11–20)
+	# -------------------------
+	# 11–13: Sloops only again but higher count (breather + familiar)
+	{ "sloop": 6, "corsair": 0, "brig": 0, "boss": false }, # Wave 11
+	{ "sloop": 7, "corsair": 0, "brig": 0, "boss": false }, # Wave 12
+	{ "sloop": 8, "corsair": 0, "brig": 0, "boss": false }, # Wave 13
+
+	# 14–16: Sloops + more corsairs
+	{ "sloop": 7, "corsair": 2, "brig": 0, "boss": false }, # Wave 14
+	{ "sloop": 7, "corsair": 3, "brig": 0, "boss": false }, # Wave 15
+	{ "sloop": 8, "corsair": 3, "brig": 0, "boss": false }, # Wave 16
+
+	# 17–19: Brigs join in more seriously
+	{ "sloop": 7, "corsair": 3, "brig": 1, "boss": false }, # Wave 17
+	{ "sloop": 8, "corsair": 3, "brig": 2, "boss": false }, # Wave 18
+	{ "sloop": 8, "corsair": 4, "brig": 2, "boss": false }, # Wave 19
+
+	# 20: Second boss, a bit heavier
+	{ "sloop": 6, "corsair": 4, "brig": 3, "boss": true  }, # Wave 20 (Boss 2)
+
+	# -------------------------
+	# Mid/Late: Chunky Fleets (21–30)
+	# -------------------------
+	# 21–23: Sloops only but strong counts (another “pattern reset”)
+	{ "sloop": 9, "corsair": 0, "brig": 0, "boss": false }, # Wave 21
+	{ "sloop": 10, "corsair": 0, "brig": 0, "boss": false }, # Wave 22
+	{ "sloop": 11, "corsair": 0, "brig": 0, "boss": false }, # Wave 23
+
+	# 24–26: Big sloops + corsairs
+	{ "sloop": 9, "corsair": 3, "brig": 0, "boss": false }, # Wave 24
+	{ "sloop": 9, "corsair": 4, "brig": 0, "boss": false }, # Wave 25
+	{ "sloop": 10, "corsair": 4, "brig": 0, "boss": false }, # Wave 26
+
+	# 27–29: Full mixed fleets
+	{ "sloop": 9, "corsair": 4, "brig": 2, "boss": false }, # Wave 27
+	{ "sloop": 10, "corsair": 4, "brig": 3, "boss": false }, # Wave 28
+	{ "sloop": 10, "corsair": 5, "brig": 3, "boss": false }, # Wave 29
+
+	# 30: Final boss – hardest wave, but not insane
+	{ "sloop": 8, "corsair": 5, "brig": 4, "boss": true  }, # Wave 30 (Boss 3 - Finale)
 ]
 
 # ---- Signals for HUD ----
@@ -203,7 +233,6 @@ func _start_wave(wave: int) -> void:
 	enemy_counts_changed.emit(_enemies_remaining_total, _enemies_remaining_per_type.duplicate(true))
 	call_deferred("_update_hud")
 
-
 func _spawn_enemy(scene: PackedScene, position: Vector2, kind: String) -> void:
 	if scene == null:
 		return
@@ -218,16 +247,19 @@ func _spawn_enemy(scene: PackedScene, position: Vector2, kind: String) -> void:
 	root.call_deferred("add_child", ship)
 	ship.global_position = position
 
-	var ship_ai := ship as ShipAI
-	if ship_ai and _player:
-		ship_ai.set_aggro(_player)
+	var ai: Node = ship
 
-		# Connect despawn signal with enemy type
-		if ship_ai.has_signal("despawned"):
-			ship_ai.despawned.connect(Callable(self, "_on_enemy_despawned").bind(kind))
+	if ai and _player:
+		# Let AI lock onto the player if it supports it
+		if ai.has_method("set_aggro"):
+			ai.set_aggro(_player)
+
+		# Hook despawned for ANY enemy with that signal (ShipAI or BossAI)
+		if ai.has_signal("despawned"):
+			print("[WaveManager] Connecting despawned for", kind, "->", ai.name)
+			ai.despawned.connect(Callable(self, "_on_enemy_despawned").bind(kind))
 	else:
-		print("[WaveManager] Spawned ship has no ShipAI or no player:", ship)
-
+		print("[WaveManager] Spawned ship has no valid AI or no player:", ship)
 
 func _on_enemy_despawned(kind: String) -> void:
 	call_deferred("_update_hud")
@@ -268,6 +300,7 @@ func _on_enemy_despawned(kind: String) -> void:
 		$"../PlayerBoat".global_position = Vector2(443, -912)
 		$"../PlayerBoat".velocity = Vector2.ZERO
 		$"../PlayerBoat".sails_furled = true
+		$"../PlayerBoat".rotation = deg_to_rad(180  )
 
 		wave_finished.emit()
 

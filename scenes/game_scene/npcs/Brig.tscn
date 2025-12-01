@@ -76,40 +76,50 @@ max_hp = 225
 
 [node name="Gun1" parent="Guns" instance=ExtResource("6_kwagq")]
 position = Vector2(-8, 0)
+shooter_group = "enemy"
 
 [node name="Gun2" parent="Guns" instance=ExtResource("6_kwagq")]
 position = Vector2(8, 0)
 scale = Vector2(-1, 1)
+shooter_group = "enemy"
 
 [node name="Gun3" parent="Guns" instance=ExtResource("6_kwagq")]
 position = Vector2(-8, -7)
+shooter_group = "enemy"
 
 [node name="Gun4" parent="Guns" instance=ExtResource("6_kwagq")]
 position = Vector2(8, -7)
 scale = Vector2(-1, 1)
+shooter_group = "enemy"
 
 [node name="Gun5" parent="Guns" instance=ExtResource("6_kwagq")]
 position = Vector2(-8, 7)
+shooter_group = "enemy"
 
 [node name="Gun6" parent="Guns" instance=ExtResource("6_kwagq")]
 position = Vector2(8, 7)
 scale = Vector2(-1, 1)
+shooter_group = "enemy"
 
 [node name="Gun7" parent="Guns" instance=ExtResource("6_kwagq")]
 position = Vector2(-8, 14)
+shooter_group = "enemy"
 
 [node name="Gun9" parent="Guns" instance=ExtResource("6_kwagq")]
 position = Vector2(-8, 21)
+shooter_group = "enemy"
 
 [node name="Gun8" parent="Guns" instance=ExtResource("6_kwagq")]
 position = Vector2(8, 14)
 rotation = 3.1415927
 scale = Vector2(1, -1)
+shooter_group = "enemy"
 
 [node name="Gun10" parent="Guns" instance=ExtResource("6_kwagq")]
 position = Vector2(8, 21)
 rotation = 3.1415927
 scale = Vector2(1, -1)
+shooter_group = "enemy"
 
 [node name="HitSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("7_14p3k")

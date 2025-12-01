@@ -1,12 +1,13 @@
 extends ColorRect
 
-func _ready():
+func _ready() -> void:
+	# Fade IN when entering the world for the first time
 	fade_in()
 
 
-func fade_in(duration: float = 1.5) -> void:
+func fade_in(duration: float = 1.2) -> void:
 	# Start fully black
-	self.color = Color(0, 0, 0, 1.0)
+	color = Color(0, 0, 0, 1.0)
 	show()
 
 	var tween := create_tween()
@@ -14,12 +15,15 @@ func fade_in(duration: float = 1.5) -> void:
 	tween.set_trans(Tween.TRANS_SINE)
 	tween.set_ease(Tween.EASE_OUT)
 
-	tween.finished.connect(func(): hide())
+	# After fade-in: hide (so UI responds to clicks)
+	tween.finished.connect(func():
+		hide()
+	)
 
 
-func fade_out(duration: float = 1.0, after_callback: Callable = Callable()) -> void:
-	# Ensure visible and start transparency
-	self.color.a = 0.0
+func fade_out(duration: float = 0.8, after_callback: Callable = Callable()) -> void:
+	# Start fully transparent black
+	color = Color(0, 0, 0, 0.0)
 	show()
 
 	var tween := create_tween()

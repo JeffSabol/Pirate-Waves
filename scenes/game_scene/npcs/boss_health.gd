@@ -1,11 +1,10 @@
 extends Node
-class_name ShipHealth
 
 signal damaged(amount: int, from: Node)
 signal died
 
-@export var max_hp: int = 60
-var hp: int
+@export var max_hp: int = 500
+@export var hp: int
 
 # Make sure we only die once
 var _is_dead: bool = false
@@ -13,16 +12,18 @@ var _is_dead: bool = false
 const TreasureScene := preload("res://scenes/game_scene/npcs/treasure.tscn")
 
 @onready var _ship: Node2D = get_parent() as Node2D
-@onready var _ship_ai: ShipAI = _ship as ShipAI
+# NOTE: don't lock this to ShipAI; parent might be BossAI
+# we'll just treat _ship as a generic node and check methods as needed
 
 
 func _ready() -> void:
 	hp = max_hp
 
 	# Debug info so we can see whether this is a boss or normal ship
-	if _ship_ai and _ship_ai.enable_ghost_special:
+	var ship_ai := _ship as ShipAI
+	if ship_ai and ship_ai.enable_ghost_special:
 		print("[ShipHealth]", _ship.name, "READY as BOSS. Ghost special ENABLED. max_hp =", max_hp)
-	elif _ship_ai:
+	elif ship_ai:
 		print("[ShipHealth]", _ship.name, "READY as normal enemy ship. max_hp =", max_hp)
 	else:
 		print("[ShipHealth]", _ship.name, "READY but no ShipAI on parent (probably player or other)")
@@ -41,10 +42,10 @@ func apply_damage(amount: int, from: Node) -> void:
 	if hit_sound:
 		hit_sound.play()
 
-	# 👻 Hook into boss ghost phase here (only if parent has ShipAI)
-	if _ship_ai:
+	# Let the parent AI (ShipAI or BossAI) know HP changed, if it cares
+	if _ship and _ship.has_method("update_boss_health"):
 		print("[ShipHealth]", _ship.name, "HP changed:", hp, "/", max_hp, "-> calling update_boss_health")
-		_ship_ai.update_boss_health(hp, max_hp)
+		_ship.update_boss_health(hp, max_hp)
 
 	# ---- Death handling ----
 	if hp == 0:
@@ -71,9 +72,9 @@ func _handle_enemy_death(ship: Node2D, death_pos: Vector2) -> void:
 	# Spawn treasure
 	_spawn_treasure(death_pos)
 
-	var ai := ship as ShipAI
-	if ai:
-		ai.begin_death()
+	# Works for both ShipAI and BossAI
+	if ship and ship.has_method("begin_death"):
+		ship.begin_death()
 	else:
 		ship.queue_free()
 
