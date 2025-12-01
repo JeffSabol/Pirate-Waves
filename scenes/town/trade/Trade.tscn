@@ -168,7 +168,7 @@ stream = ExtResource("17_rrndr")
 [connection signal="gui_input" from="CanvasLayer/CompassClickZone" to="CanvasLayer/ItemMenu" method="_on_compass_gui_input"]
 [connection signal="mouse_entered" from="CanvasLayer/CompassClickZone" to="CanvasLayer/CompassClickZone" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="CanvasLayer/CompassClickZone" to="CanvasLayer/CompassClickZone" method="_on_mouse_exited"]
-[connection signal="gui_input" from="CanvasLayer/SpyglassClickZone" to="CanvasLayer/ItemMenu" method="_on_spyglass_gui_input"]
 [connection signal="gui_input" from="CanvasLayer/SpyglassClickZone" to="CanvasLayer/SpyglassClickZone" method="_on_gui_input"]
+[connection signal="gui_input" from="CanvasLayer/SpyglassClickZone" to="CanvasLayer/ItemMenu" method="_on_spyglass_gui_input"]
 [connection signal="mouse_entered" from="CanvasLayer/SpyglassClickZone" to="CanvasLayer/SpyglassClickZone" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="CanvasLayer/SpyglassClickZone" to="CanvasLayer/SpyglassClickZone" method="_on_mouse_exited"]

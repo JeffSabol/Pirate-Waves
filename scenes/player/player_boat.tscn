@@ -456,6 +456,7 @@ script = ExtResource("1_tfbt8")
 reverse_speed = 61.37
 turn_speed = 0.75
 gold = 1000
+hammer_count = 0
 morale = 100
 tier1_shape = ExtResource("2_4axgh")
 tier2_shape = ExtResource("3_huuu2")

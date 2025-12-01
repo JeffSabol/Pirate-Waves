@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=3 uid="uid://cu6c72fyiba2s"]
+[gd_scene load_steps=49 format=3 uid="uid://cu6c72fyiba2s"]
 
 [ext_resource type="Texture2D" uid="uid://is5yutlhkb27" path="res://assets/ui/map/MapBackground.png" id="1_cm2e8"]
 [ext_resource type="Texture2D" uid="uid://bbrjt84hpvqry" path="res://assets/ui/map/Map.png" id="1_ij4mi"]
@@ -36,7 +36,15 @@
 [ext_resource type="Texture2D" uid="uid://6kxaooklpvro" path="res://assets/ui/worldui/buttons/up_pressed.png" id="19_awwsk"]
 [ext_resource type="Texture2D" uid="uid://cvk5i7f1yh5ei" path="res://assets/ui/worldui/buttons/down.png" id="20_h6r42"]
 [ext_resource type="Texture2D" uid="uid://bo7w5jiojo4ht" path="res://assets/ui/worldui/buttons/down_pressed.png" id="21_j5asc"]
+[ext_resource type="Script" uid="uid://bqga28ev3n3e5" path="res://scenes/game_scene/world/compass.gd" id="31_gok4d"]
+[ext_resource type="Texture2D" uid="uid://chm23kh3claly" path="res://assets/ui/worldui/items_hud/compass_bg.png" id="32_mke5u"]
+[ext_resource type="Texture2D" uid="uid://c53ed5cx8qf6y" path="res://assets/ui/worldui/items_hud/compass_arrow.png" id="33_bldo3"]
+[ext_resource type="Texture2D" uid="uid://b38mmlt8jr38s" path="res://assets/ui/worldui/items_hud/hammer.png" id="34_bldo3"]
+[ext_resource type="Texture2D" uid="uid://djhn48umuh1dk" path="res://assets/ui/worldui/items_hud/hammer_grey.png" id="35_okh5h"]
+[ext_resource type="Script" uid="uid://udagceftim2d" path="res://scenes/game_scene/world/hammer_repair.gd" id="36_okh5h"]
+[ext_resource type="AudioStream" uid="uid://bc28bsa3hgbhf" path="res://assets/sfx/PiratesLifeHammerMultiple3SFX.wav" id="37_6ir6m"]
 [ext_resource type="Script" uid="uid://b01m43la7os5g" path="res://scenes/game_scene/world/world_fade_rect.gd" id="37_tdvoa"]
+[ext_resource type="AudioStream" uid="uid://sr4yo0xgqpws" path="res://assets/sfx/error.mp3" id="38_ug220"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_lkfkc"]
 font = ExtResource("10_l840g")
@@ -363,6 +371,50 @@ layout_mode = 2
 texture_normal = ExtResource("20_h6r42")
 texture_pressed = ExtResource("21_j5asc")
 
+[node name="Compass" type="Control" parent="MapUI"]
+anchors_preset = 0
+offset_left = 1177.0
+offset_top = 72.0
+offset_right = 1177.0
+offset_bottom = 72.0
+scale = Vector2(3, 3)
+script = ExtResource("31_gok4d")
+
+[node name="Holder" type="TextureRect" parent="MapUI/Compass"]
+layout_mode = 0
+offset_right = 31.0
+offset_bottom = 31.0
+texture = ExtResource("32_mke5u")
+
+[node name="Arrow" type="TextureRect" parent="MapUI/Compass"]
+layout_mode = 0
+offset_right = 31.0
+offset_bottom = 31.0
+pivot_offset = Vector2(15.5, 15.5)
+texture = ExtResource("33_bldo3")
+
+[node name="Hammer" type="Control" parent="MapUI"]
+anchors_preset = 0
+
+[node name="HammerRepair" type="TextureButton" parent="MapUI/Hammer"]
+visible = false
+layout_mode = 0
+offset_left = 1188.0
+offset_top = 193.0
+offset_right = 1212.0
+offset_bottom = 222.0
+scale = Vector2(3, 3)
+texture_normal = ExtResource("34_bldo3")
+texture_pressed = ExtResource("35_okh5h")
+texture_hover = ExtResource("35_okh5h")
+script = ExtResource("36_okh5h")
+
+[node name="HammerSound" type="AudioStreamPlayer" parent="MapUI/Hammer/HammerRepair"]
+stream = ExtResource("37_6ir6m")
+
+[node name="ErrorSound" type="AudioStreamPlayer" parent="MapUI/Hammer/HammerRepair"]
+stream = ExtResource("38_ug220")
+
 [node name="InventoryUI" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
@@ -511,6 +563,7 @@ autowrap_trim_flags = 0
 justification_flags = 0
 
 [node name="FadeRect" type="ColorRect" parent="."]
+visible = false
 offset_right = 1280.0
 offset_bottom = 720.0
 color = Color(0, 0, 0, 1)
@@ -528,4 +581,5 @@ script = ExtResource("37_tdvoa")
 [connection signal="button_up" from="MapUI/Dpad/VBoxContainer/Up" to="MapUI" method="_on_up_button_up"]
 [connection signal="button_down" from="MapUI/Dpad/VBoxContainer/Down" to="MapUI" method="_on_down_button_down"]
 [connection signal="button_up" from="MapUI/Dpad/VBoxContainer/Down" to="MapUI" method="_on_down_button_up"]
+[connection signal="pressed" from="MapUI/Hammer/HammerRepair" to="MapUI/Hammer/HammerRepair" method="_on_pressed"]
 [connection signal="pressed" from="InventoryUI/InventoryButton" to="InventoryUI/InventoryButton" method="_on_pressed"]

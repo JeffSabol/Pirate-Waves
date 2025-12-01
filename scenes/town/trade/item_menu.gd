@@ -130,28 +130,37 @@ func _on_item_gui_input(event: InputEvent, it: Control) -> void:
 
 func _on_item_clicked(it: Control) -> void:
 	var player := $"../../../../PlayerBoat"
+	var item_name := it.name
 
-	var bought := false
+	if item_name == "Spyglass":
+		if player.has_spyglass:
+			print("already own spyglass")
+			player.get_node("NotEnoughSFX").play()
+		elif player.gold >= 50:
+			print("buy spyglass")
+			player.gold -= 50
+			player.has_spyglass = true
+		else:
+			player.get_node("NotEnoughSFX").play()
 
-	# updated item prices + counters
-	if it.name == "Spyglass" and player.gold >= 50:
-		print("buy spyglass")
-		#player.spyglass_item += 1
-		player.gold -= 50
-		bought = true
-	elif it.name == "Hammer" and player.gold >= 10:
-		print("buy hammer")
-		#player.hammer_item += 1
-		player.gold -= 10
-		bought = true
-	elif it.name == "Compass" and player.gold >= 80:
-		print("buy compass")
-		#player.compass_item += 1
-		player.gold -= 80
-		bought = true
+	elif item_name == "Hammer":
+		if player.gold >= 10:
+			print("buy hammer")
+			player.gold -= 10
+			player.hammer_count += 1
+		else:
+			player.get_node("NotEnoughSFX").play()
 
-	if !bought:
-		player.get_node("NotEnoughSFX").play()
+	elif item_name == "Compass":
+		if player.has_compass:
+			print("already own compass")
+			player.get_node("NotEnoughSFX").play()
+		elif player.gold >= 80:
+			print("buy compass")
+			player.gold -= 80
+			player.has_compass = true
+		else:
+			player.get_node("NotEnoughSFX").play()
 
 
 func _on_item_mouse_entered(it: Control) -> void:

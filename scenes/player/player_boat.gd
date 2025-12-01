@@ -44,6 +44,9 @@ signal hp_changed(hp: int, max_hp: int)
 @export var rum = 1
 @export var ore = 1
 @export var clothes = 1
+@export var hammer_count = 1
+@export var has_compass = false
+@export var has_spyglass  = false
 
 # KNOTS
 @export var knots := 0

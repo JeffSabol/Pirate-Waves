@@ -207,6 +207,7 @@ position = Vector2(-11, -8)
 script = ExtResource("6_mn2ti")
 cannonball_scene = ExtResource("7_b3jas")
 smoke_scene = ExtResource("8_sfi7m")
+shoot_speed = 125.0
 shooter_group = "enemy"
 
 [node name="GunSprite" type="AnimatedSprite2D" parent="Guns/Gun6"]
