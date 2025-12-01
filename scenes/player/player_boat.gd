@@ -54,6 +54,10 @@ signal hp_changed(hp: int, max_hp: int)
 @export var left_fire_cooldown := 3
 @export var right_fire_cooldown := 3
 
+# Waves AnimatedSprite2d
+@onready var waves: AnimatedSprite2D = $Waves
+var _waves_base_pos: Vector2
+
 # Let us toggle control in the editor or from another script
 @export var controls_enabled := true
 
@@ -325,6 +329,8 @@ func _ready():
 	_play_sail_idle_frame()
 	_apply_tier_collision_shape()
 	_apply_gun_offsets()
+	
+	_waves_base_pos = waves.position
 
 
 func _physics_process(delta: float) -> void:
@@ -410,7 +416,7 @@ func _physics_process(delta: float) -> void:
 
 	update_guns_visibility()
 	update_knots_display()
-
+	_update_waves_animation()
 
 func update_knots_display() -> void:
 	knots = int(round(abs(current_speed) / 10.0))
@@ -672,3 +678,48 @@ func _set_canvas_tint(tint: Color, duration := 0.4) -> void:
 			revert.set_ease(Tween.EASE_OUT)
 		)
 	)
+
+func _update_waves_animation() -> void:
+	# "Moving" means: sails are up and we actually have speed
+	var moving: bool = (not sails_furled and abs(current_speed) > 1.0)
+
+	var anim_name: String
+	var y_offset := 0.0
+
+	match ship_tier:
+		1:
+			if moving:
+				anim_name = "moving1"
+				y_offset = 4.0      # moving1 → y 4
+			else:
+				anim_name = "idle1"
+				y_offset = 0.0      # idle1 → y 0
+		2:
+			if moving:
+				anim_name = "moving2"
+				y_offset = 4.0      # moving2 → y 4
+			else:
+				anim_name = "idle2"
+				y_offset = 5.0      # idle2 → y 5
+		3:
+			if moving:
+				anim_name = "moving3"
+				y_offset = 11.0     # moving3 → y 11
+			else:
+				anim_name = "idle3"
+				y_offset = 4.0      # idle3 → y 4
+		_:
+			# Fallback if something weird happens
+			if moving:
+				anim_name = "moving1"
+				y_offset = 4.0
+			else:
+				anim_name = "idle1"
+				y_offset = 0.0
+
+	# Only restart animation if it actually changed
+	if waves.animation != anim_name:
+		waves.play(anim_name)
+
+	# Apply base position + per-animation offset
+	waves.position = _waves_base_pos + Vector2(0, y_offset)
