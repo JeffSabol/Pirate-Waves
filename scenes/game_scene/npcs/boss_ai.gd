@@ -45,9 +45,11 @@ var _has_been_hurt: bool = false
 
 # Ghosts
 @export var ghost_ship_scene: PackedScene
-@export var ghost_health_threshold: float = 0.75
+@export var ghost_health_thresholds: Array[float] = [0.75, 0.5, 0.4, 0.25]
+@export var ghost_ships_per_threshold: int = 2
 @export var ghost_ships_to_spawn: int = 2
-
+var _ghost_thresholds_triggered: Array[bool] = []
+var _last_health_ratio: float = 1.0
 var _ghosts_spawned: bool = false
 
 # ---- Helpers ----
@@ -113,6 +115,10 @@ func on_hit(attacker: Node) -> void:
 
 
 func _ready() -> void:
+	_ghost_thresholds_triggered.resize(ghost_health_thresholds.size())
+	for i in range(_ghost_thresholds_triggered.size()):
+		_ghost_thresholds_triggered[i] = false
+		
 	if debug_ai:
 		print("[BossAI]", name, "READY at", global_position)
 
@@ -396,20 +402,30 @@ func fire_right_guns() -> void:
 	t.timeout.connect(func() -> void:
 		can_fire_right = true)
 
-func _check_spawn_ghosts() -> void:
-	if _ghosts_spawned:
-		return
-
+func _check_spawn_ghosts(current_ratio: float, previous_ratio: float) -> void:
 	if ghost_ship_scene == null:
 		return
 
-	var health_ratio: float = $BossHealth.hp / $BossHealth.max_hp
+	for i in range(ghost_health_thresholds.size()):
+		if _ghost_thresholds_triggered[i]:
+			continue
 
-	if health_ratio <= ghost_health_threshold:
-		_ghosts_spawned = true
-		_spawn_ghost_ships()
+		var threshold := ghost_health_thresholds[i]
+
+		# Only trigger when we CROSS the threshold this hit:
+		# previously above, now at or below
+		if current_ratio <= threshold and previous_ratio > threshold:
+			_ghost_thresholds_triggered[i] = true
+			if debug_ai:
+				print("[BossAI]", name, "HP ratio", current_ratio,
+					"crossed ghost threshold", threshold)
+			_spawn_ghost_ships_count(ghost_ships_per_threshold)
+
 
 func _spawn_ghost_ships() -> void:
+	_spawn_ghost_ships_count(ghost_ships_to_spawn)
+
+func _spawn_ghost_ships_count(count: int) -> void:
 	if ghost_ship_scene == null:
 		return
 
@@ -417,19 +433,23 @@ func _spawn_ghost_ships() -> void:
 	if tree == null:
 		return
 
-	# Find the player the same way ShipAI does
 	var player := tree.get_first_node_in_group("PlayerBoat") as Node2D
 
-	for i in range(ghost_ships_to_spawn):
+	for i in range(count):
 		var ghost := ghost_ship_scene.instantiate()
 		ghost.global_position = global_position + Vector2(
 			randf_range(-120, 120),
 			randf_range(-120, 120)
 		)
 
-		# If this ghost uses ShipAI, give it a target so it starts in AGGRO
 		if player and ghost is ShipAI:
 			ghost.set_aggro(player)
 
-		# Safe to defer add_child because of physics
 		tree.current_scene.call_deferred("add_child", ghost)
+
+func update_boss_health(hp: int, max_hp: int) -> void:
+	var ratio := float(hp) / float(max_hp)
+	if debug_ai:
+		print("[BossAI]", name, "update_boss_health:", hp, "/", max_hp, "ratio =", ratio)
+	_check_spawn_ghosts(ratio, _last_health_ratio)
+	_last_health_ratio = ratio

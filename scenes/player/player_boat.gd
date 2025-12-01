@@ -88,6 +88,8 @@ var turn_inertia_decay: float = 10.0     # how fast it decays when you stop pres
 @export var tier2_shape: Shape2D
 @export var tier3_shape: Shape2D
 
+@onready var canvas_mod: CanvasModulate = $"../CanvasModulate"
+var _base_color := Color(0.75, 0.8, 0.9, 1.0)
 
 # ============================================================================
 # BUFFS / DRINK HOTKEYS  (FINAL FIX)
@@ -135,6 +137,7 @@ func _try_use_siren() -> void:
 	_activate_siren_buff()
 
 func _activate_siren_buff() -> void:
+	_set_canvas_tint(Color(0.65, 1.0, 0.65))
 	_siren_ver += 1
 	var my_ver := _siren_ver
 	siren_buff_active = true
@@ -158,6 +161,7 @@ func _try_use_captain() -> void:
 	_activate_captain_buff()
 
 func _activate_captain_buff() -> void:
+	_set_canvas_tint(Color(0.6, 0.75, 1.0))
 	_captain_ver += 1
 	var my_ver := _captain_ver
 
@@ -202,6 +206,7 @@ func _try_use_grog() -> void:
 	_activate_grog_buff()
 
 func _activate_grog_buff() -> void:
+	_set_canvas_tint(Color(1.0, 0.9, 0.6))
 	_grog_ver += 1
 	var my_ver := _grog_ver
 
@@ -648,3 +653,22 @@ func upgrade_guns() -> void:
 		guns_upgrade_level += 1
 
 	_check_tier_progress()
+
+func _set_canvas_tint(tint: Color, duration := 0.4) -> void:
+	# Tween to new tint
+	var tween := create_tween()
+	tween.tween_property(canvas_mod, "color", tint, duration)
+	tween.set_trans(Tween.TRANS_SINE)
+	tween.set_ease(Tween.EASE_OUT)
+
+	# After tween finishes → wait 15 seconds → return color
+	tween.finished.connect(func():
+		var timer := get_tree().create_timer(15.0) # buff duration
+		timer.timeout.connect(func():
+			# Tween back to base color
+			var revert := create_tween()
+			revert.tween_property(canvas_mod, "color", _base_color, duration)
+			revert.set_trans(Tween.TRANS_SINE)
+			revert.set_ease(Tween.EASE_OUT)
+		)
+	)

@@ -52,6 +52,7 @@ height = 68.0
 [node name="GhostShip" type="CharacterBody2D"]
 collision_mask = 5
 script = ExtResource("1_e4omx")
+guns = 4
 aggro_preferred_range = 100.0
 
 [node name="Guns" type="Node2D" parent="."]

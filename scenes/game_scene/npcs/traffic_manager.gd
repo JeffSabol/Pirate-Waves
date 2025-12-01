@@ -38,8 +38,6 @@ const BASE_WAVE_PATTERN: Array[Dictionary] = [
 	# Early Game: Very Gentle (1–10)
 	# -------------------------
 	# 1–3: Sloops only
-	{ "sloop": 0, "corsair": 0, "brig": 0, "boss": true }, # Wave 1
-	# comment out testing wave ^
 	{ "sloop": 3, "corsair": 0, "brig": 0, "boss": false }, # Wave 1
 	{ "sloop": 4, "corsair": 0, "brig": 0, "boss": false }, # Wave 2
 	{ "sloop": 5, "corsair": 0, "brig": 0, "boss": false }, # Wave 3

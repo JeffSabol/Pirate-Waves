@@ -38,7 +38,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_sfi7m")
 }],
-"loop": true,
+"loop": false,
 "name": &"defeated",
 "speed": 5.0
 }, {
@@ -397,7 +397,7 @@ texture_scale = 0.1
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_mxv8p")
-animation = &"hurt"
+animation = &"defeated"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 6)

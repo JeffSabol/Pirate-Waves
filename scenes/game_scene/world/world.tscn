@@ -912,10 +912,10 @@ color = Color(0.8808251, 0.9063318, 0.95468724, 1)
 
 [node name="TextureRect" type="TextureRect" parent="."]
 material = SubResource("ShaderMaterial_gcoiu")
-offset_left = -1555.7188
-offset_top = -2659.0
-offset_right = 32971.16
-offset_bottom = 29157.0
+offset_left = -2886.1797
+offset_top = -3885.0
+offset_right = 11298.18
+offset_bottom = 8589.0
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("1_g8xfn")
 stretch_mode = 1
