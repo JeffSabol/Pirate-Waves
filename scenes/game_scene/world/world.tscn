@@ -1,4 +1,4 @@
-[gd_scene load_steps=88 format=4 uid="uid://cu0u00s7rwajd"]
+[gd_scene load_steps=99 format=4 uid="uid://cu0u00s7rwajd"]
 
 [ext_resource type="Shader" uid="uid://cv0486d3hkql6" path="res://scenes/game_scene/world/sea.gdshader" id="1_fasui"]
 [ext_resource type="Texture2D" uid="uid://cce8i40qf3v5t" path="res://assets/backgrounds/new_bg.png" id="1_g8xfn"]
@@ -18,6 +18,9 @@
 [ext_resource type="AudioStream" uid="uid://sr4yo0xgqpws" path="res://assets/sfx/error.mp3" id="12_vrmdf"]
 [ext_resource type="AudioStream" uid="uid://dya4dixr7ky0d" path="res://assets/sfx/saw.wav" id="13_wx6fr"]
 [ext_resource type="Script" uid="uid://dx4uosn1nr4n7" path="res://scenes/game_scene/world/fade_rect.gd" id="16_h3f8j"]
+[ext_resource type="Texture2D" uid="uid://ckjg2247pi4qe" path="res://assets/objects/camp_fire.png" id="19_m0lsc"]
+[ext_resource type="Texture2D" uid="uid://col2rd6y87dto" path="res://assets/light/light_texture.png" id="20_rprxq"]
+[ext_resource type="Script" uid="uid://b8hdi4rs24j5o" path="res://scenes/town/tavern/tavern_lantern.gd" id="21_tc1d5"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_gcoiu"]
 shader = ExtResource("1_fasui")
@@ -843,7 +846,67 @@ _data = {
 }
 point_count = 16
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_u2us0"]
+atlas = ExtResource("19_m0lsc")
+region = Rect2(0, 0, 8, 7)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yg5g0"]
+atlas = ExtResource("19_m0lsc")
+region = Rect2(8, 0, 8, 7)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i452x"]
+atlas = ExtResource("19_m0lsc")
+region = Rect2(24, 0, 8, 7)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uwnvi"]
+atlas = ExtResource("19_m0lsc")
+region = Rect2(32, 0, 8, 7)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mlu87"]
+atlas = ExtResource("19_m0lsc")
+region = Rect2(40, 0, 8, 7)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jo5jw"]
+atlas = ExtResource("19_m0lsc")
+region = Rect2(48, 0, 8, 7)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ucxs2"]
+atlas = ExtResource("19_m0lsc")
+region = Rect2(56, 0, 8, 7)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_a8j85"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u2us0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yg5g0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i452x")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uwnvi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mlu87")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jo5jw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ucxs2")
+}],
+"loop": true,
+"name": &"default",
+"speed": 8.0
+}]
+
 [node name="World" type="Node2D"]
+
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+color = Color(0.8808251, 0.9063318, 0.95468724, 1)
 
 [node name="TextureRect" type="TextureRect" parent="."]
 material = SubResource("ShaderMaterial_gcoiu")
@@ -958,6 +1021,45 @@ stream = ExtResource("12_vrmdf")
 
 [node name="SawSFX" type="AudioStreamPlayer" parent="PlayerBoat"]
 stream = ExtResource("13_wx6fr")
+
+[node name="Campfire" type="AnimatedSprite2D" parent="."]
+position = Vector2(145, -1083)
+sprite_frames = SubResource("SpriteFrames_a8j85")
+autoplay = "default"
+frame_progress = 0.4164756
+
+[node name="PointLight2D" type="PointLight2D" parent="Campfire"]
+energy = 0.07
+texture = ExtResource("20_rprxq")
+script = ExtResource("21_tc1d5")
+min_energy = 0.1
+max_energy = 0.5
+
+[node name="Campfire2" type="AnimatedSprite2D" parent="."]
+position = Vector2(257, -844)
+sprite_frames = SubResource("SpriteFrames_a8j85")
+autoplay = "default"
+frame_progress = 0.2267467
+
+[node name="PointLight2D" type="PointLight2D" parent="Campfire2"]
+energy = 0.07
+texture = ExtResource("20_rprxq")
+script = ExtResource("21_tc1d5")
+min_energy = 0.1
+max_energy = 0.5
+
+[node name="Campfire3" type="AnimatedSprite2D" parent="."]
+position = Vector2(561, -988)
+sprite_frames = SubResource("SpriteFrames_a8j85")
+autoplay = "default"
+frame_progress = 0.9312005
+
+[node name="PointLight2D" type="PointLight2D" parent="Campfire3"]
+energy = 0.07
+texture = ExtResource("20_rprxq")
+script = ExtResource("21_tc1d5")
+min_energy = 0.1
+max_energy = 0.5
 
 [connection signal="body_exited" from="Towns/PortHaven/EnterZone" to="Towns/PortHaven" method="_on_enter_zone_body_exited"]
 

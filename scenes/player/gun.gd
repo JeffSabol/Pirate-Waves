@@ -19,6 +19,7 @@ var cannon_sounds: Array[String] = [
 @onready var gun_sprite: AnimatedSprite2D = $GunSprite
 @onready var boom: AudioStreamPlayer2D = $Boom
 @onready var muzzle: Marker2D = $Muzzle
+@onready var muzzle_light: Light2D = $MuzzleLight
 
 func fire() -> void:
 	if volley_spread > 0.0:
@@ -30,6 +31,9 @@ func fire() -> void:
 	var path: String = cannon_sounds.pick_random()
 	boom.stream = load(path) as AudioStream
 	boom.play()
+
+	# Muzzle flash light
+	_flash_muzzle_light()
 
 	# Smoke at muzzle (auto-free when animation ends)
 	if smoke_scene:
@@ -57,3 +61,16 @@ func fire() -> void:
 		ball.global_rotation = muzzle.global_rotation
 		ball.speed = shoot_speed
 		get_tree().current_scene.add_child(ball)
+
+
+func _flash_muzzle_light() -> void:
+	if muzzle_light == null:
+		return
+
+	# Start bright
+	muzzle_light.energy = 2.5
+
+	var tween := get_tree().create_tween()
+	tween.tween_property(muzzle_light, "energy", 0.0, 0.1)\
+		.set_trans(Tween.TRANS_LINEAR)\
+		.set_ease(Tween.EASE_OUT)
