@@ -140,6 +140,7 @@ func _on_item_clicked(it: Control) -> void:
 			print("buy spyglass")
 			player.gold -= 50
 			player.has_spyglass = true
+			$ItemBuy.play()
 		else:
 			player.get_node("NotEnoughSFX").play()
 
@@ -148,6 +149,7 @@ func _on_item_clicked(it: Control) -> void:
 			print("buy hammer")
 			player.gold -= 10
 			player.hammer_count += 1
+			$ItemBuy.play()
 		else:
 			player.get_node("NotEnoughSFX").play()
 
@@ -159,6 +161,7 @@ func _on_item_clicked(it: Control) -> void:
 			print("buy compass")
 			player.gold -= 80
 			player.has_compass = true
+			$ItemBuy.play()
 		else:
 			player.get_node("NotEnoughSFX").play()
 

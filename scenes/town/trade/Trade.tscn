@@ -16,7 +16,7 @@
 [ext_resource type="Texture2D" uid="uid://t0uiteea2pmc" path="res://assets/ui/town/trade/hammer.png" id="14_jbrx6"]
 [ext_resource type="Texture2D" uid="uid://p2jawd2r18v1" path="res://assets/ui/town/trade/spyglass.png" id="15_rjdl6"]
 [ext_resource type="Texture2D" uid="uid://cf075db1dm38j" path="res://assets/ui/town/trade/compass.png" id="16_7e3vq"]
-[ext_resource type="AudioStream" uid="uid://bxhf1x3igp6ms" path="res://assets/sfx/bottle_clink1.mp3" id="17_rrndr"]
+[ext_resource type="AudioStream" uid="uid://d3lfombve07oi" path="res://assets/sfx/inventory_change.mp3" id="17_ijon4"]
 
 [node name="Trade" type="Control"]
 layout_mode = 3
@@ -156,8 +156,8 @@ visible = false
 layout_mode = 2
 texture = ExtResource("15_rjdl6")
 
-[node name="BottleClink" type="AudioStreamPlayer" parent="CanvasLayer/ItemMenu"]
-stream = ExtResource("17_rrndr")
+[node name="ItemBuy" type="AudioStreamPlayer" parent="CanvasLayer/ItemMenu"]
+stream = ExtResource("17_ijon4")
 
 [connection signal="gui_input" from="CanvasLayer/Leave1ClickZone" to="CanvasLayer/Leave1ClickZone" method="_on_gui_input"]
 [connection signal="mouse_entered" from="CanvasLayer/Leave1ClickZone" to="CanvasLayer/Leave1ClickZone" method="_on_mouse_entered"]
