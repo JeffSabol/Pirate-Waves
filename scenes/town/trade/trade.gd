@@ -5,4 +5,3 @@ func _physics_process(_delta):
 
 func _on_leave_pressed():
 	queue_free()
-a

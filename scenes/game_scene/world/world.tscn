@@ -1,4 +1,4 @@
-[gd_scene load_steps=98 format=4 uid="uid://cu0u00s7rwajd"]
+[gd_scene load_steps=101 format=4 uid="uid://cu0u00s7rwajd"]
 
 [ext_resource type="Shader" uid="uid://cv0486d3hkql6" path="res://scenes/game_scene/world/sea.gdshader" id="1_fasui"]
 [ext_resource type="Texture2D" uid="uid://cce8i40qf3v5t" path="res://assets/backgrounds/new_bg.png" id="1_g8xfn"]
@@ -19,12 +19,12 @@
 [ext_resource type="AudioStream" uid="uid://dya4dixr7ky0d" path="res://assets/sfx/saw.wav" id="13_wx6fr"]
 [ext_resource type="Texture2D" uid="uid://ckjg2247pi4qe" path="res://assets/objects/camp_fire.png" id="19_m0lsc"]
 [ext_resource type="Texture2D" uid="uid://col2rd6y87dto" path="res://assets/light/light_texture.png" id="20_rprxq"]
+[ext_resource type="Shader" uid="uid://ce6h6m81ufewu" path="res://scenes/game_scene/world/clouds.gdshader" id="21_rprxq"]
 [ext_resource type="Script" uid="uid://b8hdi4rs24j5o" path="res://scenes/town/tavern/tavern_lantern.gd" id="21_tc1d5"]
+[ext_resource type="Texture2D" uid="uid://bhppqpss5krhg" path="res://assets/objects/clouds_512x512.png" id="22_tc1d5"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_gcoiu"]
 shader = ExtResource("1_fasui")
-shader_parameter/pixels_per_second = 1.0
-shader_parameter/texture_width = 1280.0
 shader_parameter/wobble_strength = 0.02
 shader_parameter/wobble_freq = 8.0
 shader_parameter/wobble_speed = 0.2
@@ -905,6 +905,12 @@ animations = [{
 "speed": 8.0
 }]
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_u2us0"]
+shader = ExtResource("21_rprxq")
+shader_parameter/fog_color = Vector4(1, 1, 1, 0.5)
+shader_parameter/cutoff = 0.0
+shader_parameter/scroll_speed = 0.02
+
 [node name="World" type="Node2D"]
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
@@ -1056,6 +1062,58 @@ texture = ExtResource("20_rprxq")
 script = ExtResource("21_tc1d5")
 min_energy = 0.1
 max_energy = 0.5
+
+[node name="Fog" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -1645.0
+offset_top = -2316.0
+offset_right = -1605.0
+offset_bottom = -2276.0
+
+[node name="FogRect" type="TextureRect" parent="Fog"]
+texture_filter = 1
+material = SubResource("ShaderMaterial_u2us0")
+layout_mode = 0
+offset_left = -1251.0
+offset_top = -1606.0
+offset_right = 517.0
+offset_bottom = 4658.0
+texture = ExtResource("22_tc1d5")
+stretch_mode = 1
+
+[node name="FogRect4" type="TextureRect" parent="Fog"]
+texture_filter = 1
+material = SubResource("ShaderMaterial_u2us0")
+layout_mode = 0
+offset_left = 3751.0
+offset_top = 56.0
+offset_right = 5853.0
+offset_bottom = 3035.0
+texture = ExtResource("22_tc1d5")
+stretch_mode = 1
+
+[node name="FogRect2" type="TextureRect" parent="Fog"]
+texture_filter = 1
+material = SubResource("ShaderMaterial_u2us0")
+layout_mode = 0
+offset_left = 512.0
+offset_top = -1606.0
+offset_right = 5853.0
+offset_bottom = 56.0
+texture = ExtResource("22_tc1d5")
+stretch_mode = 1
+
+[node name="FogRect3" type="TextureRect" parent="Fog"]
+texture_filter = 1
+material = SubResource("ShaderMaterial_u2us0")
+layout_mode = 0
+offset_left = 512.0
+offset_top = 3035.0
+offset_right = 5853.0
+offset_bottom = 4697.0
+texture = ExtResource("22_tc1d5")
+stretch_mode = 1
 
 [connection signal="body_exited" from="Towns/PortHaven/EnterZone" to="Towns/PortHaven" method="_on_enter_zone_body_exited"]
 
