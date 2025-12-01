@@ -1,0 +1,339 @@
+[gd_scene load_steps=16 format=3 uid="uid://dlawtaevmxgqf"]
+
+[ext_resource type="Script" uid="uid://b87mh0juoenhq" path="res://scenes/game_scene/npcs/boss_ai.gd" id="1_sfi7m"]
+[ext_resource type="PackedScene" uid="uid://brn683y014x1h" path="res://scenes/game_scene/npcs/ghost_ship.tscn" id="2_65sxp"]
+[ext_resource type="Texture2D" uid="uid://denjkf11ae3fb" path="res://assets/boat/boss.png" id="2_sfi7m"]
+[ext_resource type="Script" uid="uid://lufr4jivvja5" path="res://scenes/player/gun.gd" id="6_mn2ti"]
+[ext_resource type="PackedScene" uid="uid://ls4m2pn76itj" path="res://scenes/player/cannon_ball.tscn" id="7_b3jas"]
+[ext_resource type="AudioStream" uid="uid://ljnrvt0jhnln" path="res://assets/sfx/debris_break.wav" id="7_daurs"]
+[ext_resource type="PackedScene" uid="uid://ckj8s2lu65b2m" path="res://scenes/player/BossSmoke.tscn" id="8_sfi7m"]
+[ext_resource type="Script" uid="uid://b75i02t5qr53c" path="res://scenes/game_scene/npcs/boss_health.gd" id="9_65sxp"]
+[ext_resource type="SpriteFrames" uid="uid://ciwy8sitwoy6a" path="res://scenes/player/guns_sprite_sheet.tres" id="9_l42jc"]
+[ext_resource type="AudioStream" uid="uid://ccfc7gli15es5" path="res://assets/sfx/Cannon/cannon_1.mp3" id="10_du84x"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wml3u"]
+atlas = ExtResource("2_sfi7m")
+region = Rect2(0, 0, 70, 189)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sfi7m"]
+atlas = ExtResource("2_sfi7m")
+region = Rect2(0, 0, 70, 189)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mn2ti"]
+atlas = ExtResource("2_sfi7m")
+region = Rect2(0, 0, 70, 189)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_mxv8p"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wml3u")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sfi7m")
+}],
+"loop": true,
+"name": &"defeated",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mn2ti")
+}],
+"loop": true,
+"name": &"hurt",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4x6u1"]
+radius = 25.0
+height = 172.0
+
+[node name="BossShip" type="CharacterBody2D"]
+collision_mask = 13
+script = ExtResource("1_sfi7m")
+chase_speed = 150.0
+aggro_preferred_range = 100.0
+spawn_aggro_distance = 200.0
+debug_ai = true
+ghost_ship_scene = ExtResource("2_65sxp")
+
+[node name="Guns" type="Node2D" parent="."]
+position = Vector2(0, -11)
+
+[node name="Gun1" type="Node2D" parent="Guns"]
+position = Vector2(11, -24)
+scale = Vector2(-1, 1)
+script = ExtResource("6_mn2ti")
+cannonball_scene = ExtResource("7_b3jas")
+smoke_scene = ExtResource("8_sfi7m")
+
+[node name="GunSprite" type="AnimatedSprite2D" parent="Guns/Gun1"]
+position = Vector2(-16, 0)
+sprite_frames = ExtResource("9_l42jc")
+animation = &"level1"
+
+[node name="Muzzle" type="Marker2D" parent="Guns/Gun1"]
+position = Vector2(-20, 1)
+scale = Vector2(-1, -1)
+
+[node name="Boom" type="AudioStreamPlayer2D" parent="Guns/Gun1"]
+stream = ExtResource("10_du84x")
+volume_db = -12.0
+
+[node name="Gun2" type="Node2D" parent="Guns"]
+position = Vector2(-11, -24)
+script = ExtResource("6_mn2ti")
+cannonball_scene = ExtResource("7_b3jas")
+smoke_scene = ExtResource("8_sfi7m")
+
+[node name="GunSprite" type="AnimatedSprite2D" parent="Guns/Gun2"]
+position = Vector2(-16, 0)
+sprite_frames = ExtResource("9_l42jc")
+animation = &"level1"
+
+[node name="Muzzle" type="Marker2D" parent="Guns/Gun2"]
+position = Vector2(-20, 1)
+scale = Vector2(-1, -1)
+
+[node name="Boom" type="AudioStreamPlayer2D" parent="Guns/Gun2"]
+stream = ExtResource("10_du84x")
+volume_db = -12.0
+
+[node name="Gun3" type="Node2D" parent="Guns"]
+position = Vector2(11, -16)
+scale = Vector2(-1, 1)
+script = ExtResource("6_mn2ti")
+cannonball_scene = ExtResource("7_b3jas")
+smoke_scene = ExtResource("8_sfi7m")
+
+[node name="GunSprite" type="AnimatedSprite2D" parent="Guns/Gun3"]
+position = Vector2(-16, 0)
+sprite_frames = ExtResource("9_l42jc")
+animation = &"level1"
+
+[node name="Muzzle" type="Marker2D" parent="Guns/Gun3"]
+position = Vector2(-20, 1)
+scale = Vector2(-1, -1)
+
+[node name="Boom" type="AudioStreamPlayer2D" parent="Guns/Gun3"]
+stream = ExtResource("10_du84x")
+volume_db = -12.0
+
+[node name="Gun4" type="Node2D" parent="Guns"]
+position = Vector2(-11, -16)
+script = ExtResource("6_mn2ti")
+cannonball_scene = ExtResource("7_b3jas")
+smoke_scene = ExtResource("8_sfi7m")
+
+[node name="GunSprite" type="AnimatedSprite2D" parent="Guns/Gun4"]
+position = Vector2(-16, 0)
+sprite_frames = ExtResource("9_l42jc")
+animation = &"level1"
+
+[node name="Muzzle" type="Marker2D" parent="Guns/Gun4"]
+position = Vector2(-20, 1)
+scale = Vector2(-1, -1)
+
+[node name="Boom" type="AudioStreamPlayer2D" parent="Guns/Gun4"]
+stream = ExtResource("10_du84x")
+volume_db = -12.0
+
+[node name="Gun5" type="Node2D" parent="Guns"]
+position = Vector2(12, -8)
+scale = Vector2(-1, 1)
+script = ExtResource("6_mn2ti")
+cannonball_scene = ExtResource("7_b3jas")
+smoke_scene = ExtResource("8_sfi7m")
+
+[node name="GunSprite" type="AnimatedSprite2D" parent="Guns/Gun5"]
+position = Vector2(-16, 0)
+sprite_frames = ExtResource("9_l42jc")
+animation = &"level1"
+
+[node name="Muzzle" type="Marker2D" parent="Guns/Gun5"]
+position = Vector2(-20, 1)
+scale = Vector2(-1, -1)
+
+[node name="Boom" type="AudioStreamPlayer2D" parent="Guns/Gun5"]
+stream = ExtResource("10_du84x")
+volume_db = -12.0
+
+[node name="Gun6" type="Node2D" parent="Guns"]
+position = Vector2(-11, -8)
+script = ExtResource("6_mn2ti")
+cannonball_scene = ExtResource("7_b3jas")
+smoke_scene = ExtResource("8_sfi7m")
+
+[node name="GunSprite" type="AnimatedSprite2D" parent="Guns/Gun6"]
+position = Vector2(-16, 0)
+sprite_frames = ExtResource("9_l42jc")
+animation = &"level1"
+
+[node name="Muzzle" type="Marker2D" parent="Guns/Gun6"]
+position = Vector2(-20, 1)
+scale = Vector2(-1, -1)
+
+[node name="Boom" type="AudioStreamPlayer2D" parent="Guns/Gun6"]
+stream = ExtResource("10_du84x")
+volume_db = -12.0
+
+[node name="Gun7" type="Node2D" parent="Guns"]
+position = Vector2(12, 18)
+scale = Vector2(-1, 1)
+script = ExtResource("6_mn2ti")
+cannonball_scene = ExtResource("7_b3jas")
+smoke_scene = ExtResource("8_sfi7m")
+
+[node name="GunSprite" type="AnimatedSprite2D" parent="Guns/Gun7"]
+position = Vector2(-16, 0)
+sprite_frames = ExtResource("9_l42jc")
+animation = &"level1"
+
+[node name="Muzzle" type="Marker2D" parent="Guns/Gun7"]
+position = Vector2(-20, 1)
+scale = Vector2(-1, -1)
+
+[node name="Boom" type="AudioStreamPlayer2D" parent="Guns/Gun7"]
+stream = ExtResource("10_du84x")
+volume_db = -12.0
+
+[node name="Gun8" type="Node2D" parent="Guns"]
+position = Vector2(-12, 18)
+script = ExtResource("6_mn2ti")
+cannonball_scene = ExtResource("7_b3jas")
+smoke_scene = ExtResource("8_sfi7m")
+
+[node name="GunSprite" type="AnimatedSprite2D" parent="Guns/Gun8"]
+position = Vector2(-16, 0)
+sprite_frames = ExtResource("9_l42jc")
+animation = &"level1"
+
+[node name="Muzzle" type="Marker2D" parent="Guns/Gun8"]
+position = Vector2(-20, 1)
+scale = Vector2(-1, -1)
+
+[node name="Boom" type="AudioStreamPlayer2D" parent="Guns/Gun8"]
+stream = ExtResource("10_du84x")
+volume_db = -12.0
+
+[node name="Gun9" type="Node2D" parent="Guns"]
+position = Vector2(11, 26)
+scale = Vector2(-1, 1)
+script = ExtResource("6_mn2ti")
+cannonball_scene = ExtResource("7_b3jas")
+smoke_scene = ExtResource("8_sfi7m")
+
+[node name="GunSprite" type="AnimatedSprite2D" parent="Guns/Gun9"]
+position = Vector2(-16, 0)
+sprite_frames = ExtResource("9_l42jc")
+animation = &"level1"
+
+[node name="Muzzle" type="Marker2D" parent="Guns/Gun9"]
+position = Vector2(-20, 1)
+scale = Vector2(-1, -1)
+
+[node name="Boom" type="AudioStreamPlayer2D" parent="Guns/Gun9"]
+stream = ExtResource("10_du84x")
+volume_db = -12.0
+
+[node name="Gun10" type="Node2D" parent="Guns"]
+position = Vector2(-12, 26)
+script = ExtResource("6_mn2ti")
+cannonball_scene = ExtResource("7_b3jas")
+smoke_scene = ExtResource("8_sfi7m")
+
+[node name="GunSprite" type="AnimatedSprite2D" parent="Guns/Gun10"]
+position = Vector2(-16, 0)
+sprite_frames = ExtResource("9_l42jc")
+animation = &"level1"
+
+[node name="Muzzle" type="Marker2D" parent="Guns/Gun10"]
+position = Vector2(-20, 1)
+scale = Vector2(-1, -1)
+
+[node name="Boom" type="AudioStreamPlayer2D" parent="Guns/Gun10"]
+stream = ExtResource("10_du84x")
+volume_db = -12.0
+
+[node name="Gun11" type="Node2D" parent="Guns"]
+position = Vector2(12, 34)
+scale = Vector2(-1, 1)
+script = ExtResource("6_mn2ti")
+cannonball_scene = ExtResource("7_b3jas")
+smoke_scene = ExtResource("8_sfi7m")
+
+[node name="GunSprite" type="AnimatedSprite2D" parent="Guns/Gun11"]
+position = Vector2(-16, 0)
+sprite_frames = ExtResource("9_l42jc")
+animation = &"level1"
+
+[node name="Muzzle" type="Marker2D" parent="Guns/Gun11"]
+position = Vector2(-20, 1)
+scale = Vector2(-1, -1)
+
+[node name="Boom" type="AudioStreamPlayer2D" parent="Guns/Gun11"]
+stream = ExtResource("10_du84x")
+volume_db = -12.0
+
+[node name="Gun12" type="Node2D" parent="Guns"]
+position = Vector2(-12, 34)
+script = ExtResource("6_mn2ti")
+cannonball_scene = ExtResource("7_b3jas")
+smoke_scene = ExtResource("8_sfi7m")
+
+[node name="GunSprite" type="AnimatedSprite2D" parent="Guns/Gun12"]
+position = Vector2(-16, 0)
+sprite_frames = ExtResource("9_l42jc")
+animation = &"level1"
+
+[node name="Muzzle" type="Marker2D" parent="Guns/Gun12"]
+position = Vector2(-20, 1)
+scale = Vector2(-1, -1)
+
+[node name="Boom" type="AudioStreamPlayer2D" parent="Guns/Gun12"]
+stream = ExtResource("10_du84x")
+volume_db = -12.0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_mxv8p")
+animation = &"hurt"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 6)
+shape = SubResource("CapsuleShape2D_4x6u1")
+
+[node name="ShipHealth" type="Node2D" parent="."]
+script = ExtResource("9_65sxp")
+max_hp = 500
+
+[node name="HitSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("7_daurs")
+volume_db = -6.0
+
+[node name="LeftSight" type="RayCast2D" parent="."]
+position = Vector2(0, 23)
+rotation = 1.5707964
+target_position = Vector2(0, 300)
+
+[node name="LeftSight2" type="RayCast2D" parent="."]
+position = Vector2(0, -35)
+rotation = 1.5707964
+target_position = Vector2(0, 300)
+
+[node name="RightSight" type="RayCast2D" parent="."]
+position = Vector2(0, 23)
+rotation = -1.5707964
+target_position = Vector2(0, 300)
+
+[node name="RightSight2" type="RayCast2D" parent="."]
+position = Vector2(0, -35)
+rotation = -1.5707964
+target_position = Vector2(0, 300)
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]

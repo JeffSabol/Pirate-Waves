@@ -1,0 +1,68 @@
+[gd_scene load_steps=11 format=3 uid="uid://dfka1m0bvfytt"]
+
+[ext_resource type="Script" uid="uid://ccx4wykg48dtu" path="res://scenes/player/cannon_ball.gd" id="1_0fb6v"]
+[ext_resource type="Texture2D" uid="uid://cau58ndlyy8la" path="res://assets/boat/Guns/boss_cannon_ball.png" id="2_0fb6v"]
+[ext_resource type="Texture2D" uid="uid://d0aqktmtlyrdb" path="res://assets/boat/Guns/explosion2.png" id="3_ysatc"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7fvq5"]
+atlas = ExtResource("2_0fb6v")
+region = Rect2(0, 0, 6, 6)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vgjrg"]
+atlas = ExtResource("3_ysatc")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1ffo3"]
+atlas = ExtResource("3_ysatc")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3aom6"]
+atlas = ExtResource("3_ysatc")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ibquj"]
+atlas = ExtResource("3_ysatc")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_mqwx1"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7fvq5")
+}],
+"loop": true,
+"name": &"cannon",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vgjrg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1ffo3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3aom6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ibquj")
+}],
+"loop": false,
+"name": &"explosion",
+"speed": 9.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_mqwx1"]
+radius = 3.0
+
+[node name="CannonBall" type="Area2D"]
+script = ExtResource("1_0fb6v")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_mqwx1")
+animation = &"cannon"
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_mqwx1")

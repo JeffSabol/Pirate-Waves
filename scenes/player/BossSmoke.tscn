@@ -1,0 +1,44 @@
+[gd_scene load_steps=7 format=3 uid="uid://ckj8s2lu65b2m"]
+
+[ext_resource type="Texture2D" uid="uid://b1oweyp70iswx" path="res://assets/boat/Guns/boss_smoke.png" id="1_xxcb2"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xhnrl"]
+atlas = ExtResource("1_xxcb2")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5ayfw"]
+atlas = ExtResource("1_xxcb2")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sspgs"]
+atlas = ExtResource("1_xxcb2")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m4n2r"]
+atlas = ExtResource("1_xxcb2")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_p2rhg"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xhnrl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5ayfw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sspgs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m4n2r")
+}],
+"loop": false,
+"name": &"default",
+"speed": 9.0
+}]
+
+[node name="Smoke" type="AnimatedSprite2D"]
+sprite_frames = SubResource("SpriteFrames_p2rhg")
+autoplay = "default"
+frame_progress = 0.92335427

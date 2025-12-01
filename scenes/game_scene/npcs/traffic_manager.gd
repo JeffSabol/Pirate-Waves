@@ -33,13 +33,41 @@ var _awaiting_return_to_town: bool = false
 
 signal wave_finished
 
-# 5-wave pattern that repeats; counts are base values for wave 1–5.
 const BASE_WAVE_PATTERN: Array[Dictionary] = [
+	# ---- Early Game: Onboarding (1–5) ----
 	{ "sloop": 3, "corsair": 0, "brig": 0, "boss": false }, # Wave 1
 	{ "sloop": 4, "corsair": 1, "brig": 0, "boss": false }, # Wave 2
 	{ "sloop": 5, "corsair": 2, "brig": 0, "boss": false }, # Wave 3
 	{ "sloop": 6, "corsair": 2, "brig": 1, "boss": false }, # Wave 4
-	{ "sloop": 6, "corsair": 3, "brig": 2, "boss": true  }, # Wave 5 (boss)
+	{ "sloop": 6, "corsair": 3, "brig": 2, "boss": true  }, # Wave 5 (Boss 1)
+
+	# ---- Tier 2: More Corsairs, First Real Spike (6–10) ----
+	{ "sloop": 7, "corsair": 3, "brig": 2, "boss": false }, # Wave 6
+	{ "sloop": 8, "corsair": 4, "brig": 2, "boss": false }, # Wave 7
+	{ "sloop": 8, "corsair": 4, "brig": 3, "boss": false }, # Wave 8
+	{ "sloop": 9, "corsair": 5, "brig": 3, "boss": false }, # Wave 9
+	{ "sloop": 9, "corsair": 5, "brig": 4, "boss": true  }, # Wave 10 (Boss 2)
+
+	# ---- Tier 3: Shift Toward Heavier Ships (11–15) ----
+	{ "sloop": 8, "corsair": 6, "brig": 4, "boss": false }, # Wave 11
+	{ "sloop": 8, "corsair": 6, "brig": 5, "boss": false }, # Wave 12
+	{ "sloop": 9, "corsair": 7, "brig": 5, "boss": false }, # Wave 13
+	{ "sloop": 9, "corsair": 7, "brig": 6, "boss": false }, # Wave 14
+	{ "sloop": 10, "corsair": 8, "brig": 6, "boss": true }, # Wave 15 (Boss 3)
+
+	# ---- Tier 4: Brig City (16–20) ----
+	{ "sloop": 8, "corsair": 8, "brig": 6, "boss": false }, # Wave 16 (slight breather after boss)
+	{ "sloop": 8, "corsair": 9, "brig": 7, "boss": false }, # Wave 17
+	{ "sloop": 9, "corsair": 9, "brig": 7, "boss": false }, # Wave 18
+	{ "sloop": 9, "corsair": 10, "brig": 8, "boss": false }, # Wave 19
+	{ "sloop": 10, "corsair": 10, "brig": 8, "boss": true }, # Wave 20 (Boss 4)
+
+	# ---- Tier 5: Endgame Gauntlet (21–25) ----
+	{ "sloop": 10, "corsair": 10, "brig": 9, "boss": false }, # Wave 21
+	{ "sloop": 10, "corsair": 11, "brig": 9, "boss": false }, # Wave 22
+	{ "sloop": 11, "corsair": 11, "brig": 9, "boss": false }, # Wave 23
+	{ "sloop": 11, "corsair": 12, "brig": 10, "boss": false }, # Wave 24
+	{ "sloop": 12, "corsair": 12, "brig": 10, "boss": true }, # Wave 25 (Boss 5 - Finale)
 ]
 
 # ---- Signals for HUD ----
