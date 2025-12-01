@@ -1,4 +1,4 @@
-[gd_scene load_steps=52 format=3 uid="uid://cu6c72fyiba2s"]
+[gd_scene load_steps=55 format=3 uid="uid://cu6c72fyiba2s"]
 
 [ext_resource type="Texture2D" uid="uid://is5yutlhkb27" path="res://assets/ui/map/MapBackground.png" id="1_cm2e8"]
 [ext_resource type="Texture2D" uid="uid://bbrjt84hpvqry" path="res://assets/ui/map/Map.png" id="1_ij4mi"]
@@ -11,12 +11,15 @@
 [ext_resource type="Texture2D" uid="uid://bkjw2utplnsst" path="res://assets/ui/worldui/panels/enemy_counter_panel.png" id="5_tf8dh"]
 [ext_resource type="Texture2D" uid="uid://h56m310r62on" path="res://assets/boat/boat.png" id="6_eddq1"]
 [ext_resource type="Texture2D" uid="uid://bsuse3wvbw12r" path="res://assets/ui/worldui/panels/wave_panel.png" id="6_sj3nl"]
+[ext_resource type="Texture2D" uid="uid://d0sicnto2q6f3" path="res://assets/ui/BossBarHolder.png" id="7_bbp80"]
 [ext_resource type="Texture2D" uid="uid://cjm37ke6h0xqq" path="res://assets/ui/worldui/panels/health_bar/health_bar_empty.png" id="7_us7g3"]
 [ext_resource type="Texture2D" uid="uid://bjjsk5ie5xwm1" path="res://assets/ui/map/map_closed.png" id="8_8qdxx"]
 [ext_resource type="Texture2D" uid="uid://cu22qwigbhsgy" path="res://assets/ui/worldui/panels/health_bar/health_bar.png" id="8_awwsk"]
+[ext_resource type="Texture2D" uid="uid://174q2epqbhu" path="res://assets/ui/BossBar.png" id="8_siq6s"]
 [ext_resource type="Texture2D" uid="uid://cx80vmti284f1" path="res://assets/ui/worldui/FireButtonReady.png" id="9_4nqjw"]
 [ext_resource type="Script" uid="uid://djagmqnqey7ux" path="res://scenes/game_scene/world/health_bar.gd" id="9_awwsk"]
 [ext_resource type="Script" uid="uid://c2clrolu1yhh5" path="res://scenes/game_scene/world/inventory_ui.gd" id="9_lkfkc"]
+[ext_resource type="Script" uid="uid://btvt1po4bb3vc" path="res://scenes/game_scene/world/boss_health_bar.gd" id="9_siq6s"]
 [ext_resource type="Texture2D" uid="uid://ktn0msyny4g7" path="res://assets/ui/inventory/inventorybackground.png" id="9_vomcc"]
 [ext_resource type="Texture2D" uid="uid://dau46jgypfq1d" path="res://assets/ui/map/map_open.png" id="9_y81kt"]
 [ext_resource type="Script" uid="uid://c4dgottxqtxl3" path="res://scenes/game_scene/world/drinks_emblem.gd" id="10_1a7hd"]
@@ -119,6 +122,25 @@ offset_bottom = 96.0
 rotation = -1.5707964
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("6_eddq1")
+
+[node name="BossHealthBar" type="TextureProgressBar" parent="MapUI"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 365.0
+offset_top = -31.0
+offset_right = 493.0
+offset_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(4, 4)
+value = 100.0
+texture_under = ExtResource("7_bbp80")
+texture_progress = ExtResource("8_siq6s")
+script = ExtResource("9_siq6s")
 
 [node name="HealthBar" type="TextureProgressBar" parent="MapUI"]
 visible = false

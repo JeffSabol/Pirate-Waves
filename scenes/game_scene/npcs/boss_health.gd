@@ -2,6 +2,7 @@ extends Node
 
 signal damaged(amount: int, from: Node)
 signal died
+signal hp_changed(hp: int, max_hp: int)
 
 @export var max_hp: int = 500
 @export var hp: int
@@ -36,6 +37,7 @@ func apply_damage(amount: int, from: Node) -> void:
 
 	hp = max(hp - amount, 0)
 	damaged.emit(amount, from)
+	hp_changed.emit(hp, max_hp)
 
 	# Play hit sound if present (../HitSound)
 	var hit_sound := get_node_or_null("../HitSound")
