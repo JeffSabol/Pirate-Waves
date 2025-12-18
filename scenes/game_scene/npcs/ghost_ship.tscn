@@ -80,6 +80,7 @@ sprite_frames = SubResource("SpriteFrames_mxv8p")
 
 [node name="ShipHealth" type="Node2D" parent="."]
 script = ExtResource("5_grtbd")
+max_hp = 50
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_jopw0")
