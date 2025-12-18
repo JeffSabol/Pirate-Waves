@@ -82,7 +82,8 @@ func handle_accept_input() -> void:
 	# (make sure "ui_accept" is bound in Input Map).
 	if not Input.is_action_just_pressed("ui_accept"):
 		return
-
+	
+	set_process(false)
 	match current_index:
 		0:
 			# Tavern selected
