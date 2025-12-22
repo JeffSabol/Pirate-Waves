@@ -5,7 +5,7 @@ Godot 4.5 (4.3+ compatible)
 
 This repository contains the game itself along with shared systems such as menus, loaders, save handling, and deployment utilities.
 
-[Play on itch.io](https://b0rked.itch.io/)  
+[Play on itch.io](https://b0rked.itch.io/pirate-waves)  
 
 ---
 
