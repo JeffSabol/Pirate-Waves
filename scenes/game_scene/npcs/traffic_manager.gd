@@ -30,6 +30,7 @@ var _enemies_remaining_per_type: Dictionary = {
 }
 
 var _awaiting_return_to_town: bool = false
+var _wave_ticket_value: int = 0
 
 signal wave_finished
 
@@ -170,14 +171,14 @@ func _start_wave(wave: int) -> void:
 	var num_brig: int = int(ceil(float(base["brig"]) * multiplier))
 	var has_boss: bool = bool(base["boss"])
 
-	if debug_waves:
-		print("\n[WaveManager] Starting wave", wave,
-			"cycle =", cycle,
-			"multiplier =", multiplier,
-			"sloop =", num_sloop,
-			"corsair =", num_corsair,
-			"brig =", num_brig,
-			"boss =", has_boss)
+	#if debug_waves:
+		#print("\n[WaveManager] Starting wave", wave,
+			#"cycle =", cycle,
+			#"multiplier =", multiplier,
+			#"sloop =", num_sloop,
+			#"corsair =", num_corsair,
+			#"brig =", num_brig,
+			#"boss =", has_boss)
 
 	var enemies_to_spawn: Array[Dictionary] = []   # { "scene": PackedScene, "kind": String }
 
@@ -216,7 +217,13 @@ func _start_wave(wave: int) -> void:
 
 	# Pick spawn positions for all enemies
 	var spawn_positions: Array[Vector2] = _pick_spawn_positions(enemies_to_spawn.size())
-
+	
+	var base_amounts: Dictionary = { "sloop": 5, "corsair": 10, "brig": 20, "boss": 50 }
+	_wave_ticket_value = (num_sloop * base_amounts["sloop"]
+		+ num_corsair * base_amounts["corsair"]
+		+ num_brig * base_amounts["brig"]
+		+ boss_count * base_amounts["boss"])
+		
 	for i in range(enemies_to_spawn.size()):
 		var info: Dictionary = enemies_to_spawn[i]
 		var scene: PackedScene = info["scene"]
@@ -276,6 +283,7 @@ func _on_enemy_despawned(kind: String) -> void:
 	enemy_counts_changed.emit(_enemies_remaining_total, _enemies_remaining_per_type.duplicate(true))
 
 	if _enemies_remaining_total == 0:
+		
 		wave_active = false
 		_awaiting_return_to_town = true
 		print("[WaveManager] Wave", _current_wave, "CLEARED! Return to town.")
@@ -300,9 +308,16 @@ func _on_enemy_despawned(kind: String) -> void:
 		$"../PlayerBoat".sails_furled = true
 		$"../PlayerBoat".rotation = deg_to_rad(180  )
 
+		award_tickets(_wave_ticket_value, _current_wave)
+
 		wave_finished.emit()
 
+func award_tickets(amount: int, level: int) -> void:
+		var scaled_amount := int(round(amount * pow(1.5, level - 1)))
 
+		if OS.has_feature("web"):
+			var js = "window.parent.postMessage({type:'chomp_reward', tickets:%d, level:%d}, '*')" % [scaled_amount, level]
+			JavaScriptBridge.eval(js)
 
 
 # ------------------------

@@ -11,10 +11,12 @@ config_version=5
 [application]
 
 config/name="Pirate Waves"
-run/main_scene="res://scenes/opening/opening.tscn"
+run/main_scene="uid://dhr7kwfkmlq7o"
 config/features=PackedStringArray("4.5")
-boot_splash/image="uid://bm0o3eeg0cpec"
-config/icon="uid://cvqi3wwkc31bp"
+boot_splash/image="uid://xequnwooa5y0"
+config/icon="uid://cptsx3eenlsed"
+run/icon="uid://cptsx3eenlsed"
+run/image="uid://xequnwooa5y0"
 
 [autoload]
 
@@ -28,7 +30,9 @@ ProjectUISoundController="*res://addons/maaacks_game_template/base/nodes/autoloa
 window/size/viewport_width=1280
 window/size/viewport_height=720
 window/stretch/mode="viewport"
-window/stretch/scale_mode="integer"
+window/main_scene="uid://dhr7kwfkmlq7o"
+window/icon="uid://cptsx3eenlsed"
+window/image="uid://xequnwooa5y0"
 
 [editor_plugins]
 
